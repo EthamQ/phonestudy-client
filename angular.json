@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "phonestudy-client"
+    }
+  },
+  "defaultProject": "phonestudy-client",
+  "cli": {
+    "analytics": false
+  }
 }
