@@ -4,10 +4,10 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-music-mood-graph',
-  templateUrl: './music-mood-graph.component.html',
-  styleUrls: ['./music-mood-graph.component.scss']
+  templateUrl: './music-mood-line.component.html',
+  styleUrls: ['./music-mood-line.component.scss']
 })
-export class MusicMoodGraphComponent implements OnInit {
+export class MusicMoodLineComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: false }) baseChartDirective: BaseChartDirective;
 
@@ -20,10 +20,25 @@ export class MusicMoodGraphComponent implements OnInit {
 
   labels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-  options: ChartOptions = {
+  public options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    scales: {
+    xAxes: [{
+      scaleLabel: {
+         display: true,
+         labelString: 'Zeit (22.1.2019 - 4.5.2019)'
+      }
+   }],
+    yAxes: [{
+       scaleLabel: {
+          display: true,
+          labelString: 'Gefühlszustand'
+       }
+    }]
+ }
   };
+
 
   colors: Color[] = [
     {

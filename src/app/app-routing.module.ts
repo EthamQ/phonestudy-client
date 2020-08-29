@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './core/login/login.component';
 import { CategorySelectionComponent } from './features/category-selection/category-selection.component';
-import { ContactDetailsComponent } from './features/category-selection/contact-details/contact-details.component';
-import { MusicDetailsComponent } from './features/category-selection/music-details/music-details.component';
-import { MusicGraphComponent } from './features/category-selection/music-details/music-graph/music-graph.component';
-import { MusicMoodGraphComponent } from './features/category-selection/music-details/music-mood-graph/music-mood-graph.component';
+import { ContactDetailsComponent } from './features/contact-details/contact-details.component';
+import { MusicDetailsComponent } from './features/music-details/music-details.component';
+import { MusicPieComponent } from './features/music-details/music-pie/music-pie.component';
+import { MusicMoodLineComponent } from './features/music-details/music-mood-line/music-mood-line.component';
+import { MusicMoodScatterComponent } from './features/music-details/music-mood-scatter/music-mood-scatter.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,8 +15,9 @@ const routes: Routes = [
     path: 'select', component: CategorySelectionComponent, children: [
       { path: 'contact', component: ContactDetailsComponent },
       { path: 'music', component: MusicDetailsComponent, children: [
-        { path: '1', component: MusicGraphComponent },
-        { path: '2', component: MusicMoodGraphComponent }
+        { path: '1', component: MusicPieComponent },
+        { path: '2', component: MusicMoodLineComponent },
+        { path: '3', component: MusicMoodScatterComponent }
       ] }
     ]
   },

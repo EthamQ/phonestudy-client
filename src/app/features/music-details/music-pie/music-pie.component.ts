@@ -4,10 +4,10 @@ import { Label, SingleDataSet, monkeyPatchChartJsTooltip, monkeyPatchChartJsLege
 
 @Component({
   selector: 'app-music-graph',
-  templateUrl: './music-graph.component.html',
-  styleUrls: ['./music-graph.component.scss']
+  templateUrl: './music-pie.component.html',
+  styleUrls: ['./music-pie.component.scss']
 })
-export class MusicGraphComponent implements OnInit {
+export class MusicPieComponent implements OnInit {
 
   // Pie
   public pieChartOptions: ChartOptions = {
