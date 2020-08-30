@@ -10,6 +10,10 @@ import { MusicDetailsComponent } from './features/music-details/music-details.co
 import { MusicPieComponent } from './features/music-details/music-pie/music-pie.component';
 import { MusicMoodLineComponent } from './features/music-details/music-mood-line/music-mood-line.component';
 import { MusicMoodScatterComponent } from './features/music-details/music-mood-scatter/music-mood-scatter.component';
+import { AppDetailsComponent } from './features/app-details/app-details.component';
+import { AppPieComponent } from './features/app-details/app-pie/app-pie.component';
+import { AppMoodLineComponent } from './features/app-details/app-mood-line/app-mood-line.component';
+import { AppMoodScatterComponent } from './features/app-details/app-mood-scatter/app-mood-scatter.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { MusicMoodScatterComponent } from './features/music-details/music-mood-s
     MusicPieComponent,
     MusicMoodLineComponent,
     MusicMoodScatterComponent,
+    AppDetailsComponent,
+    AppPieComponent,
+    AppMoodLineComponent,
+    AppMoodScatterComponent,
   ],
   imports: [
     BrowserModule,
