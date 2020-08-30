@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartDataSets, ChartType } from 'chart.js';
+import { CorrelationCalculationService } from 'src/app/services/correlation-calculation.service';
+
 
 @Component({
   selector: 'app-music-mood-scatter',
@@ -10,6 +12,9 @@ export class MusicMoodScatterComponent implements OnInit {
 
   public scatterChartOptions: ChartOptions = {
     responsive: true,
+    legend: {
+      display: false,
+    },
     // maintainAspectRatio: false,
     scales: { //you're missing this
     xAxes: [{
@@ -43,8 +48,21 @@ export class MusicMoodScatterComponent implements OnInit {
   ];
   public scatterChartType: ChartType = 'scatter';
 
-  constructor() { }
+  public chartColors = [{
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    pointBackgroundColor: 'blue',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: '#ff0000'
+  }];
+
+
+  constructor(private correlationCalculationService: CorrelationCalculationService) { }
 
   ngOnInit() {
+    const x = [1, 7, 6, 2, 3, 3, 3, 4, 3, 0];
+    const y = [3, 7, 6, 4, 3, 4, 5, 4, 1, 0];
+    this.scatterChartData[0].data = x.map((x, i) => ({ x, y: y[i]}));
+    console.log('Correlation', this.correlationCalculationService.getPearsonCorrelation(x, y));
   }
 }
