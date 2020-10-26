@@ -11,13 +11,22 @@ import { AppPieComponent } from './features/app-details/app-pie/app-pie.componen
 import { AppMoodLineComponent } from './features/app-details/app-mood-line/app-mood-line.component';
 import { AppMoodScatterComponent } from './features/app-details/app-mood-scatter/app-mood-scatter.component';
 import { AppDetailsComponent } from './features/app-details/app-details.component';
+import { MoodBarComponent } from './features/statistics/mood/mood-bar/mood-bar.component';
+import { StatisticDetailComponent } from './features/statistics/statistic-detail/statistic-detail.component';
+import { MoodPieComponent } from './features/statistics/mood/mood-pie/mood-pie.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'select', component: CategorySelectionComponent, children: [
-      { path: 'contact', component: ContactDetailsComponent },
+      // { path: 'contact', component: ContactDetailsComponent },
+      {
+        path: 'mood', component: StatisticDetailComponent, children: [
+          { path: '1', component: MoodPieComponent },
+          { path: '2', component: MoodBarComponent },
+        ]
+      },
       {
         path: 'music', component: MusicDetailsComponent, children: [
           { path: '1', component: MusicPieComponent },

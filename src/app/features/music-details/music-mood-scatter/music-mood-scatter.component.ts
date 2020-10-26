@@ -11,7 +11,7 @@ import { CorrelationCalculationService } from 'src/app/services/correlation-calc
 export class MusicMoodScatterComponent implements OnInit {
 
   public scatterChartOptions: ChartOptions = {
-    responsive: true,
+    responsive: true, 
     legend: {
       display: false,
     },
@@ -20,7 +20,7 @@ export class MusicMoodScatterComponent implements OnInit {
     xAxes: [{
       scaleLabel: {
          display: true,
-         labelString: 'Häufigkeit Interpret angehört'
+         labelString: 'Minuten telefoniert'
       }
    }],
     yAxes: [{
@@ -51,7 +51,7 @@ export class MusicMoodScatterComponent implements OnInit {
   public chartColors = [{
     backgroundColor: 'transparent',
     borderColor: 'transparent',
-    pointBackgroundColor: 'blue',
+    pointBackgroundColor: 'red',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: '#ff0000'
   }];

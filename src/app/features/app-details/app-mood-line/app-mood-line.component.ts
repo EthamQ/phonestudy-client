@@ -15,7 +15,7 @@ export class AppMoodLineComponent implements OnInit {
   textPlugin: any;
 
   datasets: ChartDataSets[] = [
-    { data: [5, 5, 6, 7, 8, 5, 4], label: 'Aktivitätslevel' },
+    { data: [7, 4, 4, 3, 5, 6, 7], label: 'Aktivitätslevel' },
   ];
 
   labels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -82,7 +82,7 @@ export class AppMoodLineComponent implements OnInit {
         ctx.font = '20px serif';
         ctx.fillStyle = 'white';
         ctx.fillText(
-          '7',
+          '6',
           xaxis.getPixelForValue(this_.labels[3]) - 5,
           yaxis.getPixelForValue(this_.datasets[0].data[3])
         );
@@ -105,7 +105,7 @@ export class AppMoodLineComponent implements OnInit {
         ctx.font = '20px serif';
         ctx.fillStyle = 'white';
         ctx.fillText(
-          '8',
+          '7',
           xaxis.getPixelForValue(this_.labels[1]) - 5,
           yaxis.getPixelForValue(this_.datasets[0].data[1])
         );
@@ -129,7 +129,7 @@ export class AppMoodLineComponent implements OnInit {
         ctx.font = '20px serif';
         ctx.fillStyle = 'white';
         ctx.fillText(
-          '10',
+          '9',
           xaxis.getPixelForValue(this_.labels[2]) - 10,
           yaxis.getPixelForValue(this_.datasets[0].data[2])
         );

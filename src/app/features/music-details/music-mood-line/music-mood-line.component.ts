@@ -15,10 +15,10 @@ export class MusicMoodLineComponent implements OnInit {
   textPlugin: any;
 
   datasets: ChartDataSets[] = [
-    { data: [5, 5, 6, 7, 8, 5, 4], label: 'Gefühlszustand' },
+    { data: [2, 5, 2, 8], label: 'Gefühlszustand' },
   ];
 
-  labels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  labels: Label[] = ['12. Juli', '13. Juli', '14. Juli', '15. Juli'];
 
   public options: ChartOptions = {
     responsive: true,
@@ -27,14 +27,18 @@ export class MusicMoodLineComponent implements OnInit {
     xAxes: [{
       scaleLabel: {
          display: true,
-         labelString: 'Zeit (22.1.2019 - 4.5.2019)'
+        //  labelString: 'Zeit (22.1.2019 - 4.5.2019)'
       }
    }],
     yAxes: [{
        scaleLabel: {
           display: true,
-          labelString: 'Gefühlszustand'
-       }
+          labelString: 'Gefühlszustand',
+       },
+       ticks: {
+        suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+        suggestedMax: 10,
+    }
     }]
  }
   };

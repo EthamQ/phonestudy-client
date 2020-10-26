@@ -60,7 +60,7 @@ export class AppMoodScatterComponent implements OnInit {
 
   ngOnInit() {
     const x = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10];
-    const y = [7, 7, 8, 5, 6, 7, 4, 3, 2, 0];
+    const y = [7, 7, 8, 5, 6, 7, 4, 3, 2, 0].reverse();
     this.scatterChartData[0].data = x.map((x, i) => ({ x, y: y[i]}));
     console.log('Correlation', this.correlationCalculationService.getPearsonCorrelation(x, y));
   }

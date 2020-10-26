@@ -14,6 +14,10 @@ import { AppDetailsComponent } from './features/app-details/app-details.componen
 import { AppPieComponent } from './features/app-details/app-pie/app-pie.component';
 import { AppMoodLineComponent } from './features/app-details/app-mood-line/app-mood-line.component';
 import { AppMoodScatterComponent } from './features/app-details/app-mood-scatter/app-mood-scatter.component';
+import { MoodPieComponent } from './features/statistics/mood/mood-pie/mood-pie.component';
+import { MoodBarComponent } from './features/statistics/mood/mood-bar/mood-bar.component';
+import { StatisticDetailComponent } from './features/statistics/statistic-detail/statistic-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +33,9 @@ import { AppMoodScatterComponent } from './features/app-details/app-mood-scatter
     AppPieComponent,
     AppMoodLineComponent,
     AppMoodScatterComponent,
+    MoodPieComponent,
+    MoodBarComponent,
+    StatisticDetailComponent,
   ],
   imports: [
     BrowserModule,
