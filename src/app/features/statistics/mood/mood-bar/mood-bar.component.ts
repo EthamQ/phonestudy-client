@@ -23,7 +23,7 @@ public pieChartOptions: ChartOptions = {
 };
 public pieChartLabels: Label[] = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 
-public pieChartData: SingleDataSet = [4, 5, 8, 3, 2, 7, 8];
+public pieChartData: SingleDataSet = [4, 5, 8, 3, 2, 7, 8].reverse();
 public pieChartType: ChartType = 'bar';
 public pieChartLegend = true;
 public pieChartPlugins = [];
