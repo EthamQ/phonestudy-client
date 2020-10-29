@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ECategory } from '@shared/types/category.type';
 
 @Component({
   selector: 'app-statistic-header',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./statistic-header.component.scss']
 })
 export class StatisticHeaderComponent implements OnInit {
+
+  @Input() category: ECategory;
 
   constructor() { }
 

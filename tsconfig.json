@@ -5,13 +5,17 @@
   To learn more about this file see: https://angular.io/config/solution-tsconfig.
 */
 {
-  "files": [],
+  "files": [
+    {
+      "path": "./src/app/shared/types/index.ts"
+    }
+  ],
   "references": [
     {
       "path": "./tsconfig.app.json"
     },
     {
       "path": "./tsconfig.spec.json"
-    }
+    },
 ]
 }
