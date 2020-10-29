@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ECategory } from '@shared/types/category.type';
+import { ECategory } from '../../types/category.type';
 
 @Component({
   selector: 'app-category-card',

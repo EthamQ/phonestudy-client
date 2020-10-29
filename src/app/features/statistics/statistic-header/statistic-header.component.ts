@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ECategory } from '@shared/types/category.type';
+import { ECategory } from '@shared/types';
 
 @Component({
   selector: 'app-statistic-header',
