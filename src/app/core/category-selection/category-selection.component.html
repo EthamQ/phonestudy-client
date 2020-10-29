@@ -1,4 +1,11 @@
-<p>category-selection works!</p>
 
 
-<app-category-card *ngFor="let card of statisticCards" [category]="card.category"></app-category-card>
+<div class="grid">
+
+    <div class="statistics" *ngFor="let card of statisticCards">
+
+        <app-category-card  [category]="card.category" [routerLink]="['../statistics', card.url, '1']"></app-category-card>
+
+    </div>
+
+</div>

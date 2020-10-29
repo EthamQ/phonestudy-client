@@ -9,6 +9,7 @@ import { ECategory } from '@shared/types';
 export class StatisticHeaderComponent implements OnInit {
 
   @Input() category: ECategory;
+  @Input() date: string;
 
   constructor() { }
 

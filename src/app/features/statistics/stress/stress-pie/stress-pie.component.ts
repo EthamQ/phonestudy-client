@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ECategory } from '@shared/types';
+import { ECategory, IRange } from '@shared/types';
 
 @Component({
   selector: 'app-stress-pie',
@@ -9,6 +9,11 @@ import { ECategory } from '@shared/types';
 export class StressPieComponent {
 
   category = ECategory.STRESS;
+
+  dateRange: IRange<string> = {
+    from: '12.07.2020',
+    to: '16.07.2020',
+  }
 
   options = [
     'sehr entspannt',

@@ -1,5 +1,10 @@
-<p>category-card works!</p>
+<div class="card" [class.clickable]="clickable">
+    <div class="text">{{ category | categoryText }}</div>
 
-<div class="card">
-    <img [src]="imageSrc" alt="">
+    <div class="img-container">
+        <img [src]="imageSrc" alt="">
+    </div>
 </div>
+
+
+

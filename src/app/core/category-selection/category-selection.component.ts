@@ -11,6 +11,10 @@ export class CategorySelectionComponent implements OnInit {
   statisticCards = [
     { category: ECategory.STRESS, url: 'stress' },
     { category: ECategory.MOOD, url: 'mood' },
+    { category: ECategory.SLEEP, url: 'sleep' },
+    { category: ECategory.APP, url: 'app' },
+    { category: ECategory.COMMUNICATION, url: 'communication' },
+    { category: ECategory.WORDS, url: 'words' },
   ]
 
   constructor() { }

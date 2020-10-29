@@ -8,7 +8,7 @@ import { ChartsModule } from 'ng2-charts';
 import { StatisticDetailComponent } from './statistic-detail/statistic-detail.component';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { CommonModule } from '@angular/common';  
-import { SharedUiModule } from '../../shared/shared-ui.module';
+import { SharedModule } from '../../shared/shared-ui.module';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import { SharedUiModule } from '../../shared/shared-ui.module';
     CommonModule,
     ChartsModule,
     StatisticsRoutingModule,
-    SharedUiModule,
+    SharedModule,
   ],
   declarations: [
     PieChartComponent,

@@ -1,3 +1,7 @@
-<app-statistic-header [category]="category"></app-statistic-header>
+<app-detail-view>
 
-<app-pie-chart [options]="options" [values1]="values1" [values2]="values2"></app-pie-chart>
+    <app-statistic-header [category]="category" [date]="dateRange | dateRange"></app-statistic-header>
+
+    <app-pie-chart class="chart" [options]="options" [values1]="values1" [values2]="values2"></app-pie-chart>
+
+</app-detail-view>

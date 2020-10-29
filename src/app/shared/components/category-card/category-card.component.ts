@@ -9,22 +9,32 @@ import { ECategory } from '../../types/category.type';
 export class CategoryCardComponent implements OnChanges {
 
   @Input() category: ECategory;
+  @Input() clickable = true;
 
   imageSrc = '';
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.category) {
+    if (changes.category) {
       this.imageSrc = this.getImageSrc(this.category);
     }
   }
 
-  getImageSrc(category: ECategory) {
+  getImageSrc(category: ECategory): string {
     const basePath = '/assets/card-icons/';
-    switch(category) {
+    switch (category) {
       case ECategory.STRESS:
         return `${basePath}stress.svg`
+      case ECategory.MOOD:
+        return `${basePath}mood.svg`
+      case ECategory.SLEEP:
+        return `${basePath}sleep.svg`
+      case ECategory.COMMUNICATION:
+        return `${basePath}communication.svg`
+      case ECategory.WORDS:
+        return `${basePath}words.svg`
+      case ECategory.APP:
+        return `${basePath}app.svg`
     }
-
   }
 
 }

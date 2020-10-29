@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { CategorySelectionComponent } from './core/category-selection/category-selection.component';  
-import { SharedUiModule } from '@shared/shared-ui.module';
+import { SharedModule } from '@shared/shared-ui.module';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { SharedUiModule } from '@shared/shared-ui.module';
     CommonModule,
     AppRoutingModule,
     ChartsModule,
-    SharedUiModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
