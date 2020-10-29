@@ -6,9 +6,6 @@
 */
 {
   "files": [
-    {
-      "path": "./src/app/shared/types/index.ts"
-    }
   ],
   "references": [
     {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ECategory, IRange } from '@shared/types';
+import { EColorStyle } from '../../charts/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'app-stress-pie',
@@ -9,6 +10,8 @@ import { ECategory, IRange } from '@shared/types';
 export class StressPieComponent {
 
   category = ECategory.STRESS;
+
+  colorStyle = EColorStyle.DESCENDING;
 
   dateRange: IRange<string> = {
     from: '12.07.2020',
