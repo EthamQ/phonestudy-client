@@ -1,0 +1,15 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 60px;
+}
+
+.statistics {
+    display: flex;
+    justify-content: center;
+}
+
+app-category-card {
+    width: 75px;
+    height: 70px;
+}

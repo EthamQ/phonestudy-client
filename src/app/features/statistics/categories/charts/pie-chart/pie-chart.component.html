@@ -1,0 +1,11 @@
+
+<div *ngIf="datasets.length > 0" style="display: block;">
+    <canvas baseChart 
+      [datasets]="datasets"
+      [labels]="options" 
+      [chartType]="pieChartType"
+      [options]="pieChartOptions"
+      [legend]="pieChartLegend">
+    </canvas>
+  </div>
+  

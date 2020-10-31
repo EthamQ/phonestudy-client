@@ -1,0 +1,11 @@
+
+
+<div class="grid">
+
+    <div class="statistics" *ngFor="let card of statisticCards">
+
+        <app-category-card class="clickable" [category]="card.category" [routerLink]="['../statistics', card.url, '1']"></app-category-card>
+
+    </div>
+
+</div>
