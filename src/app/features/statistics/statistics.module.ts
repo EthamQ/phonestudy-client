@@ -12,11 +12,15 @@ import { MoodPieComponent } from './categories/mood/mood-pie/mood-pie.component'
 import { MoodBarComponent } from './categories/mood/mood-bar/mood-bar.component';
 import { StatisticRouterOutletComponent } from './statistic-router-outlet/statistic-router-outlet.component';
 import { StatisticDetailPieComponent } from './detail-view/statistic-detail-pie/statistic-detail-pie.component';
+import { StatisticDetailBarComponent } from './detail-view/statistic-detail-bar/statistic-detail-bar.component';
+import { StatisticsDataAccessService } from './data-access/statistics-data-access.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     ChartsModule,
     StatisticsRoutingModule,
     SharedModule,
@@ -31,7 +35,8 @@ import { StatisticDetailPieComponent } from './detail-view/statistic-detail-pie/
     MoodBarComponent,
     StatisticRouterOutletComponent,
     StatisticDetailPieComponent,
+    StatisticDetailBarComponent,
   ],
-  providers: [],
+  providers: [StatisticsDataAccessService],
 })
 export class StatisticsModule { }

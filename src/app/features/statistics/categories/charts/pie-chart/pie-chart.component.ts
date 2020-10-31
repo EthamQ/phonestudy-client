@@ -40,6 +40,7 @@ export class PieChartComponent implements OnInit {
   pieChartLegend = true;
   pieChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
   };
   datasets: ChartDataSets[] = [];
 

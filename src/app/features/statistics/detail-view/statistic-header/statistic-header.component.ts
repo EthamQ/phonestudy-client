@@ -10,6 +10,8 @@ export class StatisticHeaderComponent implements OnInit {
 
   @Input() category: ECategory;
   @Input() date: string;
+  @Input() arrowLeftActive: boolean;
+  @Input() arrowRightActive: boolean;
 
   constructor() { }
 
