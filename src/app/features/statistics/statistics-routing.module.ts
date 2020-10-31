@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StressBarComponent } from './categories/stress/stress-bar/stress-bar.component';
-import { StressPieComponent } from './categories/stress/stress-pie/stress-pie.component';
-import { MoodBarComponent } from './categories/mood/mood-bar/mood-bar.component';
-import { MoodPieComponent } from './categories/mood/mood-pie/mood-pie.component';
-import { StatisticRouterOutletComponent } from './statistic-router-outlet/statistic-router-outlet.component';
+import { StressBarComponent } from './src/components/categories/stress/stress-bar/stress-bar.component';
+import { StressPieComponent } from './src/components/categories/stress/stress-pie/stress-pie.component';
+import { MoodBarComponent } from './src/components/categories/mood/mood-bar/mood-bar.component';
+import { MoodPieComponent } from './src/components/categories/mood/mood-pie/mood-pie.component';
+import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
 
 const routes: Routes = [
   {
