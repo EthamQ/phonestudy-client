@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ECategory, IChartItem, IRange } from '@shared/types';
+import { ECategory, IRange } from '@shared/types';
 import { EColorStyle } from '../../charts/pie-chart/pie-chart.component';
 import { StatisticsDataAccessService } from '../../../data-access/statistics-data-access.service';
-import { map } from 'rxjs/operators';
+import { IChartItems } from '@shared/types/chart';
 
 @Component({
   selector: 'app-stress-pie',
@@ -11,7 +11,9 @@ import { map } from 'rxjs/operators';
 })
 export class StressPieComponent {
 
-  constructor(private statisticsDataAccessService: StatisticsDataAccessService) { }
+  constructor(
+    private statisticsDataAccessService: StatisticsDataAccessService,
+    ) { }
 
   options: string[];
   values1: number[];
@@ -30,10 +32,9 @@ export class StressPieComponent {
       this.category,
       this.dateRange.from,
       this.dateRange.to,
-    ).subscribe((data: IChartItem[]) => {
-      console.log(data);
-      this.options = data.map(x => x.option);
-      this.values1 = data.map(x => x.value);
+    ).subscribe((data: IChartItems) => {
+      this.options = data.options;
+      this.values1 = data.values;
     });
   }
 

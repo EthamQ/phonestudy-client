@@ -6,12 +6,16 @@ import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { CategorySelectionComponent } from './core/category-selection/category-selection.component';  
 import { SharedModule } from '@shared/shared-ui.module';
+import { AuthenticationComponent } from './core/authentication/authentication.component';
+import { ErrorComponent } from './core/components/error/error.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CategorySelectionComponent,
+    AuthenticationComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,14 +7,12 @@
     padding: 15px 10px 15px 10px;
     border-radius: 7px;
     cursor: pointer;
-}
 
-
-
-.clickable {
-    &:hover {
-        background: #97D2FF;
-        transform: scale(1.01);
+    &.clickable {
+        &:hover {
+            background: #97D2FF;
+            transform: scale(1.01);
+        }
     }
 }
 

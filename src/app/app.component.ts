@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,16 +8,6 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'phonestudy-client';
 
-  startLinkVisible = false;
 
-  constructor(public router: Router) { }
 
-  ngOnInit() {
-    this.router.events.subscribe((event: any) => {
-      if(!event.url) {
-        return;
-      }
-      this.startLinkVisible = event.url !== '/start';
-    });
-  }
 }
