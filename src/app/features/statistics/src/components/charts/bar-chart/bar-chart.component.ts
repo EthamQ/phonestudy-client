@@ -1,3 +1,4 @@
+import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
@@ -9,7 +10,15 @@ import { Label, SingleDataSet } from 'ng2-charts';
 })
 export class BarChartComponent implements OnInit {
 
-  readonly labels: Label[] = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  @Input() options: string[];
+  @Input() values: number[];
+
+
+  public pieChartType: ChartType = 'bar';
+  public pieChartLegend = true;
+
+  // readonly labels: Label[] = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  // public pieChartData: SingleDataSet = [4, 5, 8, 3, 2, 7, 8].reverse();
 
   constructor() { }
 
@@ -30,9 +39,8 @@ export class BarChartComponent implements OnInit {
   };
 
 
-  public pieChartData: SingleDataSet = [4, 5, 8, 3, 2, 7, 8].reverse();
-  public pieChartType: ChartType = 'bar';
-  public pieChartLegend = true;
+
+
   public pieChartPlugins = [];
 
   datasets: ChartDataSets[] = [

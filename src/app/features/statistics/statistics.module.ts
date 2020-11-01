@@ -24,7 +24,6 @@ import { StatisticsDataAccessService } from './src/data-access/services/statisti
 
 import { DetailViewModule } from '../detail-view/detail-view.module';
 
-
 @NgModule({
   imports: [
     CommonModule,
