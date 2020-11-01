@@ -23,7 +23,7 @@ export class StressPieComponent {
   colorStyle = EColorStyle.DESCENDING;
 
   dateRange: IRange<string> = {
-    from: '2020-07-01',
+    from: '2020-04-15',
     to: '2020-07-10',
   }
 
@@ -31,7 +31,7 @@ export class StressPieComponent {
     this.statisticsDataAccessService.getStatistics(
       this.category,
       this.dateRange.from,
-      this.dateRange.to,
+      10,
     ).subscribe((data: IChartItems) => {
       this.options = data.options;
       this.values1 = data.values;
