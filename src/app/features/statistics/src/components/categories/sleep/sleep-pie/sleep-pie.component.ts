@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { DateService } from '@shared/services';
+import { ECategory } from '@shared/types';
+import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { GenericPieComponent } from '../../generic-pie/generic-pie.component';
 
 @Component({
   selector: 'app-sleep-pie',
-  templateUrl: './sleep-pie.component.html',
+  templateUrl: '../../generic-pie/generic-pie.component.html',
   styleUrls: ['./sleep-pie.component.scss']
 })
-export class SleepPieComponent implements OnInit {
+export class SleepPieComponent extends GenericPieComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    statisticsDataAccessService: StatisticsDataAccessService,
+    dateService: DateService,
+  ) {
+    super(statisticsDataAccessService, dateService);
+    this.category = ECategory.SLEEP;
   }
 
 }

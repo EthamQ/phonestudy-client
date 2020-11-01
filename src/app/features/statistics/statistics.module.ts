@@ -23,6 +23,9 @@ import { StatisticDetailBarComponent } from './src/components/statistics-bar/sta
 import { StatisticsDataAccessService } from './src/data-access/services/statistics-data-access.service';
 
 import { DetailViewModule } from '../detail-view/detail-view.module';
+import { GenericPieComponent } from './src/components/categories/generic-pie/generic-pie.component';
+import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/sleep-bar.component';
+import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
 
 @NgModule({
   imports: [
@@ -40,9 +43,12 @@ import { DetailViewModule } from '../detail-view/detail-view.module';
     StressPieComponent,
     MoodPieComponent,
     MoodBarComponent,
+    SleepPieComponent,
+    SleepBarComponent,
     StatisticRouterOutletComponent,
     StatisticDetailPieComponent,
     StatisticDetailBarComponent,
+    GenericPieComponent,
   ],
   providers: [StatisticsDataAccessService],
 })

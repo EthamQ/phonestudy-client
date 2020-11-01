@@ -4,6 +4,8 @@ import { StressBarComponent } from './src/components/categories/stress/stress-ba
 import { StressPieComponent } from './src/components/categories/stress/stress-pie/stress-pie.component';
 import { MoodBarComponent } from './src/components/categories/mood/mood-bar/mood-bar.component';
 import { MoodPieComponent } from './src/components/categories/mood/mood-pie/mood-pie.component';
+import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/sleep-bar.component';
+import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
 import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
 
 const routes: Routes = [
@@ -17,6 +19,12 @@ const routes: Routes = [
     path: 'mood', component: StatisticRouterOutletComponent, children: [
       { path: '1', component: MoodPieComponent },
       { path: '2', component: MoodBarComponent },
+    ]
+  },
+  {
+    path: 'sleep', component: StatisticRouterOutletComponent, children: [
+      { path: '1', component: SleepPieComponent },
+      { path: '2', component: SleepBarComponent },
     ]
   },
 ];

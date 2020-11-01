@@ -1,0 +1,4 @@
+<app-statistic-header [category]="category" [date]="dateRange | dateRange" [arrowLeftActive]="false" [arrowRightActive]="true"></app-statistic-header>
+
+<app-pie-chart *ngIf="values1 && options" class="chart" [options]="options" [values1]="values1" [values2]="values2" [colorStyle]="colorStyle">
+</app-pie-chart>
