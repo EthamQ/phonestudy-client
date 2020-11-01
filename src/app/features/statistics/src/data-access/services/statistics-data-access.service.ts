@@ -19,7 +19,7 @@ export class StatisticsDataAccessService {
     return this.http.get(this.getUrl(category, dateFrom, dateTo)).pipe(
       map((response: IServerResponse<IQuestionaireItem[]>) => response[`${dateFrom} 00:00:00`]),
       map((timeBucket: ITimeBucket<IQuestionaireItem[]>) => timeBucket.data),
-      map((items: IQuestionaireItem[]) => items.sort((a, b) => a.positivity - b.positivity)),
+      map((items: IQuestionaireItem[]) => items.sort((a, b) => b.positivity - a.positivity)),
       map((items: IQuestionaireItem[]) => {
         return {
           options: items.map(item => item.option),

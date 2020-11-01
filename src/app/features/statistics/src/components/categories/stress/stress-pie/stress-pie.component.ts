@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ECategory, IRange } from '@shared/types';
-import { EColorStyle } from '../../charts/pie-chart/pie-chart.component';
+import { EColorStyle } from '../../../charts';
 import { StatisticsDataAccessService } from '../../../../data-access/services/statistics-data-access.service';
 import { IChartItems } from '@shared/types/chart';
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StatisticDetailPieComponent } from './statistic-detail-pie.component';
+import { StatisticDetailBarComponent } from './statistic-bar.component';
 
-describe('StatisticDetailPieComponent', () => {
-  let component: StatisticDetailPieComponent;
-  let fixture: ComponentFixture<StatisticDetailPieComponent>;
+describe('StatisticDetailBarComponent', () => {
+  let component: StatisticDetailBarComponent;
+  let fixture: ComponentFixture<StatisticDetailBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatisticDetailPieComponent ]
+      declarations: [ StatisticDetailBarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StatisticDetailPieComponent);
+    fixture = TestBed.createComponent(StatisticDetailBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

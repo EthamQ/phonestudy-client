@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ECategory, IRange } from '@shared/types';
-import { EColorStyle } from '../../charts/pie-chart/pie-chart.component';
+import { EColorStyle } from '../../../charts';
 
 @Component({
   selector: 'app-stress-bar',

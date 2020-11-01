@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ECategory, IRange } from '@shared/types';
-import { EColorStyle } from '../../categories/charts/pie-chart/pie-chart.component';
+import { EColorStyle } from '../charts';
 
 @Component({
   selector: 'app-statistic-detail-bar',
-  templateUrl: './statistic-detail-bar.component.html',
-  styleUrls: ['./statistic-detail-bar.component.scss']
+  templateUrl: './statistic-bar.component.html',
+  styleUrls: ['./statistic-bar.component.scss']
 })
 export class StatisticDetailBarComponent {
 
