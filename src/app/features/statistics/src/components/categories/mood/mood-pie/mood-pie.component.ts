@@ -7,7 +7,7 @@ import { GenericPieComponent } from '../../generic-pie/generic-pie.component';
 @Component({
   selector: 'app-mood-pie',
   templateUrl: '../../generic-pie/generic-pie.component.html',
-  styleUrls: ['./mood-pie.component.scss']
+  styleUrls: ['../../generic-pie/generic-pie.component.scss']
 })
 export class MoodPieComponent extends GenericPieComponent {
 
@@ -18,5 +18,5 @@ export class MoodPieComponent extends GenericPieComponent {
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.MOOD;
     }
-    
+
 }

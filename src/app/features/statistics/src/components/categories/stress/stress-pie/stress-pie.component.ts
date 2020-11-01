@@ -7,7 +7,7 @@ import { StatisticsDataAccessService } from 'app/features/statistics/src/data-ac
 @Component({
   selector: 'app-stress-pie',
   templateUrl: '../../generic-pie/generic-pie.component.html',
-  styleUrls: ['./stress-pie.component.scss']
+  styleUrls: ['../../generic-pie/generic-pie.component.scss']
 })
 export class StressPieComponent extends GenericPieComponent {
 

@@ -18,14 +18,13 @@ import {
 import { StatisticHeaderComponent } from './src/components/statistic-header/statistic-header.component';
 import { StatisticsRoutingModule } from './statistics-routing.module';
 import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
-import { StatisticDetailPieComponent } from './src/components/statistic-pie/statistic-pie.component';
-import { StatisticDetailBarComponent } from './src/components/statistics-bar/statistic-bar.component';
 import { StatisticsDataAccessService } from './src/data-access/services/statistics-data-access.service';
 
 import { DetailViewModule } from '../detail-view/detail-view.module';
 import { GenericPieComponent } from './src/components/categories/generic-pie/generic-pie.component';
 import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/sleep-bar.component';
 import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
+import { GenericBarComponent } from './src/components/categories/generic-bar/generic-bar.component';
 
 @NgModule({
   imports: [
@@ -46,9 +45,8 @@ import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/s
     SleepPieComponent,
     SleepBarComponent,
     StatisticRouterOutletComponent,
-    StatisticDetailPieComponent,
-    StatisticDetailBarComponent,
     GenericPieComponent,
+    GenericBarComponent,
   ],
   providers: [StatisticsDataAccessService],
 })

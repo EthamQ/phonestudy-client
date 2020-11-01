@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { DateService } from '@shared/services';
+import { ECategory } from '@shared/types';
+import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
 
 @Component({
   selector: 'app-sleep-bar',
-  templateUrl: './sleep-bar.component.html',
+  templateUrl: '../../generic-bar/generic-bar.component.html',
   styleUrls: ['./sleep-bar.component.scss']
 })
-export class SleepBarComponent implements OnInit {
+export class SleepBarComponent extends GenericBarComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    statisticsDataAccessService: StatisticsDataAccessService,
+    dateService: DateService,
+  ) {
+    super(statisticsDataAccessService, dateService);
+    this.category = ECategory.SLEEP;
   }
 
 }

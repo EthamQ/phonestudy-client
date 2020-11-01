@@ -7,7 +7,7 @@ import { GenericPieComponent } from '../../generic-pie/generic-pie.component';
 @Component({
   selector: 'app-sleep-pie',
   templateUrl: '../../generic-pie/generic-pie.component.html',
-  styleUrls: ['./sleep-pie.component.scss']
+  styleUrls: ['../../generic-pie/generic-pie.component.scss']
 })
 export class SleepPieComponent extends GenericPieComponent {
 
