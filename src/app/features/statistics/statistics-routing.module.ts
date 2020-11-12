@@ -7,6 +7,8 @@ import { MoodPieComponent } from './src/components/categories/mood/mood-pie/mood
 import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/sleep-bar.component';
 import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
 import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
+import { AppUsageBarComponent } from './src/components/categories/app-usage/app-usage-bar/app-usage-bar.component';
+import { AppUsagePieComponent } from './src/components/categories/app-usage/app-usage-pie/app-usage-pie.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,12 @@ const routes: Routes = [
     path: 'sleep', component: StatisticRouterOutletComponent, children: [
       { path: '1', component: SleepPieComponent },
       { path: '2', component: SleepBarComponent },
+    ]
+  },
+  {
+    path: 'app', component: StatisticRouterOutletComponent, children: [
+      { path: '1', component: AppUsagePieComponent },
+      { path: '2', component: AppUsageBarComponent },
     ]
   },
 ];

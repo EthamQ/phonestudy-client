@@ -22,13 +22,13 @@ export class GenericPieComponent implements OnInit {
   values1: number[];
   values2: number[];
 
-  colorStyle = EColorStyle.DESCENDING;
+  colorStyle: EColorStyle;
 
   numberOfDays = 7;
   dateRange: IRange<string>;
 
   ngOnInit(): void {
-    const startDate = '2020-04-15';
+    const startDate = '2020-08-01';
     this.dateRange = {
       from: startDate,
       to: this.dateService.addDays(startDate, this.numberOfDays),

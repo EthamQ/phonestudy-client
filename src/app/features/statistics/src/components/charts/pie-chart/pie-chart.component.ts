@@ -45,33 +45,57 @@ export class PieChartComponent implements OnInit {
   datasets: ChartDataSets[] = [];
 
   ngOnInit() {
-    if (this.values2) {
-      this.datasets = [
-        {
-          data: this.values1,
-          backgroundColor: this.getColors(),
-        },
-        {
-          data: this.values2,
-          backgroundColor: this.getColors(),
-        },
-      ]
-    } else {
-      this.datasets = [
-        {
-          data: this.values1,
-          backgroundColor: this.getColors(),
-        },
-      ]
+    if(this.colorStyle === EColorStyle.DESCENDING) {
+      if (this.values2) {
+        this.datasets = [
+          {
+            data: this.values1,
+            backgroundColor: this.colorsDescending,
+          },
+          {
+            data: this.values2,
+            backgroundColor: this.colorsDescending,
+          },
+        ]
+      } else {
+        this.datasets = [
+          {
+            data: this.values1,
+            backgroundColor: this.colorsDescending,
+          },
+        ]
+      }
     }
+
+    else {
+      if (this.values2) {
+        this.datasets = [
+          {
+            data: this.values1,
+          },
+          {
+            data: this.values2,
+          },
+        ]
+      } else {
+        this.datasets = [
+          {
+            data: this.values1,
+          },
+        ]
+      }
+    }
+
+
+
   }
 
   getColors(): string[] {
     switch(this.colorStyle) {
       case EColorStyle.DESCENDING: 
         return this.colorsDescending;
-      // default:
-      //   return this.colorsDescending;
+      default:
+        return undefined;
     }
   }
 

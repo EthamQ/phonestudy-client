@@ -3,6 +3,7 @@ import { ECategory } from '@shared/types';
 import { DateService } from '@shared/services';
 import { GenericPieComponent } from '../../generic-pie/generic-pie.component';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { EColorStyle } from '../../../charts';
 
 @Component({
   selector: 'app-stress-pie',
@@ -17,5 +18,6 @@ export class StressPieComponent extends GenericPieComponent {
     ) {
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.STRESS;
+      this.colorStyle = EColorStyle.DESCENDING;
     }
 }

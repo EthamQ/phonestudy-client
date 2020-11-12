@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { EColorStyle } from '../../../charts';
 import { GenericPieComponent } from '../../generic-pie/generic-pie.component';
 
 @Component({
@@ -17,6 +18,7 @@ export class MoodPieComponent extends GenericPieComponent {
     ) {
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.MOOD;
+      this.colorStyle = EColorStyle.DESCENDING;
     }
 
 }

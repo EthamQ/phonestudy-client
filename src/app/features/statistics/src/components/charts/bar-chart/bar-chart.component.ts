@@ -1,5 +1,5 @@
 import { Input } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
 
@@ -8,7 +8,7 @@ import { Label, SingleDataSet } from 'ng2-charts';
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss']
 })
-export class BarChartComponent implements OnInit {
+export class BarChartComponent implements OnChanges {
 
   @Input() options: string[];
   @Input() values: number[];
@@ -22,7 +22,8 @@ export class BarChartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    console.log(this.values);
   }
 
   public pieChartOptions: ChartOptions = {

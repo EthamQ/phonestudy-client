@@ -1,15 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { DateService } from '@shared/services';
+import { ECategory } from '@shared/types';
+import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { EColorStyle } from '../../../charts';
+import { GenericPieComponent } from '../../generic-pie/generic-pie.component';
 
 @Component({
   selector: 'app-app-usage-pie',
-  templateUrl: './app-usage-pie.component.html',
-  styleUrls: ['./app-usage-pie.component.scss']
+  templateUrl: '../../generic-pie/generic-pie.component.html',
+  styleUrls: ['../../generic-pie/generic-pie.component.scss']
 })
-export class AppUsagePieComponent implements OnInit {
+export class AppUsagePieComponent extends GenericPieComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  constructor(
+    statisticsDataAccessService: StatisticsDataAccessService,
+    dateService: DateService,
+    ) {
+      super(statisticsDataAccessService, dateService);
+      this.category = ECategory.APP;
+      this.colorStyle = EColorStyle.RANDOM;
+    }
 
 }

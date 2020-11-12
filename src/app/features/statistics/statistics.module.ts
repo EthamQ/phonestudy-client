@@ -24,6 +24,8 @@ import { DetailViewModule } from '../detail-view/detail-view.module';
 import { GenericPieComponent } from './src/components/categories/generic-pie/generic-pie.component';
 import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/sleep-bar.component';
 import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
+import { AppUsageBarComponent } from './src/components/categories/app-usage/app-usage-bar/app-usage-bar.component';
+import { AppUsagePieComponent } from './src/components/categories/app-usage/app-usage-pie/app-usage-pie.component';
 import { GenericBarComponent } from './src/components/categories/generic-bar/generic-bar.component';
 
 @NgModule({
@@ -47,6 +49,8 @@ import { GenericBarComponent } from './src/components/categories/generic-bar/gen
     StatisticRouterOutletComponent,
     GenericPieComponent,
     GenericBarComponent,
+    AppUsagePieComponent,
+    AppUsageBarComponent,
   ],
   providers: [StatisticsDataAccessService],
 })
