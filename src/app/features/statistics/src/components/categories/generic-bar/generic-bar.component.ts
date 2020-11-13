@@ -28,7 +28,6 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   category: ECategory;
   options = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  filterByOption = 'Spotify';
 
   filterActive = false;
 
@@ -37,6 +36,8 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   numberOfDays = 7;
   dateRange: IRange<string>;
+
+  url: string;
 
   ngOnInit(): void {
     const startDate = '2020-08-01'; // monday
@@ -50,6 +51,7 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dateRange.from,
       7,
       EAggregation.DAYS,
+      this.url,
     );
 
     this.allOptions$ = this.data$.pipe(

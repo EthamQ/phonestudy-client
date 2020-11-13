@@ -30,9 +30,10 @@ export class StatisticsDataAccessService {
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
+    url?,
   ): Observable<ITimeBucket<IQuestionaireItem[]>[]> {
     return this.http.get(this.getUrl(
-      category,
+      url || category,
       dateFrom,
       days,
       aggregation
