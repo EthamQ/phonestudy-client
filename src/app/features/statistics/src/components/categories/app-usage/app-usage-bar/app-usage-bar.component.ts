@@ -7,7 +7,7 @@ import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
 @Component({
   selector: 'app-app-usage-bar',
   templateUrl: '../../generic-bar/generic-bar.component.html',
-  styleUrls: ['./app-usage-bar.component.scss']
+  styleUrls: ['../../generic-bar/generic-bar.component.scss']
 })
 export class AppUsageBarComponent extends GenericBarComponent {
 

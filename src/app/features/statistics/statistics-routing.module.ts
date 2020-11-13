@@ -9,6 +9,8 @@ import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/s
 import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
 import { AppUsageBarComponent } from './src/components/categories/app-usage/app-usage-bar/app-usage-bar.component';
 import { AppUsagePieComponent } from './src/components/categories/app-usage/app-usage-pie/app-usage-pie.component';
+import { CommunicationBarComponent } from './src/components/categories/communication/communication-bar/communication-bar.component';
+import { CommunicationPieComponent } from './src/components/categories/communication/communication-pie/communication-pie.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,12 @@ const routes: Routes = [
     path: 'app', component: StatisticRouterOutletComponent, children: [
       { path: '1', component: AppUsagePieComponent },
       { path: '2', component: AppUsageBarComponent },
+    ]
+  },
+  {
+    path: 'communication', component: StatisticRouterOutletComponent, children: [
+      { path: '1', component: CommunicationPieComponent },
+      { path: '2', component: CommunicationBarComponent },
     ]
   },
 ];

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common'; 
+import { MatSelectModule } from '@angular/material/select';
+
 import { SharedModule } from '@shared/shared-ui.module';
 
 import {
@@ -26,8 +28,10 @@ import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/s
 import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
 import { AppUsageBarComponent } from './src/components/categories/app-usage/app-usage-bar/app-usage-bar.component';
 import { AppUsagePieComponent } from './src/components/categories/app-usage/app-usage-pie/app-usage-pie.component';
+import { CommunicationBarComponent } from './src/components/categories/communication/communication-bar/communication-bar.component';
+import { CommunicationPieComponent } from './src/components/categories/communication/communication-pie/communication-pie.component';
 import { GenericBarComponent } from './src/components/categories/generic-bar/generic-bar.component';
-import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   imports: [
@@ -53,6 +57,8 @@ import { MatSelectModule } from '@angular/material/select';
     GenericBarComponent,
     AppUsagePieComponent,
     AppUsageBarComponent,
+    CommunicationPieComponent,
+    CommunicationBarComponent,
   ],
   providers: [StatisticsDataAccessService],
 })

@@ -1,11 +1,21 @@
-<app-statistic-header [category]="category" [date]="dateRange | dateRange" [arrowLeftActive]="true" [arrowRightActive]="false"></app-statistic-header>
+<app-statistic-header [category]="category" [date]="dateRange | dateRange" [arrowLeftActive]="true"
+    [arrowRightActive]="false"></app-statistic-header>
 
-<mat-form-field *ngIf="filterActive">
-<mat-select [value]="filterByOption$ | async" (selectionChange)="onSelectionChange($event.value)">
-    <mat-option *ngFor="let option of allOptions$ | async" [value]="option">
-        {{ option }}
-    </mat-option>
-</mat-select>
-</mat-form-field>
+<div *ngIf="filterActive" class="dropdown-container">
+
+    <mat-form-field>
+
+        <mat-select [value]="filterByOption$ | async" (selectionChange)="onSelectionChange($event.value)">
+
+            <mat-option *ngFor="let option of allOptions$ | async" [value]="option">
+                {{ option }}
+            </mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+
+</div>
+
 
 <app-bar-chart [values]="values1$ | async" [options]="options"></app-bar-chart>

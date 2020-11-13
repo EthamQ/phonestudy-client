@@ -8,7 +8,8 @@ import { StatisticsDataAccessService, EAggregation } from '../../../data-access/
 
 @Component({
   selector: 'app-generic-bar',
-  template: '',
+  templateUrl: './generic-bar.component.html',
+  styleUrls: ['./generic-bar.component.scss']
 })
 export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
