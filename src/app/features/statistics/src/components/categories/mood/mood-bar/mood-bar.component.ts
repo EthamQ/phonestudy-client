@@ -17,6 +17,7 @@ export class MoodBarComponent extends GenericBarComponent {
   ) {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.MOOD;
+    this.urlSuffix = 'mood';
   }
 
 }

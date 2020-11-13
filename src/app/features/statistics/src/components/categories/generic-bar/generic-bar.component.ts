@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
-import { ECategory, IRange } from '@shared/types';
+import { ECategory } from '@shared/types';
 import { ITimeBucket, IQuestionaireItem } from '@shared/types/server';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import { map, take, takeUntil, tap } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
 
 @Component({
@@ -12,46 +12,38 @@ import { StatisticsDataAccessService, EAggregation } from '../../../data-access/
   styleUrls: ['./generic-bar.component.scss']
 })
 export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
+  category: ECategory;
+
+  data$: Observable<ITimeBucket<IQuestionaireItem[]>[]>
+  destroy$: Subject<void> = new Subject<void>();
+
+  xAxis = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  yAxis1$: Observable<number[]>;
+
+  filterActive = false;
+  allOptions$: Observable<string[]>;
+  filterByOption$: Subject<string> = new Subject<string>();
+
+  daysToRequest = 7;
+  dateFrom: string;
+  dateTo: string;
+
+  urlSuffix: string;
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
   ) { }
 
-  destroy$: Subject<void> = new Subject<void>();
-
-  data$: Observable<ITimeBucket<IQuestionaireItem[]>[]>
-
-  values1$: Observable<number[]>;
-  allOptions$: Observable<string[]>;
-  filterByOption$: Subject<string> = new Subject<string>();
-
-  category: ECategory;
-  options = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-
-  filterActive = false;
-
-  values1: number[];
-  values2: number[];
-
-  numberOfDays = 7;
-  dateRange: IRange<string>;
-
-  url: string;
-
   ngOnInit(): void {
-    const startDate = '2020-08-01'; // monday
-    this.dateRange = {
-      from: startDate,
-      to: this.dateService.addDays(startDate, this.numberOfDays),
-    };
+    this.dateFrom = '2020-08-01';
+    this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
     this.data$ = this.statisticsDataAccessService.getStatistics(
-      this.category,
-      this.dateRange.from,
-      7,
+      this.urlSuffix,
+      this.dateFrom,
+      this.daysToRequest,
       EAggregation.DAYS,
-      this.url,
     );
 
     this.allOptions$ = this.data$.pipe(
@@ -67,8 +59,7 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.destroy$),
     );
 
-    this.values1$ = combineLatest([this.data$, this.filterByOption$]).pipe(
-      tap(x => console.log(x)),
+    this.yAxis1$ = combineLatest([this.data$, this.filterByOption$]).pipe(
       map(([timeBuckets, filter]) =>
         (timeBuckets
           .map(bucket => ({

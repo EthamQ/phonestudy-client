@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
@@ -17,6 +17,7 @@ export class SleepBarComponent extends GenericBarComponent {
   ) {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.SLEEP;
+    this.urlSuffix = 'sleep';
   }
 
 }

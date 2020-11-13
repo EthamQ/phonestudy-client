@@ -1,4 +1,4 @@
-<app-statistic-header [category]="category" [date]="dateRange | dateRange" [arrowLeftActive]="true"
+<app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="true"
     [arrowRightActive]="false"></app-statistic-header>
 
 <div *ngIf="filterActive" class="dropdown-container">
@@ -18,4 +18,4 @@
 </div>
 
 
-<app-bar-chart [values]="values1$ | async" [options]="options"></app-bar-chart>
+<app-bar-chart [values]="yAxis1$ | async" [options]="xAxis"></app-bar-chart>

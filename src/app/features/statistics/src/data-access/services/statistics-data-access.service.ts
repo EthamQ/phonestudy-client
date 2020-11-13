@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DateService, ELocalStorageKey, LocalStorageService } from '@shared/services';
-import { ECategory } from '@shared/types';
 import { IQuestionaireItem, IServerResponse, ITimeBucket } from '@shared/types/server';
 import { StatisticsMappingService } from '../../data-mapping/services/statistics-mapping/statistics-mapping.service';
 
@@ -26,14 +25,13 @@ export class StatisticsDataAccessService {
   ) { }
 
   getStatistics(
-    category: ECategory,
+    urlSuffix: string,
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
-    url?,
   ): Observable<ITimeBucket<IQuestionaireItem[]>[]> {
     return this.http.get(this.getUrl(
-      url || category,
+      urlSuffix,
       dateFrom,
       days,
       aggregation
@@ -43,12 +41,12 @@ export class StatisticsDataAccessService {
   }
 
   private getUrl(
-    category: ECategory,
+    urlSuffix: string,
     dateFrom: string,
     days: number,
     aggregation: EAggregation
   ): string {
-    return `${this.baseUrl}/${category}`
+    return `${this.baseUrl}/${urlSuffix}`
       + `/${this.localStorageService.get(ELocalStorageKey.USERID)}`
       + `/?date_from=${dateFrom}`
       + `&date_to=${this.dateService.addDays(dateFrom, days)}`

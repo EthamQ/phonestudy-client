@@ -19,5 +19,6 @@ export class CommunicationPieComponent extends GenericPieComponent{
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.COMMUNICATION;
       this.colorStyle = EColorStyle.RANDOM;
+      this.urlSuffix = 'communication';
     }
 }

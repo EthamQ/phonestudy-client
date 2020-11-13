@@ -17,6 +17,7 @@ export class StressBarComponent extends GenericBarComponent {
   ) {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.STRESS;
+    this.urlSuffix = 'stress';
   }
 
 }
