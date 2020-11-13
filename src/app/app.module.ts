@@ -8,6 +8,7 @@ import { CategorySelectionComponent } from '@core/components/category-selection/
 import { SharedModule } from '@shared/shared-ui.module';
 import { AuthenticationComponent } from '@core/components/authentication/authentication.component';
 import { ErrorComponent } from '@core/components/error/error.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ErrorComponent } from '@core/components/error/error.component';
     AppRoutingModule,
     ChartsModule,
     SharedModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

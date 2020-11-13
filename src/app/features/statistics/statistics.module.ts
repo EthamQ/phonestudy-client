@@ -27,6 +27,7 @@ import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/s
 import { AppUsageBarComponent } from './src/components/categories/app-usage/app-usage-bar/app-usage-bar.component';
 import { AppUsagePieComponent } from './src/components/categories/app-usage/app-usage-pie/app-usage-pie.component';
 import { GenericBarComponent } from './src/components/categories/generic-bar/generic-bar.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { GenericBarComponent } from './src/components/categories/generic-bar/gen
     DetailViewModule,
     StatisticsRoutingModule,
     SharedModule,
+    MatSelectModule,
   ],
   declarations: [
     PieChartComponent,

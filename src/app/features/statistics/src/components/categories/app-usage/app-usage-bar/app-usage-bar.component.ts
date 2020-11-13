@@ -16,6 +16,7 @@ export class AppUsageBarComponent extends GenericBarComponent {
     dateService: DateService,
   ) {
     super(statisticsDataAccessService, dateService);
+    this.filterActive = true;
     this.category = ECategory.APP;
   }
 
