@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 
 export enum EColorStyle {
@@ -20,7 +20,7 @@ export enum EColor {
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss']
 })
-export class PieChartComponent implements OnInit {
+export class PieChartComponent implements OnChanges {
 
   @Input() options: string[];
   @Input() values1: number[];
@@ -44,60 +44,25 @@ export class PieChartComponent implements OnInit {
   };
   datasets: ChartDataSets[] = [];
 
-  ngOnInit() {
-    if(this.colorStyle === EColorStyle.DESCENDING) {
-      if (this.values2) {
-        this.datasets = [
-          {
-            data: this.values1,
-            backgroundColor: this.colorsDescending,
-          },
-          {
-            data: this.values2,
-            backgroundColor: this.colorsDescending,
-          },
-        ]
-      } else {
-        this.datasets = [
-          {
-            data: this.values1,
-            backgroundColor: this.colorsDescending,
-          },
-        ]
-      }
-    }
+  ngOnChanges(): void {
+    this.datasets = [
+      this.getDataSets(this.values1, this.colorStyle),
+    ];
 
-    else {
-      if (this.values2) {
-        this.datasets = [
-          {
-            data: this.values1,
-          },
-          {
-            data: this.values2,
-          },
-        ]
-      } else {
-        this.datasets = [
-          {
-            data: this.values1,
-          },
-        ]
-      }
-    }
-
-
-
-  }
-
-  getColors(): string[] {
-    switch(this.colorStyle) {
-      case EColorStyle.DESCENDING: 
-        return this.colorsDescending;
-      default:
-        return undefined;
+    if(this.values2) {
+      this.datasets.push(this.getDataSets(this.values2, this.colorStyle));
     }
   }
 
+  getDataSets(data: number[], colorStyle: EColorStyle): ChartDataSets {
+    if(colorStyle === EColorStyle.DESCENDING) {
+      return {
+        data,
+        backgroundColor: this.colorsDescending,
+      }
+    }
+
+    return { data };
+  }
 
 }
