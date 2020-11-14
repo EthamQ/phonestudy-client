@@ -17,7 +17,7 @@ export class SleepBarComponent extends GenericBarComponent {
   ) {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.SLEEP;
-    this.urlSuffix = 'sleep/null';
+    this.urlSuffix = 'sleep/user';
   }
 
 }

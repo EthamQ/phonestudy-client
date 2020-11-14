@@ -14,6 +14,8 @@ import { EColorStyle } from '../../charts';
 })
 export class GenericPieComponent implements OnInit {
 
+  comparisonActive: boolean;
+
   data1$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
   data2$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
 
@@ -51,7 +53,7 @@ export class GenericPieComponent implements OnInit {
       this.values1 = timeBuckets[0].data.map(x => x.value);
     });
 
-    if(environment.comparisonAll) {
+    if(this.comparisonActive) {
       this.data2$ = this.statisticsDataAccessService.getStatistics(
         this.urlSuffix2,
         this.dateFrom,

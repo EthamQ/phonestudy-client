@@ -4,6 +4,7 @@ import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { GenericPieComponent } from '../../generic-pie/generic-pie.component';
 import { EColorStyle } from '../../../charts';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-sleep-pie',
@@ -19,7 +20,9 @@ export class SleepPieComponent extends GenericPieComponent {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.SLEEP;
     this.colorStyle = EColorStyle.DESCENDING;
-    this.urlSuffix = 'sleep/null';
+    this.urlSuffix = 'sleep/user';
+    this.urlSuffix2 = 'sleep/all';
+    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
   }
 
 }
