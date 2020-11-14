@@ -7,7 +7,7 @@
 
         <mat-select [value]="filterByOption$ | async" (selectionChange)="onSelectionChange($event.value)">
 
-            <mat-option *ngFor="let option of allOptions$ | async" [value]="option">
+            <mat-option *ngFor="let option of uniqueOptions$ | async" [value]="option">
                 {{ option }}
             </mat-option>
 
@@ -18,4 +18,4 @@
 </div>
 
 
-<app-bar-chart [values]="yAxis1$ | async" [options]="xAxis"></app-bar-chart>
+<app-bar-chart [values]="yAxis1$ | async" [values2]="yAxis2$ | async" [options]="xAxis"></app-bar-chart>

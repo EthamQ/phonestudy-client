@@ -1,7 +1,6 @@
 import { Input } from '@angular/core';
 import { Component, OnChanges } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label, SingleDataSet } from 'ng2-charts';
 
 @Component({
   selector: 'app-bar-chart',
@@ -12,42 +11,30 @@ export class BarChartComponent implements OnChanges {
 
   @Input() options: string[];
   @Input() values: number[];
+  @Input() values2: number[];
 
-
-  public pieChartType: ChartType = 'bar';
-  public pieChartLegend = true;
-
-  // readonly labels: Label[] = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  // public pieChartData: SingleDataSet = [4, 5, 8, 3, 2, 7, 8].reverse();
-
-  constructor() { }
-
-  ngOnChanges(): void {
-    console.log(this.values);
-  }
-
-  public pieChartOptions: ChartOptions = {
+  datasets: ChartDataSets[];
+  pieChartType: ChartType = 'bar';
+  pieChartLegend = true;
+  chartOptions: ChartOptions = {
     responsive: true,
     scales: {
       yAxes: [{
         display: true,
         ticks: {
-          suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+          suggestedMin: 0,
           suggestedMax: 10,
         }
       }]
     },
   };
 
+  ngOnChanges(): void {
+    this.datasets = [{ data: this.values, backgroundColor: '#07c' }];
 
-
-
-  public pieChartPlugins = [];
-
-  datasets: ChartDataSets[] = [
-    { backgroundColor: '#07c' },
-  ];
-
-
+    if(this.values2) {
+      this.datasets.push({ data: this.values2, backgroundColor: '#07c' });
+    }
+  }
 
 }

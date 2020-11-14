@@ -5,6 +5,7 @@ import { ITimeBucket, IQuestionaireItem } from '@shared/types/server';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
+import { StatisticsMappingService } from '../../../data-mapping/services/statistics-mapping/statistics-mapping.service';
 
 @Component({
   selector: 'app-generic-bar',
@@ -14,24 +15,30 @@ import { StatisticsDataAccessService, EAggregation } from '../../../data-access/
 export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
   category: ECategory;
 
-  data$: Observable<ITimeBucket<IQuestionaireItem[]>[]>
-  destroy$: Subject<void> = new Subject<void>();
-
-  xAxis = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  yAxis1$: Observable<number[]>;
-
+  comparisonActive = false;
   filterActive = false;
-  allOptions$: Observable<string[]>;
-  filterByOption$: Subject<string> = new Subject<string>();
-
   daysToRequest = 7;
   dateFrom: string;
   dateTo: string;
 
-  urlSuffix: string;
+  data1$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
+  data2$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
+
+  urlSuffix1: string;
+  urlSuffix2: string;
+
+  yAxis1$: Observable<number[]>;
+  yAxis2$: Observable<number[]>;
+
+  xAxis = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+
+  uniqueOptions$: Observable<string[]>;
+  filterByOption$: Subject<string> = new Subject<string>();
+  destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
+    private statisticsMappingService: StatisticsMappingService,
     private dateService: DateService,
   ) { }
 
@@ -39,19 +46,19 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dateFrom = '2020-08-01';
     this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
-    this.data$ = this.statisticsDataAccessService.getStatistics(
-      this.urlSuffix,
+    this.data1$ = this.statisticsDataAccessService.getStatistics(
+      this.urlSuffix1,
       this.dateFrom,
       this.daysToRequest,
       EAggregation.DAYS,
     );
 
-    this.allOptions$ = this.data$.pipe(
+    this.uniqueOptions$ = this.data1$.pipe(
       map((timeBuckets: ITimeBucket<IQuestionaireItem[]>[]) => {
         const set = new Set<string>();
-        timeBuckets.forEach(x => {
-          x.data.forEach(y => {
-            set.add(y.option);
+        timeBuckets.forEach(bucket => {
+          bucket.data.forEach(dataEntry => {
+            set.add(dataEntry.option);
           });
         });
         return Array.from(set);
@@ -59,22 +66,36 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.destroy$),
     );
 
-    this.yAxis1$ = combineLatest([this.data$, this.filterByOption$]).pipe(
+    this.yAxis1$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
       map(([timeBuckets, filter]) =>
-        (timeBuckets
-          .map(bucket => ({
-            ...bucket,
-            data: bucket.data.filter(x => this.filterActive ? x.option === filter : true)
-          }))
-          .map(bucket => bucket.data.map(x => x.value * x.weight))
-          .map(x => x.length > 0 ? x.reduce((acc, curr) => acc + curr) : 0))
-      ),
+        this.statisticsMappingService.mapToBarChartYAxis(
+          timeBuckets,
+          this.filterActive ? filter : undefined
+        )),
       takeUntil(this.destroy$),
     );
+
+    if (this.comparisonActive) {
+      this.data2$ = this.statisticsDataAccessService.getStatistics(
+        this.urlSuffix2,
+        this.dateFrom,
+        this.daysToRequest,
+        EAggregation.DAYS,
+      );
+
+      this.yAxis2$ = combineLatest([this.data2$, this.filterByOption$]).pipe(
+        map(([timeBuckets, filter]) =>
+          this.statisticsMappingService.mapToBarChartYAxis(
+            timeBuckets,
+            this.filterActive ? filter : undefined
+          )),
+        takeUntil(this.destroy$),
+      );
+    }
   }
 
   ngAfterViewInit(): void {
-    this.allOptions$.pipe(
+    this.uniqueOptions$.pipe(
       take(1),
     ).subscribe(x => this.filterByOption$.next(x[0]));
   }
