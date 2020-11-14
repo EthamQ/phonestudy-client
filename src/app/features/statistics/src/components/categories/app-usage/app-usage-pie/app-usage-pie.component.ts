@@ -19,7 +19,7 @@ export class AppUsagePieComponent extends GenericPieComponent {
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.APP;
       this.colorStyle = EColorStyle.RANDOM;
-      this.urlSuffix = 'app';
+      this.urlSuffix = 'app/null';
     }
 
 }

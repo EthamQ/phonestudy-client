@@ -19,7 +19,7 @@ export class SleepPieComponent extends GenericPieComponent {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.SLEEP;
     this.colorStyle = EColorStyle.DESCENDING;
-    this.urlSuffix = 'sleep';
+    this.urlSuffix = 'sleep/null';
   }
 
 }

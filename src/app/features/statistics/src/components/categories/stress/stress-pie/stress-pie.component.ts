@@ -18,7 +18,8 @@ export class StressPieComponent extends GenericPieComponent {
     ) {
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.STRESS;
-      this.urlSuffix = 'stress';
+      this.urlSuffix = 'stress/user';
+      this.urlSuffix2 = 'stress/all';
       this.colorStyle = EColorStyle.DESCENDING;
     }
 }

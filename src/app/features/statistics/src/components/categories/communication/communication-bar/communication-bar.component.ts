@@ -18,6 +18,6 @@ export class CommunicationBarComponent extends GenericBarComponent {
     super(statisticsDataAccessService, dateService);
     this.filterActive = false;
     this.category = ECategory.COMMUNICATION;
-    this.urlSuffix = 'communication-lengths'
+    this.urlSuffix = 'communication/length'
   }
 }

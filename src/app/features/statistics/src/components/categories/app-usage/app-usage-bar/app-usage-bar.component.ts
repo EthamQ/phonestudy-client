@@ -18,7 +18,7 @@ export class AppUsageBarComponent extends GenericBarComponent {
     super(statisticsDataAccessService, dateService);
     this.filterActive = true;
     this.category = ECategory.APP;
-    this.urlSuffix = 'app';
+    this.urlSuffix = 'app/null';
   }
 
 }
