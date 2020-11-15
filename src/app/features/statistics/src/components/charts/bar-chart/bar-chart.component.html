@@ -1,0 +1,10 @@
+<div *ngIf="values" style="display: block;">
+    <canvas baseChart 
+      [datasets]="datasets"
+      [labels]="options" 
+      [chartType]="pieChartType"
+      [options]="chartOptions"
+      [legend]="pieChartLegend"
+      [legend]="false">
+    </canvas>
+  </div>

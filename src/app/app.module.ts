@@ -4,10 +4,11 @@ import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
-import { CategorySelectionComponent } from './core/category-selection/category-selection.component';  
+import { CategorySelectionComponent } from '@core/components/category-selection/category-selection.component';  
 import { SharedModule } from '@shared/shared-ui.module';
-import { AuthenticationComponent } from './core/authentication/authentication.component';
-import { ErrorComponent } from './core/components/error/error.component';
+import { AuthenticationComponent } from '@core/components/authentication/authentication.component';
+import { ErrorComponent } from '@core/components/error/error.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ErrorComponent } from './core/components/error/error.component';
     AppRoutingModule,
     ChartsModule,
     SharedModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
