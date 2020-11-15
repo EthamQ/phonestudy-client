@@ -21,6 +21,12 @@ export class CommunicationPieComponent extends GenericPieComponent{
       this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
       this.category = ECategory.COMMUNICATION;
       this.colorStyle = EColorStyle.RANDOM;
-      this.urlSuffix = 'communication/category';
+      this.urlSuffix = 'communication/single-category';
+
+      if (environment.comparisonAll) {
+        this.urlSuffix = 'communication/multi-category-all';
+      } else {
+        this.urlSuffix = 'communication/single-category';
+      }
     }
 }
