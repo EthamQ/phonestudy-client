@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { StatisticsDataAccessService } from '../../../../data-access/services/statistics-data-access.service';
 import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
 import { StatisticsMappingService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/statistics-mapping.service';
+import { BarChartService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
 
 @Component({
   selector: 'app-stress-bar',
@@ -15,10 +16,10 @@ export class StressBarComponent extends GenericBarComponent {
 
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
-    statisticsMappingService: StatisticsMappingService,
+    barChartService: BarChartService,
     dateService: DateService,
   ) {
-    super(statisticsDataAccessService, statisticsMappingService, dateService);
+    super(statisticsDataAccessService, barChartService, dateService);
     this.category = ECategory.STRESS;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
     

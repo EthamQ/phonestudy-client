@@ -18,9 +18,10 @@ export class AppUsagePieComponent extends GenericPieComponent {
     dateService: DateService,
   ) {
     super(statisticsDataAccessService, dateService);
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
     this.category = ECategory.APP;
     this.colorStyle = EColorStyle.RANDOM;
+
+    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
     if (environment.comparisonAll) {
       this.urlSuffix = 'app/multi-all';
