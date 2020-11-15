@@ -21,8 +21,12 @@ export class StressBarComponent extends GenericBarComponent {
     super(statisticsDataAccessService, statisticsMappingService, dateService);
     this.category = ECategory.STRESS;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
-    this.urlSuffix1 = 'stress/user';
-    this.urlSuffix2 = 'stress/all';
+    
+    if(environment.comparisonAll) {
+      this.urlSuffix = 'stress/multi-all';
+    } else {
+      this.urlSuffix = 'stress/single';
+    }
   }
 
 }

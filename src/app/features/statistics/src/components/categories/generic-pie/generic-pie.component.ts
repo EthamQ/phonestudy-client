@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { ITimeBucket, IQuestionaireItem } from '@shared/types/server';
-import { environment } from 'environments/environment';
+import { ITimeBucket, IQuestionaireItem, IBasicResponse } from '@shared/types/server';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
@@ -16,7 +15,7 @@ export class GenericPieComponent implements OnInit {
 
   comparisonActive: boolean;
 
-  data1$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
+  data1$: Observable<ITimeBucket<IBasicResponse>[]>;
   data2$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
 
   category: ECategory;
@@ -48,23 +47,15 @@ export class GenericPieComponent implements OnInit {
       EAggregation.NO_AGGREGATION,
     );
 
-    this.data1$.pipe(take(1)).subscribe((timeBuckets: ITimeBucket<IQuestionaireItem[]>[]) => {
-      this.options = timeBuckets[0].data.map(x => x.option);
-      this.values1 = timeBuckets[0].data.map(x => x.value);
+    this.data1$.pipe(take(1)).subscribe(timeBuckets => {
+      this.options = timeBuckets[0].data.user.map(x => x.option);
+      this.values1 = timeBuckets[0].data.user.map(x => x.value);
+
+      if(this.comparisonActive) {  
+        this.values2 = timeBuckets[0].data.compare.map(x => x.value);
+      }
     });
 
-    if(this.comparisonActive) {
-      this.data2$ = this.statisticsDataAccessService.getStatistics(
-        this.urlSuffix2,
-        this.dateFrom,
-        this.daysToRequest,
-        EAggregation.NO_AGGREGATION,
-      );
-  
-      this.data2$.pipe(take(1)).subscribe((timeBuckets: ITimeBucket<IQuestionaireItem[]>[]) => {
-        this.values2 = timeBuckets[0].data.map(x => x.value);
-      });
-    }
 }
 
 }

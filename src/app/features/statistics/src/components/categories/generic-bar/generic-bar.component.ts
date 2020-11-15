@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { ITimeBucket, IQuestionaireItem } from '@shared/types/server';
+import { ITimeBucket, IQuestionaireItem, IBasicResponse } from '@shared/types/server';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
@@ -21,11 +21,9 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
   dateFrom: string;
   dateTo: string;
 
-  data1$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
-  data2$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
+  data1$: Observable<ITimeBucket<IBasicResponse>[]>;
 
-  urlSuffix1: string;
-  urlSuffix2: string;
+  urlSuffix: string;
 
   yAxis1$: Observable<number[]>;
   yAxis2$: Observable<number[]>;
@@ -47,17 +45,17 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
     this.data1$ = this.statisticsDataAccessService.getStatistics(
-      this.urlSuffix1,
+      this.urlSuffix,
       this.dateFrom,
       this.daysToRequest,
       EAggregation.DAYS,
     );
 
     this.uniqueOptions$ = this.data1$.pipe(
-      map((timeBuckets: ITimeBucket<IQuestionaireItem[]>[]) => {
+      map((timeBuckets: ITimeBucket<IBasicResponse>[]) => {
         const set = new Set<string>();
         timeBuckets.forEach(bucket => {
-          bucket.data.forEach(dataEntry => {
+          bucket.data.user.forEach(dataEntry => {
             set.add(dataEntry.option);
           });
         });
@@ -75,23 +73,6 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.destroy$),
     );
 
-    if (this.comparisonActive) {
-      this.data2$ = this.statisticsDataAccessService.getStatistics(
-        this.urlSuffix2,
-        this.dateFrom,
-        this.daysToRequest,
-        EAggregation.DAYS,
-      );
-
-      this.yAxis2$ = combineLatest([this.data2$, this.filterByOption$]).pipe(
-        map(([timeBuckets, filter]) =>
-          this.statisticsMappingService.mapToBarChartYAxis(
-            timeBuckets,
-            this.filterActive ? filter : undefined
-          )),
-        takeUntil(this.destroy$),
-      );
-    }
   }
 
   ngAfterViewInit(): void {

@@ -21,8 +21,12 @@ export class MoodBarComponent extends GenericBarComponent {
     super(statisticsDataAccessService, statisticsMappingService, dateService);
     this.category = ECategory.MOOD;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
-    this.urlSuffix1 = 'mood/user';
-    this.urlSuffix2 = 'mood/all';
+
+    if(environment.comparisonAll) {
+      this.urlSuffix = 'mood/multi-all';
+    } else {
+      this.urlSuffix = 'mood/single';
+    }
   }
 
 }

@@ -20,9 +20,13 @@ export class MoodPieComponent extends GenericPieComponent {
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.MOOD;
       this.colorStyle = EColorStyle.DESCENDING;
-      this.urlSuffix = 'mood/user';
-      this.urlSuffix2 = 'mood/all';
       this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+
+      if(environment.comparisonAll) {
+        this.urlSuffix = 'mood/multi-all';
+      } else {
+        this.urlSuffix = 'mood/single';
+      }
     }
 
 }

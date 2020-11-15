@@ -16,13 +16,18 @@ export class AppUsagePieComponent extends GenericPieComponent {
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
-    ) {
-      super(statisticsDataAccessService, dateService);
-      this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
-      this.category = ECategory.APP;
-      this.colorStyle = EColorStyle.RANDOM;
-      this.urlSuffix = 'app/user';
-      this.urlSuffix2 = 'app/all';
+  ) {
+    super(statisticsDataAccessService, dateService);
+    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.category = ECategory.APP;
+    this.colorStyle = EColorStyle.RANDOM;
+
+    if (environment.comparisonAll) {
+      this.urlSuffix = 'app/multi-all';
+    } else {
+      this.urlSuffix = 'app/single';
     }
+
+  }
 
 }

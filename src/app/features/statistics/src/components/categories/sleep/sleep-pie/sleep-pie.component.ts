@@ -21,8 +21,12 @@ export class SleepPieComponent extends GenericPieComponent {
     this.category = ECategory.SLEEP;
     this.colorStyle = EColorStyle.DESCENDING;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
-    this.urlSuffix = 'sleep/user';
-    this.urlSuffix2 = 'sleep/all';
+
+    if(environment.comparisonAll) {
+      this.urlSuffix = 'sleep/multi-all';
+    } else {
+      this.urlSuffix = 'sleep/single';
+    }
   }
 
 }

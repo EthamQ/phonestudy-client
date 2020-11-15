@@ -22,8 +22,12 @@ export class AppUsageBarComponent extends GenericBarComponent {
     this.filterActive = true;
     this.category = ECategory.APP;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
-    this.urlSuffix1 = 'app/user';
-    this.urlSuffix2 = 'app/all';
+
+    if(environment.comparisonAll) {
+      this.urlSuffix = 'app/multi-all';
+    } else {
+      this.urlSuffix = 'app/single';
+    }
   }
 
 }

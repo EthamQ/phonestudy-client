@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DateService, ELocalStorageKey, LocalStorageService } from '@shared/services';
-import { IQuestionaireItem, IServerResponse, ITimeBucket } from '@shared/types/server';
+import { IBasicResponse, IQuestionaireItem, IServerResponse, ITimeBucket } from '@shared/types/server';
 import { StatisticsMappingService } from '../../data-mapping/services/statistics-mapping/statistics-mapping.service';
 
 export enum EAggregation {
@@ -29,14 +29,14 @@ export class StatisticsDataAccessService {
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
-  ): Observable<ITimeBucket<IQuestionaireItem[]>[]> {
+  ): Observable<ITimeBucket<IBasicResponse>[]> {
     return this.http.get(this.getUrl(
       urlSuffix,
       dateFrom,
       days,
       aggregation
     )).pipe(
-      map((response: IServerResponse<IQuestionaireItem[]>) => this.statisticsMappingService.map(response)),
+      map((response: IServerResponse<IBasicResponse>) => this.statisticsMappingService.map(response)),
     );
   }
 

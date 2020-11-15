@@ -21,8 +21,12 @@ export class SleepBarComponent extends GenericBarComponent {
     super(statisticsDataAccessService, statisticsMappingService, dateService);
     this.category = ECategory.SLEEP;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
-    this.urlSuffix1 = 'sleep/user';
-    this.urlSuffix2 = 'sleep/all';
+    
+    if(environment.comparisonAll) {
+      this.urlSuffix = 'sleep/multi-all';
+    } else {
+      this.urlSuffix = 'sleep/single';
+    }
   }
 
 }
