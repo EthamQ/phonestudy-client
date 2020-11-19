@@ -22,7 +22,6 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
 import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
 import { StatisticsDataAccessService } from './src/data-access/services/statistics-data-access.service';
 
-import { DetailViewModule } from '../detail-view/detail-view.module';
 import { GenericPieComponent } from './src/components/categories/generic-pie/generic-pie.component';
 import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/sleep-bar.component';
 import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
@@ -31,16 +30,20 @@ import { AppUsagePieComponent } from './src/components/categories/app-usage/app-
 import { CommunicationBarComponent } from './src/components/categories/communication/communication-bar/communication-bar.component';
 import { CommunicationPieComponent } from './src/components/categories/communication/communication-pie/communication-pie.component';
 import { GenericBarComponent } from './src/components/categories/generic-bar/generic-bar.component';
+import { AppUsageScatterComponent } from './src/components/categories/app-usage/app-usage-scatter/app-usage-scatter.component';
+import { GenericScatterComponent } from './src/components/categories/generic-scatter/generic-scatter.component';
+import { ScatterChartComponent } from './src/components/charts/scatter-chart/scatter-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    DetailViewModule,
     StatisticsRoutingModule,
     SharedModule,
     MatSelectModule,
+    ChartsModule,
   ],
   declarations: [
     PieChartComponent,
@@ -59,6 +62,9 @@ import { GenericBarComponent } from './src/components/categories/generic-bar/gen
     AppUsageBarComponent,
     CommunicationPieComponent,
     CommunicationBarComponent,
+    AppUsageScatterComponent,
+    GenericScatterComponent,
+    ScatterChartComponent,
   ],
   providers: [StatisticsDataAccessService],
 })

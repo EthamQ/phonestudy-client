@@ -22,7 +22,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     CommonModule,
     AppRoutingModule,
-    ChartsModule,
     SharedModule,
     BrowserAnimationsModule,
   ],

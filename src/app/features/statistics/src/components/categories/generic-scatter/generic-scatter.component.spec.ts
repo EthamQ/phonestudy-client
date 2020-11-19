@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppDetailsComponent } from './app-details.component';
+import { GenericScatterComponent } from './generic-scatter.component';
 
-describe('AppDetailsComponent', () => {
-  let component: AppDetailsComponent;
-  let fixture: ComponentFixture<AppDetailsComponent>;
+describe('GenericScatterComponent', () => {
+  let component: GenericScatterComponent;
+  let fixture: ComponentFixture<GenericScatterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppDetailsComponent ]
+      declarations: [ GenericScatterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppDetailsComponent);
+    fixture = TestBed.createComponent(GenericScatterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -11,6 +11,7 @@ import { AppUsageBarComponent } from './src/components/categories/app-usage/app-
 import { AppUsagePieComponent } from './src/components/categories/app-usage/app-usage-pie/app-usage-pie.component';
 import { CommunicationBarComponent } from './src/components/categories/communication/communication-bar/communication-bar.component';
 import { CommunicationPieComponent } from './src/components/categories/communication/communication-pie/communication-pie.component';
+import { AppUsageScatterComponent } from './src/components/categories/app-usage/app-usage-scatter/app-usage-scatter.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
     path: 'app', component: StatisticRouterOutletComponent, children: [
       { path: '1', component: AppUsagePieComponent },
       { path: '2', component: AppUsageBarComponent },
+    ]
+  },
+  {
+    path: 'app-correlation', component: StatisticRouterOutletComponent, children: [
+      { path: '1', component: AppUsageScatterComponent },
     ]
   },
   {
