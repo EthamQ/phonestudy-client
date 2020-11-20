@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
-import { ChartOptions, ChartDataSets, ChartType } from 'chart.js';
 import { environment } from 'environments/environment';
-import { EColorStyle } from '../../../charts';
 import { GenericScatterComponent } from '../../generic-scatter/generic-scatter.component';
 
 @Component({
@@ -24,7 +22,7 @@ export class AppUsageScatterComponent extends GenericScatterComponent {
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
     if (environment.comparisonAll) {
-      this.urlSuffix = 'communication/multi-all';
+      this.urlSuffix = 'communication/multi-correlation-all';
     } else {
       this.urlSuffix = 'communication/single-correlation';
     }

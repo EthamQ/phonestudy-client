@@ -15,7 +15,7 @@ export class GenericPieComponent implements OnInit {
 
   comparisonActive: boolean;
 
-  data1$: Observable<ITimeBucket<IBasicResponse>[]>;
+  data1$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
   data2$: Observable<ITimeBucket<IStatisticItem[]>[]>;
 
   category: ECategory;

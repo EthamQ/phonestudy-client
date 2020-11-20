@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { ICorrelation, ITimeBucket } from '@shared/types/server';
+import { IBasicResponse, ICorrelation, ITimeBucket } from '@shared/types/server';
+import { ChartPoint } from 'chart.js';
 import { Observable } from 'rxjs';
 import { EAggregation, StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 
@@ -14,28 +15,18 @@ export class GenericScatterComponent implements OnInit {
 
   comparisonActive: boolean;
   category: ECategory;
-  daysToRequest = 7;
+  daysToRequest = 14;
   dateFrom: string;
   dateTo: string;
   urlSuffix: string;
 
-  data1$: Observable<ITimeBucket<ICorrelation>[]>;
+  data1$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
 
-  values1 = [
-    { x: 1, y: 1 },
-    { x: 2, y: 3 },
-    { x: 3, y: 4 },
-    { x: 4, y: 7 },
-    { x: 5, y: 12 },
-  ];
+  valuesStress: ChartPoint[];
+  valuesMood: ChartPoint[];
+  valuesSleep: ChartPoint[];
 
-  values2 = [
-    { x: 3, y: 1 },
-    { x: 4, y: 3 },
-    { x: 5, y: 4 },
-    { x: 2, y: 7 },
-    { x: 1, y: 12 },
-  ];
+  values1: ChartPoint[];
 
   textX = 'App';
   textY = 'Stress';
@@ -56,7 +47,14 @@ export class GenericScatterComponent implements OnInit {
       EAggregation.DAYS,
     );
 
-    this.data1$.subscribe(x => console.log(x));
+    this.data1$.subscribe(x => {
+      console.log(x);
+      this.valuesStress = x.map(y => ({ x: y.data.user.option, y: y.data.user.stress }));
+      this.valuesMood = x.map(y => ({ x: y.data.user.option, y: y.data.user.mood }));
+      this.valuesSleep = x.map(y => ({ x: y.data.user.option, y: y.data.user.sleep }));
+
+      this.values1 = this.valuesStress;
+    });
   }
 
 }

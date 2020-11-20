@@ -19,17 +19,18 @@ export class ScatterChartComponent implements OnChanges {
   options: ChartOptions;
 
   ngOnChanges(): void {
+    console.log('values1', this.values1);
     this.datasets = [
       {
         data: this.values1,
         pointRadius: 10,
         pointBackgroundColor: 'red',
       },
-      {
-        data: this.values2,
-        pointRadius: 10,
-        pointBackgroundColor: 'blue',
-      },
+      // {
+      //   data: this.values2,
+      //   pointRadius: 10,
+      //   pointBackgroundColor: 'blue',
+      // },
     ];
 
     this.options = {
@@ -45,7 +46,7 @@ export class ScatterChartComponent implements OnChanges {
           },
           ticks: {
             suggestedMin: 0,
-            suggestedMax: 10,
+            suggestedMax: 30,
           },
         }],
         yAxes: [{
@@ -55,7 +56,7 @@ export class ScatterChartComponent implements OnChanges {
           },
           ticks: {
             suggestedMin: 0,
-            suggestedMax: 10,
+            suggestedMax: 30,
           },
         }]
       }

@@ -9,9 +9,10 @@ export interface ITimeBucket<T> {
     timeBucketKey: string,
 }
 
-export interface IBasicResponse {
-    user: IStatisticItem[],
-    compare: IStatisticItem[],
+
+export interface IBasicResponse<T> {
+    user: T,
+    compare: T,
 }
 
 export interface IStatisticItem {

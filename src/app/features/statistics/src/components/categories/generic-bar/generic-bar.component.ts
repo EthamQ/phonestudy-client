@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { ITimeBucket, IBasicResponse } from '@shared/types/server';
+import { ITimeBucket, IBasicResponse, IStatisticItem } from '@shared/types/server';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
@@ -23,7 +23,7 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uniqueOptions$: Observable<string[]>;
   filterByOption$: Subject<string> = new Subject<string>();
-  data1$: Observable<ITimeBucket<IBasicResponse>[]>;
+  data1$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
   yAxis1$: Observable<number[]>;
   yAxis2$: Observable<number[]>;
   destroy$: Subject<void> = new Subject<void>();
@@ -48,7 +48,7 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.uniqueOptions$ = this.data1$.pipe(
-      map((timeBuckets: ITimeBucket<IBasicResponse>[]) =>
+      map((timeBuckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[]) =>
         this.barChartService.getUniqueOptions(timeBuckets.map(x => x.data.user))
       ),
       takeUntil(this.destroy$),
