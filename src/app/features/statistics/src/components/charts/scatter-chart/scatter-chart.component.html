@@ -1,8 +1,7 @@
-<div style="display: block;">
-    <canvas baseChart
-      [datasets]="scatterChartData"
-      [options]="scatterChartOptions"
-      [chartType]="scatterChartType"
-      [colors]="chartColors">
-    </canvas>
-  </div>
+<div *ngIf="datasets" style="display: block;">
+  <canvas baseChart
+    [datasets]="datasets"
+    [options]="options"
+    [chartType]="chartType">
+  </canvas>
+</div>

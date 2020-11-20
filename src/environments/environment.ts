@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  comparisonAll: true,
+  comparisonAll: false,
   comparisonDemographic: false,
 };
 

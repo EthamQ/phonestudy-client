@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { ITimeBucket, IQuestionaireItem, IBasicResponse } from '@shared/types/server';
+import { ITimeBucket, IStatisticItem, IBasicResponse } from '@shared/types/server';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
@@ -16,7 +16,7 @@ export class GenericPieComponent implements OnInit {
   comparisonActive: boolean;
 
   data1$: Observable<ITimeBucket<IBasicResponse>[]>;
-  data2$: Observable<ITimeBucket<IQuestionaireItem[]>[]>;
+  data2$: Observable<ITimeBucket<IStatisticItem[]>[]>;
 
   category: ECategory;
   colorStyle: EColorStyle;
