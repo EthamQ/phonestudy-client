@@ -31,6 +31,8 @@ export class GenericPieComponent implements OnInit {
   dateFrom: string;
   dateTo: string;
 
+  requestPayload;
+
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
@@ -45,6 +47,7 @@ export class GenericPieComponent implements OnInit {
       this.dateFrom,
       this.daysToRequest,
       EAggregation.NO_AGGREGATION,
+      this.requestPayload,
     );
 
     this.data1$.pipe(take(1)).subscribe(timeBuckets => {

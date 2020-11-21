@@ -23,11 +23,13 @@ export class AppUsagePieComponent extends GenericPieComponent {
 
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
-    if (environment.comparisonAll) {
-      this.urlSuffix = 'app/multi-all';
-    } else {
-      this.urlSuffix = 'app/single';
-    }
+    this.urlSuffix = 'app';
+
+    this.requestPayload = {
+      compareWith: environment.comparisonAll ? 'all' : 'none',
+      type: 'simple',
+      aggregation: 'total',
+    };
 
   }
 

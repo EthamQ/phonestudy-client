@@ -34,6 +34,7 @@ import { AppUsageScatterComponent } from './src/components/categories/app-usage/
 import { GenericScatterComponent } from './src/components/categories/generic-scatter/generic-scatter.component';
 import { ScatterChartComponent } from './src/components/charts/scatter-chart/scatter-chart.component';
 import { ChartsModule } from 'ng2-charts';
+import { CommunicationScatterComponent } from './src/components/categories/communication/communication-scatter/communication-scatter.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { ChartsModule } from 'ng2-charts';
     AppUsageScatterComponent,
     GenericScatterComponent,
     ScatterChartComponent,
+    CommunicationScatterComponent,
   ],
   providers: [StatisticsDataAccessService],
 })

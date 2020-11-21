@@ -21,6 +21,8 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
   dateTo: string;
   urlSuffix: string;
 
+  requestPayload;
+
   uniqueOptions$: Observable<string[]>;
   filterByOption$: Subject<string> = new Subject<string>();
   data1$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
@@ -45,6 +47,7 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dateFrom,
       this.daysToRequest,
       EAggregation.DAYS,
+      this.requestPayload,
     );
 
     this.uniqueOptions$ = this.data1$.pipe(

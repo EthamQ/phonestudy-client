@@ -29,13 +29,14 @@ export class StatisticsDataAccessService {
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
+    payload,
   ): Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]> {
-    return this.http.get(this.getUrl(
+    return this.http.post(this.getUrl(
       urlSuffix,
       dateFrom,
       days,
       aggregation
-    )).pipe(
+    ), payload).pipe(
       map((response: IServerResponse<IBasicResponse<IStatisticItem[]>>) => this.statisticsMappingService.map(response)),
     );
   }
@@ -45,13 +46,14 @@ export class StatisticsDataAccessService {
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
+    payload,
   ): Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]> {
-    return this.http.get(this.getUrl(
+    return this.http.post(this.getUrl(
       urlSuffix,
       dateFrom,
       days,
       aggregation
-    )).pipe(
+    ), payload).pipe(
       map((response: IServerResponse<IBasicResponse<ICorrelation>>) => this.statisticsMappingService.map(response)),
     );
   }

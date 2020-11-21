@@ -21,12 +21,13 @@ export class CommunicationPieComponent extends GenericPieComponent{
       this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
       this.category = ECategory.COMMUNICATION;
       this.colorStyle = EColorStyle.RANDOM;
-      this.urlSuffix = 'communication/single-category';
 
-      if (environment.comparisonAll) {
-        this.urlSuffix = 'communication/multi-category-all';
-      } else {
-        this.urlSuffix = 'communication/single-category';
-      }
+      this.urlSuffix = 'communication';
+
+      this.requestPayload = {
+        compareWith: environment.comparisonAll ? 'all' : 'none',
+        type: 'simple',
+        aggregation: 'category',
+      };
     }
 }

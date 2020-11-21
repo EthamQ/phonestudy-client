@@ -23,12 +23,14 @@ export class AppUsageBarComponent extends GenericBarComponent {
     this.category = ECategory.APP;
     
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    
+    this.urlSuffix = 'app';
 
-    if(environment.comparisonAll) {
-      this.urlSuffix = 'app/multi-all';
-    } else {
-      this.urlSuffix = 'app/single';
-    }
+    this.requestPayload = {
+      compareWith: environment.comparisonAll ? 'all' : 'none',
+      type: 'simple',
+      aggregation: 'total',
+    };
   }
 
 }

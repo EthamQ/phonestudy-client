@@ -22,11 +22,13 @@ export class SleepPieComponent extends GenericPieComponent {
     this.colorStyle = EColorStyle.DESCENDING;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
-    if(environment.comparisonAll) {
-      this.urlSuffix = 'sleep/multi-all';
-    } else {
-      this.urlSuffix = 'sleep/single';
-    }
+    this.urlSuffix = 'sleep';
+
+    this.requestPayload = {
+      compareWith: environment.comparisonAll ? 'all' : 'none',
+      type: 'simple',
+      aggregation: 'weight',
+    };
   }
 
 }

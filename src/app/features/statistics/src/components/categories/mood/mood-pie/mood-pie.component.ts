@@ -23,11 +23,13 @@ export class MoodPieComponent extends GenericPieComponent {
       
       this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
-      if(environment.comparisonAll) {
-        this.urlSuffix = 'mood/multi-all';
-      } else {
-        this.urlSuffix = 'mood/single';
-      }
+      this.urlSuffix = 'mood';
+
+      this.requestPayload = {
+        compareWith: environment.comparisonAll ? 'all' : 'none',
+        type: 'simple',
+        aggregation: 'weight',
+      };
     }
 
 }

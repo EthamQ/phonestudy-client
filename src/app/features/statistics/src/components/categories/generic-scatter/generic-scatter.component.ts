@@ -20,6 +20,12 @@ export class GenericScatterComponent implements OnInit {
   dateTo: string;
   urlSuffix: string;
 
+  requestPayload = {
+    compareWith: 'none',
+    type: 'correlation',
+    aggregation: 'length',
+  };
+
   data1$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
 
   valuesStress: ChartPoint[];
@@ -45,6 +51,7 @@ export class GenericScatterComponent implements OnInit {
       this.dateFrom,
       this.daysToRequest,
       EAggregation.DAYS,
+      this.requestPayload
     );
 
     this.data1$.subscribe(x => {

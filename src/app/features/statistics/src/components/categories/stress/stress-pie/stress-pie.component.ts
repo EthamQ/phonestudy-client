@@ -22,10 +22,12 @@ export class StressPieComponent extends GenericPieComponent {
       this.colorStyle = EColorStyle.DESCENDING;
       this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
-      if(environment.comparisonAll) {
-        this.urlSuffix = 'stress/multi-all';
-      } else {
-        this.urlSuffix = 'stress/single';
-      }
+      this.urlSuffix = 'stress';
+
+      this.requestPayload = {
+        compareWith: environment.comparisonAll ? 'all' : 'none',
+        type: 'simple',
+        aggregation: 'weight',
+      };
     }
 }

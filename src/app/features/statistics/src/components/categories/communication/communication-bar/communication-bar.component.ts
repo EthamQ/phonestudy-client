@@ -24,10 +24,12 @@ export class CommunicationBarComponent extends GenericBarComponent {
 
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
-    if (environment.comparisonAll) {
-      this.urlSuffix = 'communication/multi-length-all';
-    } else {
-      this.urlSuffix = 'communication/single-length';
-    }
+    this.urlSuffix = 'communication';
+
+    this.requestPayload = {
+      compareWith: environment.comparisonAll ? 'all' : 'none',
+      type: 'simple',
+      aggregation: 'length',
+    };
   }
 }

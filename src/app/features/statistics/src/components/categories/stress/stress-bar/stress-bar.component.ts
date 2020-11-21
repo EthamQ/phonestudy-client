@@ -23,11 +23,13 @@ export class StressBarComponent extends GenericBarComponent {
     this.category = ECategory.STRESS;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
     
-    if(environment.comparisonAll) {
-      this.urlSuffix = 'stress/multi-all';
-    } else {
-      this.urlSuffix = 'stress/single';
-    }
+    this.urlSuffix = 'stress';
+    
+    this.requestPayload = {
+      compareWith: environment.comparisonAll ? 'all' : 'none',
+      type: 'simple',
+      aggregation: 'weight',
+    };
   }
 
 }
