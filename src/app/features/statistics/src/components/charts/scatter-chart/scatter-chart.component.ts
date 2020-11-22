@@ -20,18 +20,24 @@ export class ScatterChartComponent implements OnChanges {
 
   ngOnChanges(): void {
     console.log('values1', this.values1);
-    this.datasets = [
-      {
-        data: this.values1,
+    console.log('values2', this.values2);
+    if(this.values1) {
+      this.datasets = [
+        {
+          data: this.values1,
+          pointRadius: 10,
+          pointBackgroundColor: 'red',
+        },
+      ];
+    }
+
+    if(this.values2 && this.datasets && this.datasets.length === 1) {
+      this.datasets.push({
+        data: this.values2.map(point => ({ x: point.x ? (<number>point.x + 1) : point.x, y: point.y ? (<number>point.y + 1): point.y})),
         pointRadius: 10,
-        pointBackgroundColor: 'red',
-      },
-      // {
-      //   data: this.values2,
-      //   pointRadius: 10,
-      //   pointBackgroundColor: 'blue',
-      // },
-    ];
+        pointBackgroundColor: 'blue',
+      });
+    }
 
     this.options = {
       responsive: true,

@@ -24,6 +24,8 @@ export class CommunicationScatterComponent extends GenericScatterComponent {
       ECategory.SLEEP
     ];
 
+    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+
     this.urlSuffix = 'communication';
 
     this.textX = 'Minuten telefoniert';
