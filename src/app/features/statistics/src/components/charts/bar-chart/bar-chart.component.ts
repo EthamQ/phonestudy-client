@@ -23,7 +23,7 @@ export class BarChartComponent implements OnChanges {
         display: true,
         ticks: {
           suggestedMin: 0,
-          suggestedMax: 10,
+          suggestedMax: 6,
         }
       }]
     },

@@ -56,7 +56,7 @@ export class ScatterChartComponent implements OnChanges {
           },
           ticks: {
             suggestedMin: 0,
-            suggestedMax: 30,
+            suggestedMax: 6,
           },
         }]
       }
