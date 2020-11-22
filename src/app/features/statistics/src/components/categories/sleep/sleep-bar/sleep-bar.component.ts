@@ -4,7 +4,6 @@ import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
 import { environment } from 'environments/environment';
-import { BarChartService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
 
 @Component({
   selector: 'app-sleep-bar',
@@ -15,10 +14,9 @@ export class SleepBarComponent extends GenericBarComponent {
 
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
-    barChartService: BarChartService,
     dateService: DateService,
   ) {
-    super(statisticsDataAccessService, barChartService, dateService);
+    super(statisticsDataAccessService, dateService);
     this.category = ECategory.SLEEP;
     
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
@@ -28,7 +26,7 @@ export class SleepBarComponent extends GenericBarComponent {
     this.requestPayload = {
       compareWith: environment.comparisonAll ? 'all' : 'none',
       type: 'simple',
-      aggregation: 'weight',
+      aggregation: 'total',
     };
   }
 

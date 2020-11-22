@@ -5,7 +5,6 @@ import { ITimeBucket, IBasicResponse, IStatisticItem } from '@shared/types/serve
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
-import { BarChartService } from '../../../data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
 
 @Component({
   selector: 'app-generic-bar',
@@ -34,7 +33,6 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
-    private barChartService: BarChartService,
     private dateService: DateService,
   ) { }
 
@@ -50,45 +48,75 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.requestPayload,
     );
 
-    this.uniqueOptions$ = this.data1$.pipe(
-      map((timeBuckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[]) =>
-        this.barChartService.getUniqueOptions(timeBuckets.map(x => x.data.user))
-      ),
-      takeUntil(this.destroy$),
-    );
-
     this.yAxis1$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
-      map(([timeBuckets, filter]) =>
-        this.barChartService.getValueByDay(
-          this.barChartService.filterByOption(
-            timeBuckets.map(x => x.data.user),
-            filter)),
-        takeUntil(this.destroy$),
-      ));
+      map(([buckets, filter]) => {
+        const valueByDay = [];
+
+        buckets.forEach(bucket => {
+          bucket.data.user.forEach(data => {
+            if (!filter || data.option === filter) {
+              valueByDay.push(data.value);
+            }
+          });
+        });
+
+        return valueByDay;
+      })
+    );
 
     if (this.comparisonActive) {
       this.yAxis2$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
-        map(([timeBuckets, filter]) =>
-          this.barChartService.getValueByDay(
-            this.barChartService.filterByOption(
-              timeBuckets.map(x => x.data.compare),
-              filter)),
-          takeUntil(this.destroy$),
-        ));
+        map(([buckets, filter]) => {
+          const valueByDay = [];
+
+          buckets.forEach(bucket => {
+            bucket.data.compare.forEach(data => {
+              if (!filter || data.option === filter) {
+                valueByDay.push(data.value);
+              }
+            });
+          });
+
+          return valueByDay;
+        })
+      );
     }
   }
 
   ngAfterViewInit(): void {
-    this.uniqueOptions$.pipe(
-      take(1),
-    ).subscribe(x => this.filterByOption$.next(this.filterActive ? x[0] : null));
+    if (this.filterActive) {
+      this.uniqueOptions$ = this.data1$.pipe(
+        map((timeBuckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[]) =>
+          this.getUniqueOptions(timeBuckets.map(x => x.data.user))
+        ),
+        takeUntil(this.destroy$),
+      );
+
+      this.uniqueOptions$.pipe(
+        take(1),
+      ).subscribe(allOptions => this.filterByOption$.next(allOptions[0]));
+
+    } else {
+      // To make the observable emit a value
+      this.filterByOption$.next(null)
+    }
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
 
-  onSelectionChange(option: string) {
+  onSelectionChange(option: string): void {
     this.filterByOption$.next(option);
+  }
+
+  private getUniqueOptions(items: IStatisticItem[][]): string[] {
+    const set = new Set<string>();
+    items.forEach(itemArray => {
+      itemArray.forEach(item => {
+        set.add(item.option);
+      });
+    });
+    return Array.from(set);
   }
 }

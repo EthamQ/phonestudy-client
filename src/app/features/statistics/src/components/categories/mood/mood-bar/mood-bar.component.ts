@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
-import { BarChartService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
 import { environment } from 'environments/environment';
 import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
 
@@ -15,20 +14,19 @@ export class MoodBarComponent extends GenericBarComponent {
 
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
-    barChartService: BarChartService,
     dateService: DateService,
   ) {
-    super(statisticsDataAccessService, barChartService, dateService);
+    super(statisticsDataAccessService, dateService);
     this.category = ECategory.MOOD;
     
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
-    
+
     this.urlSuffix = 'mood';
     
     this.requestPayload = {
       compareWith: environment.comparisonAll ? 'all' : 'none',
       type: 'simple',
-      aggregation: 'weight',
+      aggregation: 'total',
     };
   }
 

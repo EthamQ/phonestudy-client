@@ -3,7 +3,6 @@ import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
-import { BarChartService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -15,10 +14,9 @@ export class CommunicationBarComponent extends GenericBarComponent {
 
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
-    barChartService: BarChartService,
     dateService: DateService,
   ) {
-    super(statisticsDataAccessService, barChartService, dateService);
+    super(statisticsDataAccessService, dateService);
     this.filterActive = false;
     this.category = ECategory.COMMUNICATION;
 
