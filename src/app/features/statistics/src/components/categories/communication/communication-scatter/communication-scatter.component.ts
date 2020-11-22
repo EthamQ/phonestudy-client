@@ -31,7 +31,7 @@ export class CommunicationScatterComponent extends GenericScatterComponent {
     this.requestPayload = {
       compareWith: environment.comparisonAll ? 'all' : 'none',
       type: 'correlation',
-      aggregation: 'length',
+      aggregation: 'total & average',
     };
 
   }

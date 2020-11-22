@@ -9,7 +9,6 @@ export interface ITimeBucket<T> {
     timeBucketKey: string,
 }
 
-
 export interface IBasicResponse<T> {
     user: T,
     compare: T,
@@ -36,5 +35,5 @@ export interface ICorrelation {
 export interface IRequestPayload {
     compareWith: 'none' | 'all' | 'demographic',
     type: 'simple' | 'correlation',
-    aggregation: 'length' | 'category' | 'total' | 'weight',
+    aggregation: 'length' | 'category' | 'total' | 'weight' | 'average' | 'total_response_object' | 'total & average',
 }

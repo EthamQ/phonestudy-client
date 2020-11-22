@@ -27,7 +27,7 @@ export class CommunicationBarComponent extends GenericBarComponent {
     this.requestPayload = {
       compareWith: environment.comparisonAll ? 'all' : 'none',
       type: 'simple',
-      aggregation: 'length',
+      aggregation: 'total_response_object',
     };
   }
 }

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { ITimeBucket, IBasicResponse, IStatisticItem } from '@shared/types/server';
+import { ITimeBucket, IBasicResponse, IStatisticItem, IRequestPayload } from '@shared/types/server';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
@@ -20,7 +20,7 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
   dateTo: string;
   urlSuffix: string;
 
-  requestPayload;
+  requestPayload: IRequestPayload;
 
   uniqueOptions$: Observable<string[]>;
   filterByOption$: Subject<string> = new Subject<string>();
@@ -50,6 +50,7 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.yAxis1$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
       map(([buckets, filter]) => {
+        console.log(buckets);
         const valueByDay = [];
 
         buckets.forEach(bucket => {

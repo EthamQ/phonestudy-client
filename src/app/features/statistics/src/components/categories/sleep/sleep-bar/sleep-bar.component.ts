@@ -26,7 +26,7 @@ export class SleepBarComponent extends GenericBarComponent {
     this.requestPayload = {
       compareWith: environment.comparisonAll ? 'all' : 'none',
       type: 'simple',
-      aggregation: 'total',
+      aggregation: 'average',
     };
   }
 
