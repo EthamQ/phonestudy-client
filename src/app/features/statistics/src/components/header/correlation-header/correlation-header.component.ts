@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ECategory } from '@shared/types';
 
 @Component({
@@ -9,18 +9,23 @@ import { ECategory } from '@shared/types';
 export class CorrelationHeaderComponent implements OnChanges {
 
   @Input() categories: ECategory[];
+  @Input() selectedCategory: ECategory;
   @Input() date: string;
+
+  @Output() categoryClicked = new EventEmitter<ECategory>();
 
   categoryLeft: ECategory;
   categoriesRight: ECategory[];
-
-  constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.categories && this.categories) {
       this.categoryLeft = this.categories[0];
       this.categoriesRight = this.categories.slice(1, 4);
     }
+  }
+
+  onCategoryClicked(category: ECategory): void  {
+    this.categoryClicked.emit(category);
   }
 
 }

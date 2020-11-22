@@ -1,1 +1,1 @@
-export * from './response.type';
+export * from './server.type';

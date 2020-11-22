@@ -32,3 +32,9 @@ export interface ICorrelation {
     mood: number,
     sleep: number,
 };
+
+export interface IRequestPayload {
+    compareWith: 'none' | 'all' | 'demographic',
+    type: 'simple' | 'correlation',
+    aggregation: 'length' | 'category' | 'total' | 'weight',
+}

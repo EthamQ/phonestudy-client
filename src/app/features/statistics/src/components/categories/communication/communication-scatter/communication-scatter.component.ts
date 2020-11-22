@@ -26,6 +26,8 @@ export class CommunicationScatterComponent extends GenericScatterComponent {
 
     this.urlSuffix = 'communication';
 
+    this.textX = 'Minuten telefoniert';
+
     this.requestPayload = {
       compareWith: environment.comparisonAll ? 'all' : 'none',
       type: 'correlation',

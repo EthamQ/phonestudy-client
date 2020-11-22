@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { IBasicResponse, ICorrelation, ITimeBucket } from '@shared/types/server';
+import { IBasicResponse, ICorrelation, IRequestPayload, ITimeBucket } from '@shared/types/server';
 import { ChartPoint } from 'chart.js';
 import { Observable } from 'rxjs';
 import { EAggregation, StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
@@ -13,18 +13,14 @@ import { EAggregation, StatisticsDataAccessService } from '../../../data-access/
 })
 export class GenericScatterComponent implements OnInit {
 
-  comparisonActive: boolean;
   categories: ECategory[];
+  selectedCategory: ECategory;
+  comparisonActive: boolean;
   daysToRequest = 14;
   dateFrom: string;
   dateTo: string;
   urlSuffix: string;
-
-  requestPayload = {
-    compareWith: 'none',
-    type: 'correlation',
-    aggregation: 'length',
-  };
+  requestPayload: IRequestPayload;
 
   data1$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
 
@@ -34,8 +30,8 @@ export class GenericScatterComponent implements OnInit {
 
   values1: ChartPoint[];
 
-  textX = 'App';
-  textY = 'Stress';
+  textX = '';
+  textY = '';
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
@@ -55,13 +51,29 @@ export class GenericScatterComponent implements OnInit {
     );
 
     this.data1$.subscribe(x => {
-      console.log(x);
       this.valuesStress = x.map(y => ({ x: y.data.user.option, y: y.data.user.stress }));
       this.valuesMood = x.map(y => ({ x: y.data.user.option, y: y.data.user.mood }));
       this.valuesSleep = x.map(y => ({ x: y.data.user.option, y: y.data.user.sleep }));
 
-      this.values1 = this.valuesStress;
+      this.onCategoryClicked(ECategory.STRESS);
     });
+  }
+
+  onCategoryClicked(category: ECategory) {
+    this.selectedCategory = category;
+
+    if(category === ECategory.STRESS) {
+      this.values1 = this.valuesStress;
+      this.textY = 'Stresslevel';
+    }
+    if(category === ECategory.MOOD) {
+      this.values1 = this.valuesMood;
+      this.textY = 'Gefühlszustand';
+    }
+    if(category === ECategory.SLEEP) {
+      this.values1 = this.valuesSleep;
+      this.textY = 'Schlafqualität';
+    }
   }
 
 }
