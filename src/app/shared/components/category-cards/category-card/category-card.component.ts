@@ -9,7 +9,6 @@ import { ECategory } from '../../../types/category.type';
 export class CategoryCardComponent implements OnChanges {
 
   @Input() category: ECategory;
-  @Input() clickable = true;
 
   imageSrc = '';
 

@@ -17,7 +17,7 @@ import {
   BarChartComponent
 } from './src/components/charts';
 
-import { StatisticHeaderComponent } from './src/components/statistic-header/statistic-header.component';
+import { StatisticHeaderComponent } from './src/components/header/statistic-header/statistic-header.component';
 import { StatisticsRoutingModule } from './statistics-routing.module';
 import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
 import { StatisticsDataAccessService } from './src/data-access/services/statistics-data-access.service';
@@ -35,6 +35,7 @@ import { GenericScatterComponent } from './src/components/categories/generic-sca
 import { ScatterChartComponent } from './src/components/charts/scatter-chart/scatter-chart.component';
 import { ChartsModule } from 'ng2-charts';
 import { CommunicationScatterComponent } from './src/components/categories/communication/communication-scatter/communication-scatter.component';
+import { CorrelationHeaderComponent } from './src/components/header/correlation-header/correlation-header.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { CommunicationScatterComponent } from './src/components/categories/commu
     GenericScatterComponent,
     ScatterChartComponent,
     CommunicationScatterComponent,
+    CorrelationHeaderComponent,
   ],
   providers: [StatisticsDataAccessService],
 })

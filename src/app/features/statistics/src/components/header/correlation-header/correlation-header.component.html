@@ -1,0 +1,19 @@
+<div>
+
+<div class="text">
+    <div class="heading">Korrelation</div>
+    <div class="date">{{ date }}</div>
+</div>
+
+<div class="categories">
+
+    <app-category-card [category]="categoryLeft"></app-category-card>
+
+    <div class="plus">+</div>
+
+    <app-category-card class="clickable" *ngFor="let category of categoriesRight" [category]="category">
+    </app-category-card>
+
+</div>
+
+</div>

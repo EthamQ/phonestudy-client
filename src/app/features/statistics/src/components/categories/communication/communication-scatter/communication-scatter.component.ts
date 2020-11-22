@@ -17,7 +17,12 @@ export class CommunicationScatterComponent extends GenericScatterComponent {
     dateService: DateService,
   ) {
     super(statisticsDataAccessService, dateService);
-    this.category = ECategory.APP;
+    this.categories = [
+      ECategory.COMMUNICATION,
+      ECategory.STRESS,
+      ECategory.MOOD,
+      ECategory.SLEEP
+    ];
 
     this.urlSuffix = 'communication';
 

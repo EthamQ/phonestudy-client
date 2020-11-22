@@ -1,0 +1,48 @@
+$margin-cards: 10px;
+
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+.heading {
+    color: #0089EF;
+    font-size: 22px;
+
+    @media only screen and (max-width: 500px) {
+        font-size: 15px;
+      }
+}
+
+.date {
+    color: #5c5c5c;
+    @media only screen and (max-width: 500px) {
+        font-size: 12px;
+      }
+}
+
+app-category-card {
+    width: 75px;
+    height: 70px;
+
+    @media only screen and (max-width: 500px) {
+        width: 45px;
+        height: 40px;
+        padding: 4px 5px 14px 5px;
+      }
+}
+
+app-category-card:not(:first-child) {
+    margin-left: $margin-cards;
+}
+
+.categories {
+    display: flex;
+}
+
+.plus {
+    margin-left: $margin-cards;
+    display: flex;
+    align-items: center;
+    font-size: 55px;
+}

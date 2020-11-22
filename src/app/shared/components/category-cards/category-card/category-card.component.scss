@@ -6,20 +6,24 @@
     box-shadow: 2px 2px #efefef;
     padding: 15px 10px 15px 10px;
     border-radius: 7px;
-    cursor: pointer;
 
     &.clickable {
+        cursor: pointer;
         &:hover {
             background: #97D2FF;
-            transform: scale(1.01);
         }
     }
 }
 
 .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: center;
     font-size: 12px;
     color: #353535;
+    @media only screen and (max-width: 500px) {
+        font-size: 8px;
+      }
 }
 
 .img-container {
@@ -29,5 +33,5 @@
 }
 
 img {
-    width: 70%;
+    width: 60%;
 }

@@ -14,7 +14,7 @@ import { EAggregation, StatisticsDataAccessService } from '../../../data-access/
 export class GenericScatterComponent implements OnInit {
 
   comparisonActive: boolean;
-  category: ECategory;
+  categories: ECategory[];
   daysToRequest = 14;
   dateFrom: string;
   dateTo: string;

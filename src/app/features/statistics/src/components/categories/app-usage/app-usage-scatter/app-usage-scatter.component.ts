@@ -17,7 +17,7 @@ export class AppUsageScatterComponent extends GenericScatterComponent {
     dateService: DateService,
   ) {
     super(statisticsDataAccessService, dateService);
-    this.category = ECategory.APP;
+    // this.category = ECategory.APP;
 
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
