@@ -1,3 +1,19 @@
-<app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory" [date]="dateFrom + ' - ' + dateTo" (categoryClicked)="onCategoryClicked($event)"></app-correlation-header>
+<app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory" [date]="dateFrom + ' - ' + dateTo" (categoryClicked)="selectCategory($event)"></app-correlation-header>
+
+<div *ngIf="multipleOptions" class="dropdown-container">
+
+    <mat-form-field>
+
+        <mat-select [value]="filterByOption" (selectionChange)="onSelectionChange($event.value)">
+
+            <mat-option *ngFor="let option of uniqueOptions" [value]="option">
+                {{ option }}
+            </mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+
+</div>
 
 <app-scatter-chart [values1]="values1" [values2]="values2" [textX]="textX" [textY]="textY"></app-scatter-chart>

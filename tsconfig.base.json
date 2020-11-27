@@ -17,6 +17,7 @@
       "dom"
     ],
     "paths": {
+      "underscore": ["./node_modules/underscore/underscore.js"],
       "@shared/*": ["app/shared/*"],
       "@core/*": ["app/core/src/*"],
     }

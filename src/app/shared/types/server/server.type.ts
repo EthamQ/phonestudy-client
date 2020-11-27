@@ -26,11 +26,16 @@ export interface ICorrelationResponse {
 }
 
 export interface ICorrelation {
-    option: number,
+    option?: number,
+    options?: {
+        name: string,
+        value: number,
+    }[],
     stress: number,
     mood: number,
     sleep: number,
 };
+
 
 export interface IRequestPayload {
     compareWith: 'none' | 'all' | 'demographic',

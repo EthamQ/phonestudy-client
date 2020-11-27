@@ -17,16 +17,25 @@ export class AppUsageScatterComponent extends GenericScatterComponent {
     dateService: DateService,
   ) {
     super(statisticsDataAccessService, dateService);
-    // this.category = ECategory.APP;
+    this.categories = [
+      ECategory.APP,
+      ECategory.STRESS,
+      ECategory.MOOD,
+      ECategory.SLEEP
+    ];
 
+    this.multipleOptions = true;
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
-    if (environment.comparisonAll) {
-      this.urlSuffix = 'communication/multi-correlation-all';
-    } else {
-      this.urlSuffix = 'communication/single-correlation';
-    }
+    this.urlSuffix = 'app';
 
+    this.textX = 'App geöffnet';
+
+    this.requestPayload = {
+      compareWith: environment.comparisonAll ? 'all' : 'none',
+      type: 'correlation',
+      aggregation: 'total & average',
+    };
   }
 
 }
