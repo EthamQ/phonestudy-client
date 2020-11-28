@@ -1,19 +1,32 @@
-<app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory" [date]="dateFrom + ' - ' + dateTo" (categoryClicked)="selectCategory($event)"></app-correlation-header>
+<ng-container *ngIf="data$ | async as timeBuckets; else loading">
 
-<div *ngIf="multipleOptions" class="dropdown-container">
+    <app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory"
+        [date]="dateFrom + ' - ' + dateTo"
+        (categoryClicked)="setChartpoints(timeBuckets, $event, selectedOptionDropdown)">
+    </app-correlation-header>
 
-    <mat-form-field>
+    <div *ngIf="multipleOptions" class="dropdown-container">
 
-        <mat-select [value]="filterByOption" (selectionChange)="onSelectionChange($event.value)">
+        <mat-form-field>
 
-            <mat-option *ngFor="let option of uniqueOptions" [value]="option">
-                {{ option }}
-            </mat-option>
+            <mat-select [value]="selectedOptionDropdown"
+                (selectionChange)="onDropdownChange(timeBuckets, $event.value)">
 
-        </mat-select>
+                <mat-option *ngFor="let option of activeUniqueOptions" [value]="option">
+                    {{ option }}
+                </mat-option>
 
-    </mat-form-field>
+            </mat-select>
 
-</div>
+        </mat-form-field>
 
-<app-scatter-chart [values1]="values1" [values2]="values2" [textX]="textX" [textY]="textY"></app-scatter-chart>
+    </div>
+
+    <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX" [textY]="textY">
+    </app-scatter-chart>
+
+</ng-container>
+
+<ng-template #loading>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

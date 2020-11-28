@@ -36,7 +36,7 @@ import { ScatterChartComponent } from './src/components/charts/scatter-chart/sca
 import { ChartsModule } from 'ng2-charts';
 import { CommunicationScatterComponent } from './src/components/categories/communication/communication-scatter/communication-scatter.component';
 import { CorrelationHeaderComponent } from './src/components/header/correlation-header/correlation-header.component';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -46,6 +46,7 @@ import { CorrelationHeaderComponent } from './src/components/header/correlation-
     SharedModule,
     MatSelectModule,
     ChartsModule,
+    MatProgressBarModule,
   ],
   declarations: [
     PieChartComponent,
