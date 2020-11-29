@@ -51,6 +51,7 @@ export class GenericPieComponent implements OnInit {
     );
 
     this.data1$.pipe(take(1)).subscribe(timeBuckets => {
+      console.log('timeBuckets', timeBuckets);
       this.options = timeBuckets[0].data.user.map(x => x.option);
       this.values1 = timeBuckets[0].data.user.map(x => x.value);
 

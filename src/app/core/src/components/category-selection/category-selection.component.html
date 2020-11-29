@@ -1,19 +1,36 @@
-<div class="grid">
+<div class="section">
+
+<div class="heading">Statistiken</div>
+
+<div class="grid-1">
 
     <div class="statistics" *ngFor="let card of statisticCards">
 
         <app-category-card class="clickable" [category]="card.category"
-             [routerLink]="['../detail/statistics', card.url, '1']">
+            [routerLink]="['../detail/statistics', card.url, '1']">
         </app-category-card>
 
     </div>
 
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="heading">Korrelationen</div>
+
+<div class="grid-2">
+
     <div class="statistics" *ngFor="let card of statisticCardsCorrelation">
 
-        <app-category-card-multi class="clickable"
-            [categories]="card.categories" [routerLink]="['../detail/statistics', card.url, '1']">
+        <app-category-card-multi class="clickable" [categories]="card.categories"
+            [routerLink]="['../detail/statistics', card.url, '1']">
         </app-category-card-multi>
 
     </div>
+
+</div>
 
 </div>

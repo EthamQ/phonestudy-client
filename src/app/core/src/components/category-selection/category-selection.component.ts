@@ -14,7 +14,6 @@ export class CategorySelectionComponent implements OnInit {
     { category: ECategory.SLEEP, url: 'sleep' },
     { category: ECategory.APP, url: 'app' },
     { category: ECategory.COMMUNICATION, url: 'communication' },
-    { category: ECategory.WORDS, url: 'words' },
   ];
 
   statisticCardsCorrelation = [

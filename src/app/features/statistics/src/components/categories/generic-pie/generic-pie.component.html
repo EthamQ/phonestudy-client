@@ -1,4 +1,15 @@
-<app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="false" [arrowRightActive]="true"></app-statistic-header>
+<ng-container *ngIf="values1 && options; else loading">
 
-<app-pie-chart *ngIf="values1 && options" class="chart" [options]="options" [values1]="values1" [values2]="values2" [colorStyle]="colorStyle">
-</app-pie-chart>
+    <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="false"
+        [arrowRightActive]="true"></app-statistic-header>
+
+    <app-pie-chart class="chart" [options]="options" [values1]="values1" [values2]="values2" [colorStyle]="colorStyle">
+    </app-pie-chart>
+
+</ng-container>
+
+<ng-template #loading>
+
+    <app-loading-screen></app-loading-screen>
+
+</ng-template>

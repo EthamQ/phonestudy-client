@@ -1,0 +1,72 @@
+@keyframes fullView {
+    100% {
+      width: 100%;
+    }
+  }
+
+  .vertical {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .y-axis {
+    height: 400px;
+    width: 40px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .bar {
+    width: 100px;
+    border-radius: 8px 8px 0 0;
+    margin-left: 30px;
+    margin-bottom: 20px;
+
+    &.bar-1 {
+        height: 200px;
+    }
+
+    &.bar-2 {
+        height: 300px;
+    }
+
+    &.bar-3 {
+        height: 400px;
+    }
+  }
+
+  .x-axis {
+    height: 40px;
+    width: 465px;
+    background: #777;
+    border-radius: 0 8px 8px 8px;
+  }
+
+
+.animate {
+    animation : shimmer 2s infinite;
+    background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+    background-size: 1000px 100%;
+ }
+
+ @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .placeholder-chart {
+    display: flex;
+    justify-content: center;
+}
+
+.loading-chart {
+    margin-top: 50px;
+
+    @media only screen and (max-width: 500px) {
+        margin-top: 30px;
+        transform: scale(0.6);
+    }
+}
