@@ -5,22 +5,16 @@ import { ITimeBucket, IBasicResponse, IStatisticItem, IRequestPayload } from '@s
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
+import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
 
 @Component({
   selector: 'app-generic-bar',
   templateUrl: './generic-bar.component.html',
   styleUrls: ['./generic-bar.component.scss']
 })
-export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
-  category: ECategory;
-  comparisonActive = false;
+export class GenericBarComponent extends GenericChartComponent implements OnInit, AfterViewInit, OnDestroy {
   filterActive = false;
   daysToRequest = 7;
-  dateFrom: string;
-  dateTo: string;
-  urlSuffix: string;
-
-  requestPayload: IRequestPayload;
 
   uniqueOptions$: Observable<string[]>;
   filterByOption$: Subject<string> = new Subject<string>();
@@ -34,7 +28,9 @@ export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
-  ) { }
+  ) { 
+    super();
+  }
 
   ngOnInit(): void {
     this.dateFrom = '2020-08-01';

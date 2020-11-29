@@ -7,23 +7,19 @@ import { Observable } from 'rxjs';
 import { EAggregation, StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import * as _ from 'underscore';
 import { take } from 'rxjs/operators';
+import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
 
 @Component({
   selector: 'app-generic-scatter',
   templateUrl: './generic-scatter.component.html',
   styleUrls: ['./generic-scatter.component.scss']
 })
-export class GenericScatterComponent implements OnInit {
+export class GenericScatterComponent extends GenericChartComponent implements OnInit {
 
   daysToRequest = 14;
   categories: ECategory[];
   selectedCategory: ECategory;
-  comparisonActive: boolean;
   multipleOptions: boolean;
-  dateFrom: string;
-  dateTo: string;
-  urlSuffix: string;
-  requestPayload: IRequestPayload;
 
   data$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
 
@@ -40,7 +36,9 @@ export class GenericScatterComponent implements OnInit {
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
-  ) { }
+  ) { 
+    super();
+  }
 
   ngOnInit(): void {
     this.dateFrom = '2020-08-01';

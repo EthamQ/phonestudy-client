@@ -21,6 +21,8 @@ export class AppUsagePieComponent extends GenericPieComponent {
     this.category = ECategory.APP;
     this.colorStyle = EColorStyle.RANDOM;
 
+    this.description = 'Häufigkeit Apps in dem Zeitraum geöffnet';
+
     this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
 
     this.urlSuffix = 'app';
