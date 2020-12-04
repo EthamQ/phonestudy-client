@@ -11,8 +11,7 @@ import { GenericChartComponent } from '../../generic-chart/generic-chart.compone
 
 @Component({
   selector: 'app-generic-scatter',
-  templateUrl: './generic-scatter.component.html',
-  styleUrls: ['./generic-scatter.component.scss']
+  template: '',
 })
 export class GenericScatterComponent extends GenericChartComponent implements OnInit {
 

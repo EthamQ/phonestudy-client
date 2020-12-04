@@ -1,34 +1,40 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
-import { ECategory } from '@shared/types';
-import { ITimeBucket, IBasicResponse, IStatisticItem, IRequestPayload } from '@shared/types/server';
+import { ITimeBucket, IBasicResponse, IStatisticItem } from '@shared/types/server';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
+import { flatten } from 'underscore';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
 import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
+
+enum EDataOrigin {
+  USER,
+  COMPARE,
+}
 
 @Component({
   selector: 'app-generic-bar',
   templateUrl: './generic-bar.component.html',
-  styleUrls: ['./generic-bar.component.scss']
+  styleUrls: ['./generic-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenericBarComponent extends GenericChartComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GenericBarComponent extends GenericChartComponent implements OnInit, OnDestroy {
   filterActive = false;
   daysToRequest = 7;
 
   uniqueOptions$: Observable<string[]>;
   filterByOption$: Subject<string> = new Subject<string>();
-  data1$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
-  yAxis1$: Observable<number[]>;
-  yAxis2$: Observable<number[]>;
+  timeBuckets$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
   destroy$: Subject<void> = new Subject<void>();
 
   xAxis = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  yAxis1$: Observable<number[]>;
+  yAxis2$: Observable<number[]>;
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
-  ) { 
+  ) {
     super();
   }
 
@@ -36,7 +42,7 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
     this.dateFrom = '2020-08-01';
     this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
-    this.data1$ = this.statisticsDataAccessService.getStatistics(
+    this.timeBuckets$ = this.statisticsDataAccessService.getStatistics(
       this.urlSuffix,
       this.dateFrom,
       this.daysToRequest,
@@ -44,63 +50,45 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
       this.requestPayload,
     );
 
-    this.yAxis1$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
-      map(([buckets, filter]) => {
-        console.log(buckets);
-        const valueByDay = [];
-
-        buckets.forEach(bucket => {
-          bucket.data.user.forEach(data => {
-            if (!filter || data.option === filter) {
-              valueByDay.push(data.value);
-            }
-          });
-        });
-
-        return valueByDay;
-      })
+    this.yAxis1$ = combineLatest([this.timeBuckets$, this.filterByOption$]).pipe(
+      map(([buckets, filter]) => this.getValuesMatchingFilter(buckets, filter, EDataOrigin.USER)),
     );
 
-    if (this.comparisonActive) {
-      this.yAxis2$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
-        map(([buckets, filter]) => {
-          const valueByDay = [];
+    this.yAxis2$ = this.comparisonActive ? combineLatest([this.timeBuckets$, this.filterByOption$]).pipe(
+      map(([buckets, filter]) => this.getValuesMatchingFilter(buckets, filter, EDataOrigin.COMPARE)),
+    ) : undefined;
 
-          buckets.forEach(bucket => {
-            bucket.data.compare.forEach(data => {
-              if (!filter || data.option === filter) {
-                valueByDay.push(data.value);
-              }
-            });
-          });
 
-          return valueByDay;
-        })
-      );
-    }
-  }
+    this.uniqueOptions$ = this.timeBuckets$.pipe(
+      take(1),
+      map((timeBuckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[]) =>
+        this.getUniqueOptions(timeBuckets.map(x => x.data.user))
+      ),
+      takeUntil(this.destroy$),
+    );
 
-  ngAfterViewInit(): void {
-    if (this.filterActive) {
-      this.uniqueOptions$ = this.data1$.pipe(
-        map((timeBuckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[]) =>
-          this.getUniqueOptions(timeBuckets.map(x => x.data.user))
-        ),
-        takeUntil(this.destroy$),
-      );
-
-      this.uniqueOptions$.pipe(
-        take(1),
-      ).subscribe(allOptions => this.filterByOption$.next(allOptions[0]));
-
-    } else {
-      // To make the observable emit a value
-      this.filterByOption$.next(null)
-    }
+    this.uniqueOptions$.pipe(
+      take(1),
+    ).subscribe(uniqueOptions => this.filterByOption$.next(uniqueOptions[0]));
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
+  }
+
+  getValuesMatchingFilter(buckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[], filter: string, origin: EDataOrigin): number[] {
+    let originData: IStatisticItem[];
+
+    if (origin === EDataOrigin.USER) {
+      originData = flatten(buckets.map(bucket => bucket.data.user));
+    }
+    else {
+      originData = flatten(buckets.map(bucket => bucket.data.compare));
+    }
+
+    return originData
+      .filter((data: IStatisticItem) => (!filter || data.option === filter))
+      .map(data => data.value);
   }
 
   onSelectionChange(option: string): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
@@ -15,8 +15,9 @@ export class AppUsageBarComponent extends GenericBarComponent {
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
+    cdr: ChangeDetectorRef,
   ) {
-    super(statisticsDataAccessService, dateService);
+    super(statisticsDataAccessService, dateService, cdr);
     this.filterActive = true;
     this.category = ECategory.APP;
     

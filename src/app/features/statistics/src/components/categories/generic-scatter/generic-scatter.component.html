@@ -22,9 +22,16 @@
 
     </div>
 
-    <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX" [textY]="textY">
-    </app-scatter-chart>
-    
+    <div class="chart-section">
+
+        <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX" [textY]="textY">
+        </app-scatter-chart>
+
+        <div>
+            Text here
+        </div>
+        
+    </div>
 
 </ng-container>
 

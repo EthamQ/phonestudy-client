@@ -8,7 +8,7 @@ import { GenericScatterComponent } from '../../generic-scatter/generic-scatter.c
 @Component({
   selector: 'app-app-usage-scatter',
   templateUrl: '../../generic-scatter/generic-scatter.component.html',
-  styleUrls: ['./app-usage-scatter.component.scss']
+  styleUrls: ['../../generic-scatter/generic-scatter.component.scss']
 })
 export class AppUsageScatterComponent extends GenericScatterComponent {
 
