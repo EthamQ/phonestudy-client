@@ -24,14 +24,16 @@ export class CommunicationScatterComponent extends GenericScatterComponent {
       ECategory.SLEEP
     ];
 
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
 
     this.urlSuffix = 'communication';
 
     this.textX = 'Minuten telefoniert';
 
+    this.description = 'Korrelation Minuten telefoniert und';
+
     this.requestPayload = {
-      compareWith: environment.comparisonAll ? 'all' : 'none',
+      compareWith: environment.compareWith,
       type: 'correlation',
       aggregation: 'total & average',
     };

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
@@ -19,12 +19,14 @@ export class SleepBarComponent extends GenericBarComponent {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.SLEEP;
     
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
     
     this.urlSuffix = 'sleep';
+
+    this.description = 'Verteilung Schlafqualität pro Wochentag';
     
     this.requestPayload = {
-      compareWith: environment.comparisonAll ? 'all' : 'none',
+      compareWith: environment.compareWith,
       type: 'simple',
       aggregation: 'average',
     };

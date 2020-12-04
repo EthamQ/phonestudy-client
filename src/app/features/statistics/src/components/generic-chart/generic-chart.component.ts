@@ -9,7 +9,7 @@ import { IRequestPayload } from '@shared/types/server';
 })
 export class GenericChartComponent {
   comparisonActive: boolean;
-  description: string = 'Häufigkeit Apps in dem Zeitraum geöffnet'
+  description = '';
   category: ECategory;
   urlSuffix: string;
   dateFrom: string;

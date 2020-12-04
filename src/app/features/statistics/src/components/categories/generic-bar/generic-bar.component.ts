@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ITimeBucket, IBasicResponse, IStatisticItem } from '@shared/types/server';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { combineLatest, Observable, ReplaySubject, Subject } from 'rxjs';
+import { debounceTime, map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { flatten } from 'underscore';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
 import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
@@ -16,7 +16,6 @@ enum EDataOrigin {
   selector: 'app-generic-bar',
   templateUrl: './generic-bar.component.html',
   styleUrls: ['./generic-bar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenericBarComponent extends GenericChartComponent implements OnInit, OnDestroy {
   filterActive = false;
@@ -28,8 +27,8 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   destroy$: Subject<void> = new Subject<void>();
 
   xAxis = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  yAxis1$: Observable<number[]>;
-  yAxis2$: Observable<number[]>;
+  yAxis1$: ReplaySubject<number[]> = new ReplaySubject(1);
+  yAxis2$: ReplaySubject<number[]> = new ReplaySubject(1);
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
@@ -50,14 +49,12 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
       this.requestPayload,
     );
 
-    this.yAxis1$ = combineLatest([this.timeBuckets$, this.filterByOption$]).pipe(
-      map(([buckets, filter]) => this.getValuesMatchingFilter(buckets, filter, EDataOrigin.USER)),
-    );
-
-    this.yAxis2$ = this.comparisonActive ? combineLatest([this.timeBuckets$, this.filterByOption$]).pipe(
-      map(([buckets, filter]) => this.getValuesMatchingFilter(buckets, filter, EDataOrigin.COMPARE)),
-    ) : undefined;
-
+    combineLatest([this.timeBuckets$, this.filterByOption$])
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(([buckets, filter]) => {
+      this.yAxis1$.next(this.getValuesMatchingFilter(buckets, filter, EDataOrigin.USER));
+      this.yAxis2$.next(this.getValuesMatchingFilter(buckets, filter, EDataOrigin.COMPARE));
+    });
 
     this.uniqueOptions$ = this.timeBuckets$.pipe(
       take(1),

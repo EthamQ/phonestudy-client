@@ -11,6 +11,7 @@ export class CorrelationHeaderComponent implements OnChanges {
   @Input() categories: ECategory[];
   @Input() selectedCategory: ECategory;
   @Input() date: string;
+  @Input() description: string;
 
   @Output() categoryClicked = new EventEmitter<ECategory>();
 

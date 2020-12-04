@@ -23,12 +23,12 @@ export class AppUsagePieComponent extends GenericPieComponent {
 
     this.description = 'Häufigkeit Apps in dem Zeitraum geöffnet';
 
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
 
     this.urlSuffix = 'app';
 
     this.requestPayload = {
-      compareWith: environment.comparisonAll ? 'all' : 'none',
+      compareWith: environment.compareWith,
       type: 'simple',
       aggregation: 'total',
     };

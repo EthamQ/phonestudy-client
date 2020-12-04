@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { environment } from 'environments/environment';
@@ -18,12 +18,14 @@ export class StressBarComponent extends GenericBarComponent {
   ) {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.STRESS;
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
     
     this.urlSuffix = 'stress';
 
+    this.description = 'Verteilung Stresslevel pro Wochentag';
+
     this.requestPayload = {
-      compareWith: environment.comparisonAll ? 'all' : 'none',
+      compareWith: environment.compareWith,
       type: 'simple',
       aggregation: 'average',
     };

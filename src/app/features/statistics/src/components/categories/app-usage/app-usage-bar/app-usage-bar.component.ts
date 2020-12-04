@@ -15,18 +15,19 @@ export class AppUsageBarComponent extends GenericBarComponent {
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
-    cdr: ChangeDetectorRef,
   ) {
-    super(statisticsDataAccessService, dateService, cdr);
+    super(statisticsDataAccessService, dateService);
     this.filterActive = true;
     this.category = ECategory.APP;
     
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
 
     this.urlSuffix = 'app';
 
+    this.description = 'Verteilung App-Benutzung pro Wochentag';
+
     this.requestPayload = {
-      compareWith: environment.comparisonAll ? 'all' : 'none',
+      compareWith: environment.compareWith,
       type: 'simple',
       aggregation: 'total',
     };

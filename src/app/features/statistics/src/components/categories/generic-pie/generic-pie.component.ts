@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
-import { ECategory } from '@shared/types';
 import { ITimeBucket, IStatisticItem, IBasicResponse } from '@shared/types/server';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';

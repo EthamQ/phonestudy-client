@@ -20,12 +20,14 @@ export class StressPieComponent extends GenericPieComponent {
       super(statisticsDataAccessService, dateService);
       this.category = ECategory.STRESS;
       this.colorStyle = EColorStyle.DESCENDING;
-      this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+      this.comparisonActive = environment.compareWith !== 'none';
 
       this.urlSuffix = 'stress';
 
+      this.description = 'Verteilung Stresslevel insgesamt';
+
       this.requestPayload = {
-        compareWith: environment.comparisonAll ? 'all' : 'none',
+        compareWith: environment.compareWith,
         type: 'simple',
         aggregation: 'weight',
       };

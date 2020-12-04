@@ -19,6 +19,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   categories: ECategory[];
   selectedCategory: ECategory;
   multipleOptions: boolean;
+  descriptionCorrelation: string;
 
   data$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
 
@@ -71,6 +72,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   setChartpoints(timeBuckets: ITimeBucket<IBasicResponse<ICorrelation>>[], category: ECategory, filter: string): void {
     // Remove all options from the dropdown that don't have a x and y value fpr this category
     this.activeUniqueOptions = this.getNonEmptyOptions(timeBuckets, category, this.uniqueOptions);
+    this.descriptionCorrelation = `${this.description} ${this.getDisplayName(category)}`;
 
     this.selectedCategory = category;
 

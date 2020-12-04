@@ -1,11 +1,12 @@
-import { Input } from '@angular/core';
+import { ChangeDetectionStrategy, Input } from '@angular/core';
 import { Component, OnChanges } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.scss']
+  styleUrls: ['./bar-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarChartComponent implements OnChanges {
 
@@ -30,9 +31,11 @@ export class BarChartComponent implements OnChanges {
   };
 
   ngOnChanges(): void {
+    console.log('values 1', this.values);
+    console.log('alues 2', this.values2);
     this.datasets = [{ data: this.values, backgroundColor: '#07c' }];
 
-    if(this.values2) {
+    if(this.values2 && this.values2.length > 0) {
       this.datasets.push({ data: this.values2, backgroundColor: '#07c' });
     }
   }

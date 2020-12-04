@@ -2,6 +2,7 @@
 
     <app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory"
         [date]="dateFrom + ' - ' + dateTo"
+        [description]="descriptionCorrelation"
         (categoryClicked)="setChartpoints(timeBuckets, $event, selectedOptionDropdown)">
     </app-correlation-header>
 
@@ -30,7 +31,7 @@
         <div>
             Text here
         </div>
-        
+
     </div>
 
 </ng-container>

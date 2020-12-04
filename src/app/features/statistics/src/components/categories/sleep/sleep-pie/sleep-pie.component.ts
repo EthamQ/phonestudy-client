@@ -20,12 +20,14 @@ export class SleepPieComponent extends GenericPieComponent {
     super(statisticsDataAccessService, dateService);
     this.category = ECategory.SLEEP;
     this.colorStyle = EColorStyle.DESCENDING;
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
 
     this.urlSuffix = 'sleep';
 
+    this.description = 'Verteilung Schlafqualität insgesamt';
+
     this.requestPayload = {
-      compareWith: environment.comparisonAll ? 'all' : 'none',
+      compareWith: environment.compareWith,
       type: 'simple',
       aggregation: 'weight',
     };

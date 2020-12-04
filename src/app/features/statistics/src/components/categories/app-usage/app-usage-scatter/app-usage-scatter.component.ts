@@ -25,14 +25,16 @@ export class AppUsageScatterComponent extends GenericScatterComponent {
     ];
 
     this.multipleOptions = true;
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
 
     this.urlSuffix = 'app';
 
     this.textX = 'App geöffnet';
 
+    this.description = 'Korrelation App-Benutzung und';
+
     this.requestPayload = {
-      compareWith: environment.comparisonAll ? 'all' : 'none',
+      compareWith: environment.compareWith,
       type: 'correlation',
       aggregation: 'total & average',
     };
