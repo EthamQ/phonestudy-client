@@ -39,6 +39,7 @@ import { CorrelationHeaderComponent } from './src/components/header/correlation-
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDividerModule} from '@angular/material/divider';
 import { GenericChartComponent } from './src/components/generic-chart/generic-chart.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { GenericChartComponent } from './src/components/generic-chart/generic-ch
     ChartsModule,
     MatProgressBarModule,
     MatDividerModule,
+    MatSliderModule,
   ],
   declarations: [
     PieChartComponent,

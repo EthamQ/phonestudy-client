@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { IBasicResponse, ICorrelation, IRequestPayload, ITimeBucket } from '@shared/types/server';
+import { IBasicResponse, ICorrelation, ITimeBucket } from '@shared/types/server';
 import { ChartPoint } from 'chart.js';
 import { Observable } from 'rxjs';
 import { EAggregation, StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import * as _ from 'underscore';
 import { take } from 'rxjs/operators';
 import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
+import { CorrelationCalculationService } from '../../../utils/correlation-calculation.service';
 
 @Component({
   selector: 'app-generic-scatter',
@@ -20,6 +21,12 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   selectedCategory: ECategory;
   multipleOptions: boolean;
   descriptionCorrelation: string;
+
+  pearsonCorrelation: number;
+  pearsonCorrelationAbsolute: number;
+  pearsonCorrelationTitle: string;
+  pearsonCorrelationDescription: string;
+  pearsonCorrelationExplanation: string;
 
   data$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
 
@@ -36,7 +43,8 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
-  ) { 
+    private correlationCalculationService: CorrelationCalculationService,
+  ) {
     super();
   }
 
@@ -63,7 +71,22 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       }
 
       this.setChartpoints(timeBuckets, ECategory.STRESS, this.selectedOptionDropdown);
+
+      this.setPearsonCorrelation();
     });
+  }
+
+  setPearsonCorrelation(): void {
+    const pearsonCorrelation: number = this.correlationCalculationService.getPearsonCorrelation(
+      this.chartPointsUser.map(point => point.x) as number[],
+      this.chartPointsUser.map(point => point.y) as number[],
+    );
+
+    this.pearsonCorrelation = Math.round(pearsonCorrelation * 100) / 100;
+    this.pearsonCorrelationAbsolute = Math.abs(this.pearsonCorrelation);
+
+    this.pearsonCorrelationTitle = this.pearsonCorrelation >= 0 ? 'Positive Korrelation' : 'Negative Korrelation';
+    this.pearsonCorrelationDescription = `${this.categories[0]} ${this.selectedCategory}`;
   }
 
   /**
@@ -93,6 +116,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     }
 
     this.textY = this.getDisplayName(category);
+    this.setPearsonCorrelation();
   }
 
   onDropdownChange(timeBuckets: ITimeBucket<IBasicResponse<ICorrelation>>[], selectedOption: string): void {
@@ -104,6 +128,8 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       this.selectedCategory,
       selectedOption,
     );
+
+    this.setPearsonCorrelation();
   }
 
   getChartpoints(correlations: ICorrelation[], multipleOptions: boolean, category: ECategory, filter: string): ChartPoint[] {
@@ -157,7 +183,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
 
       const chartPointsEmpty = chartPoints.every(point => (!point.x || !point.y));
 
-      if(chartPointsEmpty) {
+      if (chartPointsEmpty) {
         emptyOptions.push(option);
       }
     });

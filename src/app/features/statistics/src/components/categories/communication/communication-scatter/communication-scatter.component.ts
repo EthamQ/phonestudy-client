@@ -4,19 +4,21 @@ import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { environment } from 'environments/environment';
 import { GenericScatterComponent } from '../../generic-scatter/generic-scatter.component';
+import { CorrelationCalculationService } from '../../../../utils/correlation-calculation.service';
 
 @Component({
   selector: 'app-communication-scatter',
   templateUrl: '../../generic-scatter/generic-scatter.component.html',
-  styleUrls: ['./communication-scatter.component.scss']
+  styleUrls: ['../../generic-scatter/generic-scatter.component.scss'],
 })
 export class CommunicationScatterComponent extends GenericScatterComponent {
 
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
+    correlationCalculationService: CorrelationCalculationService,
   ) {
-    super(statisticsDataAccessService, dateService);
+    super(statisticsDataAccessService, dateService, correlationCalculationService);
     this.categories = [
       ECategory.COMMUNICATION,
       ECategory.STRESS,
