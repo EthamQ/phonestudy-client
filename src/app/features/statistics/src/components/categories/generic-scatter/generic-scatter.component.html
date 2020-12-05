@@ -9,7 +9,7 @@
 
         <mat-form-field>
 
-            <mat-select [value]="selectedOptionDropdown"
+            <mat-select [(value)]="selectedOptionDropdown"
                 (selectionChange)="onDropdownChange(timeBuckets, $event.value)">
 
                 <mat-option *ngFor="let option of activeUniqueOptions" [value]="option">
@@ -24,35 +24,47 @@
 
     <div class="chart-section">
 
-        <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX" [textY]="textY">
-        </app-scatter-chart>
+        <div class="center">
+            <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX"
+                [textY]="textY">
+            </app-scatter-chart>
+        </div>
 
-        <div>
-            <div class="correlation-title">{{ pearsonCorrelationTitle }}</div>
+        <div class="center">
 
-            <div>
-                <span class="primary-color">Korrelation 0:</span> Die 2 Werte haben keinen Zusammenhang
+            <div class="chart-text">
+                <div class="correlation-title">{{ pearsonCorrelationTitle }}</div>
+
+                <div>
+                    <span class="primary-color">Korrelation 0:</span> Die 2 Variablen haben keinen Zusammenhang
+                </div>
+
+                <div>
+                    <span class="primary-color">Korrelation -1:</span> Die 2 Variablen haben einen vollständigen
+                    negativen Zusammenhang
+                </div>
+
+                <div>
+                    <span class="primary-color">Korrelation 1:</span> Die 2 Variablen haben einen vollständigen
+                    positiven Zusammenhang
+                </div>
+
+
+                <mat-slider class="cdk-focused" thumbLabel tickInterval="0.1" min="-1" max="1"
+                    [value]="pearsonCorrelation"></mat-slider>
+
+                <div class="slider-legend">
+                    <div class="slider-color">-1</div>
+                    <div class="slider-color center">0</div>
+                    <div class="slider-color right">1</div>
+                </div>
+
+                <div>{{ pearsonCorrelationExplanation }}</div>
+
+                <div class="hint">Achtung: desto weniger Daten es gibt desto weniger aussagekräftig ist das Ergebnis
+                </div>
+
             </div>
-
-            <div>
-                <span class="primary-color">Korrelation -1:</span> Die 2 Werte haben einen vollständigen negativen Zusammenhang
-            </div>
-
-            <div>
-                <span class="primary-color">Korrelation 1:</span> Die 2 Werte haben einen vollständigen positiven Zusammenhang
-            </div>
-
-
-            <mat-slider class="cdk-focused" thumbLabel tickInterval="0.1" min="-1"
-                max="1" [value]="pearsonCorrelation"></mat-slider>
-
-            <div class="slider-legend">
-                <div class="slider-color">-1</div>
-                <div class="slider-color center">0</div>
-                <div class="slider-color right">1</div>
-            </div>
-
-            <div>{{ pearsonCorrelationDescription }}</div>
 
         </div>
 

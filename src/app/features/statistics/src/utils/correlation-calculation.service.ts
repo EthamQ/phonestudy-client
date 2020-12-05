@@ -14,6 +14,9 @@ export class CorrelationCalculationService {
    * source: https://memory.psych.mun.ca/tech/js/correlation.shtml
    */
   getPearsonCorrelation(x: Array<number>, y: Array<number>) {
+    console.log('x', x);
+    console.log('y', y);
+
     let shortestArrayLength = 0;
      
     if(x.length == y.length) {

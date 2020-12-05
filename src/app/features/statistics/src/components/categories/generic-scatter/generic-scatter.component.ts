@@ -23,9 +23,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   descriptionCorrelation: string;
 
   pearsonCorrelation: number;
-  pearsonCorrelationAbsolute: number;
   pearsonCorrelationTitle: string;
-  pearsonCorrelationDescription: string;
   pearsonCorrelationExplanation: string;
 
   data$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
@@ -77,16 +75,30 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   }
 
   setPearsonCorrelation(): void {
+    const x: number[] = this.chartPointsUser.map(point => point.x) as number[];
+    const y: number[] = this.chartPointsUser.map(point => point.y) as number[];
+    const xNonEmpty = [];
+    const yNonEmpty = [];
+
+    x.forEach((x, index) => {
+      if(x !== null && y[index] !== null) {
+        xNonEmpty.push(x);
+        yNonEmpty.push(y[index]);
+      }
+    });
+
     const pearsonCorrelation: number = this.correlationCalculationService.getPearsonCorrelation(
-      this.chartPointsUser.map(point => point.x) as number[],
-      this.chartPointsUser.map(point => point.y) as number[],
+      xNonEmpty,
+      yNonEmpty,
     );
 
     this.pearsonCorrelation = Math.round(pearsonCorrelation * 100) / 100;
-    this.pearsonCorrelationAbsolute = Math.abs(this.pearsonCorrelation);
-
     this.pearsonCorrelationTitle = this.pearsonCorrelation >= 0 ? 'Positive Korrelation' : 'Negative Korrelation';
-    this.pearsonCorrelationDescription = `${this.categories[0]} ${this.selectedCategory}`;
+    this.pearsonCorrelationExplanation = this.getCorrelationExplanation(
+      this.categories[0],
+      this.selectedCategory,
+      this.pearsonCorrelation,
+    );
   }
 
   /**
@@ -200,6 +212,31 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       case ECategory.SLEEP:
         return 'Schlafqualität';
     }
+  }
+
+  private getCorrelationExplanation(category1: ECategory, category2: ECategory, pearsonCorrelation: number): string {
+    let explanation: string;
+    const category2DisplayName = this.getDisplayName(category2);
+    switch (category1) {
+      case ECategory.COMMUNICATION:
+        if (pearsonCorrelation >= 0) {
+          explanation = `Desto mehr du telefoniert hast desto höher war dein(e) ${category2DisplayName}`;
+        }
+        if (pearsonCorrelation < 0) {
+          explanation = `Desto mehr du telefoniert hast desto niedriger war dein(e) ${category2DisplayName}`;
+        }
+        break;
+      case ECategory.APP:
+        if (pearsonCorrelation >= 0) {
+          explanation = `Desto mehr du ${this.selectedOptionDropdown} verwendet hast desto höher war dein(e) ${category2DisplayName}`;
+        }
+        if (pearsonCorrelation < 0) {
+          explanation = `Desto mehr du ${this.selectedOptionDropdown} verwendet hast desto niedriger war dein(e) ${category2DisplayName}`;
+        }
+        break;
+    }
+
+    return `${explanation} und umgekehrt`;
   }
 
 }
