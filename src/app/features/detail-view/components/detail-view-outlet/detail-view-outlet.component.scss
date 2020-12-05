@@ -1,5 +1,15 @@
 .start-link {
+    position: sticky;
+    top: 0;
+    border-radius: 5px;
     cursor: pointer;
+    width: 55px;
+    padding: 10px;
+    margin: 10px;
+
+    &:hover {
+        background: #0379d226;
+    }
 }
 
 .content {

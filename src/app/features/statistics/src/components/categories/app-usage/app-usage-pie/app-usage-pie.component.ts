@@ -21,13 +21,17 @@ export class AppUsagePieComponent extends GenericPieComponent {
     this.category = ECategory.APP;
     this.colorStyle = EColorStyle.RANDOM;
 
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.description = 'Häufigkeit Apps in dem Zeitraum geöffnet';
 
-    if (environment.comparisonAll) {
-      this.urlSuffix = 'app/multi-all';
-    } else {
-      this.urlSuffix = 'app/single';
-    }
+    this.comparisonActive = environment.compareWith !== 'none';
+
+    this.urlSuffix = 'app';
+
+    this.requestPayload = {
+      compareWith: environment.compareWith,
+      type: 'simple',
+      aggregation: 'total',
+    };
 
   }
 

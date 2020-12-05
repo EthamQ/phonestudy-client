@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
-import { BarChartService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
 import { environment } from 'environments/environment';
 import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
 
@@ -15,20 +14,23 @@ export class AppUsageBarComponent extends GenericBarComponent {
 
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
-    barChartService: BarChartService,
     dateService: DateService,
   ) {
-    super(statisticsDataAccessService, barChartService, dateService);
+    super(statisticsDataAccessService, dateService);
     this.filterActive = true;
     this.category = ECategory.APP;
     
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
 
-    if(environment.comparisonAll) {
-      this.urlSuffix = 'app/multi-all';
-    } else {
-      this.urlSuffix = 'app/single';
-    }
+    this.urlSuffix = 'app';
+
+    this.description = 'Verteilung App-Benutzung pro Wochentag';
+
+    this.requestPayload = {
+      compareWith: environment.compareWith,
+      type: 'simple',
+      aggregation: 'total',
+    };
   }
 
 }

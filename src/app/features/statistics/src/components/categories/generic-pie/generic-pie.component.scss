@@ -1,3 +1,17 @@
 .chart {
     margin-top: 30px;
 }
+
+.placeholder-chart {
+    display: flex;
+    justify-content: center;
+}
+
+.loading-chart {
+    margin-top: 50px;
+
+    @media only screen and (max-width: 500px) {
+        margin-top: 30px;
+        transform: scale(0.6);
+    }
+}

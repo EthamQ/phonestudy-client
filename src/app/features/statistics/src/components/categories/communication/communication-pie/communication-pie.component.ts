@@ -18,9 +18,18 @@ export class CommunicationPieComponent extends GenericPieComponent{
     dateService: DateService,
     ) {
       super(statisticsDataAccessService, dateService);
-      this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+      this.comparisonActive = environment.compareWith !== 'none';
       this.category = ECategory.COMMUNICATION;
       this.colorStyle = EColorStyle.RANDOM;
-      this.urlSuffix = 'communication/category';
+
+      this.urlSuffix = 'communication';
+
+      this.description = 'Verteilung Minuten telefoniert insgesamt';
+
+      this.requestPayload = {
+        compareWith: environment.compareWith,
+        type: 'simple',
+        aggregation: 'category',
+      };
     }
 }

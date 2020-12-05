@@ -21,13 +21,17 @@ export class MoodPieComponent extends GenericPieComponent {
       this.category = ECategory.MOOD;
       this.colorStyle = EColorStyle.DESCENDING;
       
-      this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+      this.comparisonActive = environment.compareWith !== 'none';
 
-      if(environment.comparisonAll) {
-        this.urlSuffix = 'mood/multi-all';
-      } else {
-        this.urlSuffix = 'mood/single';
-      }
+      this.description = 'Verteilung Gefühlszustand insgesamt';
+
+      this.urlSuffix = 'mood';
+
+      this.requestPayload = {
+        compareWith: environment.compareWith,
+        type: 'simple',
+        aggregation: 'weight',
+      };
     }
 
 }

@@ -1,0 +1,19 @@
+<div class="header">
+
+    <div class="text">
+        <div class="heading">Statistiken</div>
+        <div class="date">{{ date }}</div>
+        <mat-divider></mat-divider>
+        <div class="description">{{ description }}</div>
+    </div>
+
+    <app-category-card [category]="category"></app-category-card>
+
+</div>
+
+<div class="navigation">
+    <img class="arrow left" [class.disabled]="!arrowLeftActive" src="/assets/actions/arrow-left.svg" alt=""
+        [routerLink]="['../1']">
+    <img class="arrow right" [class.disabled]="!arrowRightActive" src="/assets/actions/arrow-right.svg" alt=""
+        [routerLink]="['../2']">
+</div>

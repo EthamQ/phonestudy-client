@@ -41,6 +41,7 @@ export class PieChartComponent implements OnChanges {
   pieChartOptions: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    aspectRatio: 10,
   };
   datasets: ChartDataSets[] = [];
 

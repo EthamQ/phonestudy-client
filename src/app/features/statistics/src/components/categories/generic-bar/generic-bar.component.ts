@@ -1,91 +1,104 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
-import { ECategory } from '@shared/types';
-import { ITimeBucket, IBasicResponse } from '@shared/types/server';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { ITimeBucket, IBasicResponse, IStatisticItem } from '@shared/types/server';
+import { combineLatest, Observable, ReplaySubject, Subject } from 'rxjs';
+import { debounceTime, map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { flatten } from 'underscore';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
-import { BarChartService } from '../../../data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
+import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
+
+enum EDataOrigin {
+  USER,
+  COMPARE,
+}
 
 @Component({
   selector: 'app-generic-bar',
   templateUrl: './generic-bar.component.html',
-  styleUrls: ['./generic-bar.component.scss']
+  styleUrls: ['./generic-bar.component.scss'],
 })
-export class GenericBarComponent implements OnInit, AfterViewInit, OnDestroy {
-  category: ECategory;
-  comparisonActive = false;
+export class GenericBarComponent extends GenericChartComponent implements OnInit, OnDestroy {
   filterActive = false;
   daysToRequest = 7;
-  dateFrom: string;
-  dateTo: string;
-  urlSuffix: string;
 
   uniqueOptions$: Observable<string[]>;
   filterByOption$: Subject<string> = new Subject<string>();
-  data1$: Observable<ITimeBucket<IBasicResponse>[]>;
-  yAxis1$: Observable<number[]>;
-  yAxis2$: Observable<number[]>;
+  timeBuckets$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
   destroy$: Subject<void> = new Subject<void>();
 
   xAxis = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  yAxis1$: ReplaySubject<number[]> = new ReplaySubject(1);
+  yAxis2$: ReplaySubject<number[]> = new ReplaySubject(1);
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
-    private barChartService: BarChartService,
     private dateService: DateService,
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.dateFrom = '2020-08-01';
     this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
-    this.data1$ = this.statisticsDataAccessService.getStatistics(
+    this.timeBuckets$ = this.statisticsDataAccessService.getStatistics(
       this.urlSuffix,
       this.dateFrom,
       this.daysToRequest,
       EAggregation.DAYS,
+      this.requestPayload,
     );
 
-    this.uniqueOptions$ = this.data1$.pipe(
-      map((timeBuckets: ITimeBucket<IBasicResponse>[]) =>
-        this.barChartService.getUniqueOptions(timeBuckets.map(x => x.data.user))
+    combineLatest([this.timeBuckets$, this.filterByOption$])
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(([buckets, filter]) => {
+      this.yAxis1$.next(this.getValuesMatchingFilter(buckets, filter, EDataOrigin.USER));
+      this.yAxis2$.next(this.getValuesMatchingFilter(buckets, filter, EDataOrigin.COMPARE));
+    });
+
+    this.uniqueOptions$ = this.timeBuckets$.pipe(
+      take(1),
+      map((timeBuckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[]) =>
+        this.getUniqueOptions(timeBuckets.map(x => x.data.user))
       ),
       takeUntil(this.destroy$),
     );
 
-    this.yAxis1$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
-      map(([timeBuckets, filter]) =>
-        this.barChartService.getValueByDay(
-          this.barChartService.filterByOption(
-            timeBuckets.map(x => x.data.user),
-            filter)),
-        takeUntil(this.destroy$),
-      ));
-
-    if (this.comparisonActive) {
-      this.yAxis2$ = combineLatest([this.data1$, this.filterByOption$]).pipe(
-        map(([timeBuckets, filter]) =>
-          this.barChartService.getValueByDay(
-            this.barChartService.filterByOption(
-              timeBuckets.map(x => x.data.compare),
-              filter)),
-          takeUntil(this.destroy$),
-        ));
-    }
-  }
-
-  ngAfterViewInit(): void {
     this.uniqueOptions$.pipe(
       take(1),
-    ).subscribe(x => this.filterByOption$.next(this.filterActive ? x[0] : null));
+    ).subscribe(uniqueOptions => this.filterByOption$.next(uniqueOptions[0]));
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
 
-  onSelectionChange(option: string) {
+  getValuesMatchingFilter(buckets: ITimeBucket<IBasicResponse<IStatisticItem[]>>[], filter: string, origin: EDataOrigin): number[] {
+    let originData: IStatisticItem[];
+
+    if (origin === EDataOrigin.USER) {
+      originData = flatten(buckets.map(bucket => bucket.data.user));
+    }
+    else {
+      originData = flatten(buckets.map(bucket => bucket.data.compare));
+    }
+
+    return originData
+      .filter((data: IStatisticItem) => (!filter || data.option === filter))
+      .map(data => data.value);
+  }
+
+  onSelectionChange(option: string): void {
     this.filterByOption$.next(option);
+  }
+
+  private getUniqueOptions(items: IStatisticItem[][]): string[] {
+    const set = new Set<string>();
+    items.forEach(itemArray => {
+      itemArray.forEach(item => {
+        set.add(item.option);
+      });
+    });
+    return Array.from(set);
   }
 }

@@ -1,0 +1,17 @@
+<div class="text">{{ categories[0] | categoryText }}</div>
+
+<div class="main-image">
+
+    <img [src]="imageSrcMain" alt="">
+
+</div>
+
+<div class="plus">
+    +
+</div>
+
+<div class="small-images">
+
+        <img class="small-image" *ngFor="let src of imageSrcs" [src]="src" alt="">
+
+</div>

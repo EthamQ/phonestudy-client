@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { environment } from 'environments/environment';
 import { StatisticsDataAccessService } from '../../../../data-access/services/statistics-data-access.service';
 import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
-import { StatisticsMappingService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/statistics-mapping.service';
-import { BarChartService } from 'app/features/statistics/src/data-mapping/services/statistics-mapping/bar-chart/bar-chart.service';
 
 @Component({
   selector: 'app-stress-bar',
@@ -16,18 +14,21 @@ export class StressBarComponent extends GenericBarComponent {
 
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
-    barChartService: BarChartService,
     dateService: DateService,
   ) {
-    super(statisticsDataAccessService, barChartService, dateService);
+    super(statisticsDataAccessService, dateService);
     this.category = ECategory.STRESS;
-    this.comparisonActive = environment.comparisonAll || environment.comparisonDemographic;
+    this.comparisonActive = environment.compareWith !== 'none';
     
-    if(environment.comparisonAll) {
-      this.urlSuffix = 'stress/multi-all';
-    } else {
-      this.urlSuffix = 'stress/single';
-    }
+    this.urlSuffix = 'stress';
+
+    this.description = 'Verteilung Stresslevel pro Wochentag';
+
+    this.requestPayload = {
+      compareWith: environment.compareWith,
+      type: 'simple',
+      aggregation: 'average',
+    };
   }
 
 }

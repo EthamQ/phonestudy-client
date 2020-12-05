@@ -1,2 +1,1 @@
-export * from './questionaire.type';
-export * from './response.type';
+export * from './server.type';
