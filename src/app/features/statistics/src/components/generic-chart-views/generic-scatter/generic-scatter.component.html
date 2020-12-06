@@ -52,7 +52,7 @@
         <div class="correlation-info">
 
             <app-correlation-info [title]="pearsonCorrelationTitleUser" [explanation]="pearsonCorrelationExplanationUser"
-                [correlationValue]="pearsonCorrelationUser" [pointColor]="colorUser" [pointText]="'(Du)'"></app-correlation-info>
+                [correlationValue]="pearsonCorrelationUser" [pointColor]="colorUser" [pointText]="comparisonActive ? '(Du)' : ''"></app-correlation-info>
 
             <app-correlation-info *ngIf="comparisonActive" [title]="pearsonCorrelationTitleCompare" [explanation]="pearsonCorrelationExplanationCompare"
                 [correlationValue]="pearsonCorrelationCompare" [pointColor]="colorCompare" [pointText]="'(Alle)'"></app-correlation-info>

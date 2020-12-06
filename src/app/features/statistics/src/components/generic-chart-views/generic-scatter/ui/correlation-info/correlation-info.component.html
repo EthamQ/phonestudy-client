@@ -2,20 +2,31 @@
 
     <div class="chart-text">
 
-        <div>
+        <div class="title-container">
             <span class="point" [style.background-color]="pointColor"></span>
-            <span [style.color]="pointColor">{{ pointText }}</span>
+            <span class="point-text" [style.color]="pointColor">{{ pointText }}</span>
             <span class="title">{{ title }}</span>
         </div>
 
-        <mat-slider class="cdk-focused" thumbLabel tickInterval="0.1" min="-1" max="1"
+        <div class="center">
+
+            <mat-slider class="cdk-focused" thumbLabel tickInterval="0.1" min="-1" max="1"
             [value]="correlationValue"></mat-slider>
 
-        <div class="slider-legend">
-            <div class="slider-color">-1</div>
-            <div class="slider-color center">0</div>
-            <div class="slider-color right">1</div>
         </div>
+
+        <div class="center">
+
+            <div class="slider-legend">
+
+                <div class="slider-color">-1</div>
+                <div class="slider-color center">0</div>
+                <div class="slider-color right">1</div>
+
+            </div>
+            
+        </div>
+
 
         <div>{{ explanation }}</div>
 
