@@ -22,25 +22,25 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
 import { StatisticRouterOutletComponent } from './src/components/statistic-router-outlet/statistic-router-outlet.component';
 import { StatisticsDataAccessService } from './src/data-access/services/statistics-data-access.service';
 
-import { GenericPieComponent } from './src/components/categories/generic-pie/generic-pie.component';
+import { GenericPieComponent } from './src/components/generic-chart-views/generic-pie/generic-pie.component';
 import { SleepBarComponent } from './src/components/categories/sleep/sleep-bar/sleep-bar.component';
 import { SleepPieComponent } from './src/components/categories/sleep/sleep-pie/sleep-pie.component';
 import { AppUsageBarComponent } from './src/components/categories/app-usage/app-usage-bar/app-usage-bar.component';
 import { AppUsagePieComponent } from './src/components/categories/app-usage/app-usage-pie/app-usage-pie.component';
 import { CommunicationBarComponent } from './src/components/categories/communication/communication-bar/communication-bar.component';
 import { CommunicationPieComponent } from './src/components/categories/communication/communication-pie/communication-pie.component';
-import { GenericBarComponent } from './src/components/categories/generic-bar/generic-bar.component';
+import { GenericBarComponent } from './src/components/generic-chart-views/generic-bar/generic-bar.component';
 import { AppUsageScatterComponent } from './src/components/categories/app-usage/app-usage-scatter/app-usage-scatter.component';
-import { GenericScatterComponent } from './src/components/categories/generic-scatter/generic-scatter.component';
-import { CorrelationInfoComponent } from './src/components/categories/generic-scatter/ui/correlation-info/correlation-info.component';
+import { GenericScatterComponent } from './src/components/generic-chart-views/generic-scatter/generic-scatter.component';
+import { CorrelationInfoComponent } from './src/components/generic-chart-views/generic-scatter/ui/correlation-info/correlation-info.component';
 import { ScatterChartComponent } from './src/components/charts/scatter-chart/scatter-chart.component';
 import { ChartsModule } from 'ng2-charts';
 import { CommunicationScatterComponent } from './src/components/categories/communication/communication-scatter/communication-scatter.component';
 import { CorrelationHeaderComponent } from './src/components/header/correlation-header/correlation-header.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatDividerModule} from '@angular/material/divider';
-import { GenericChartComponent } from './src/components/generic-chart/generic-chart.component';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { GenericChartComponent } from './src/components/generic-chart-views/generic-chart/generic-chart.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   imports: [

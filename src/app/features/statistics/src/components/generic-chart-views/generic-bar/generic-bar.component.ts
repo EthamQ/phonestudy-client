@@ -5,7 +5,7 @@ import { combineLatest, Observable, ReplaySubject, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { flatten } from 'underscore';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
-import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
+import { GenericChartComponent } from '../generic-chart/generic-chart.component';
 import { EDataOrigin } from '../../../types/types';
 
 

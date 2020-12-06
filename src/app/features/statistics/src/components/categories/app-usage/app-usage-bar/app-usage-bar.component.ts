@@ -3,12 +3,12 @@ import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { environment } from 'environments/environment';
-import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
+import { GenericBarComponent } from '../../../generic-chart-views/generic-bar/generic-bar.component';
 
 @Component({
   selector: 'app-app-usage-bar',
-  templateUrl: '../../generic-bar/generic-bar.component.html',
-  styleUrls: ['../../generic-bar/generic-bar.component.scss']
+  templateUrl: '../../../generic-chart-views/generic-bar/generic-bar.component.html',
+  styleUrls: ['../../../generic-chart-views/generic-bar/generic-bar.component.scss']
 })
 export class AppUsageBarComponent extends GenericBarComponent {
 

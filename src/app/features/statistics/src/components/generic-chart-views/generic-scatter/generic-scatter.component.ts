@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { EAggregation, StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import * as _ from 'underscore';
 import { take } from 'rxjs/operators';
-import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
+import { GenericChartComponent } from '../generic-chart/generic-chart.component';
 import { CorrelationCalculationService } from '../../../utils/correlation-calculation.service';
 import { EDataOrigin } from '../../../types/types';
 import { ColorService } from '../../../utils/color.service';
