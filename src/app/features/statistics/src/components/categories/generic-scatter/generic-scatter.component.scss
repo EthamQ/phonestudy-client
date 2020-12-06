@@ -1,23 +1,12 @@
 @import 'src/styles/theme';
 
-.correlation-title {
-    font-size: 22px;
-    color: $primary-blue;
-    padding-bottom: 20px;
+.header-text {
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .primary-color {
     color: $primary-blue;
-}
-
-.slider-color {
-    color: #ff4081;
-}
-
-.hint {
-    margin-top: 5px;
-    font-size: 13px;
-    color: $grey;
 }
 
 .dropdown-container {
@@ -36,23 +25,12 @@
     }
 }
 
-mat-slider {
-    width: 300px;
-    margin-top: 25px;
-    pointer-events: none;
-}
-
-.slider-legend {
-    width: 300px;
+.correlation-info {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr;
 
-    .center {
-        text-align: center;
-    }
-
-    .right {
-        text-align: right;
+    @media only screen and (max-width: 700px) {
+        grid-template-columns: 1fr;
     }
 }
 

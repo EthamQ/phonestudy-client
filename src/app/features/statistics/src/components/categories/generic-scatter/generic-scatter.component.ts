@@ -9,6 +9,8 @@ import * as _ from 'underscore';
 import { take } from 'rxjs/operators';
 import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
 import { CorrelationCalculationService } from '../../../utils/correlation-calculation.service';
+import { EDataOrigin } from '../../../types/types';
+import { ColorService } from '../../../utils/color.service';
 
 @Component({
   selector: 'app-generic-scatter',
@@ -22,9 +24,15 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   multipleOptions: boolean;
   descriptionCorrelation: string;
 
-  pearsonCorrelation: number;
-  pearsonCorrelationTitle: string;
-  pearsonCorrelationExplanation: string;
+  pearsonCorrelationUser: number;
+  pearsonCorrelationTitleUser: string;
+  pearsonCorrelationExplanationUser: string;
+  colorUser = this.colorService.getChartColor(EDataOrigin.USER);
+
+  pearsonCorrelationCompare: number;
+  pearsonCorrelationTitleCompare: string;
+  pearsonCorrelationExplanationCompare: string;
+  colorCompare = this.colorService.getChartColor(EDataOrigin.COMPARE);
 
   data$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
 
@@ -42,6 +50,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
     private correlationCalculationService: CorrelationCalculationService,
+    private colorService: ColorService,
   ) {
     super();
   }
@@ -61,6 +70,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     this.data$.pipe(
       take(1),
     ).subscribe(timeBuckets => {
+      console.log('timeBuckets', timeBuckets);
 
       if (this.multipleOptions) {
         this.uniqueOptions = this.getUniqueOptions(timeBuckets);
@@ -70,35 +80,8 @@ export class GenericScatterComponent extends GenericChartComponent implements On
 
       this.setChartpoints(timeBuckets, ECategory.STRESS, this.selectedOptionDropdown);
 
-      this.setPearsonCorrelation();
+      this.setPearsonCorrelation(EDataOrigin.USER);
     });
-  }
-
-  setPearsonCorrelation(): void {
-    const x: number[] = this.chartPointsUser.map(point => point.x) as number[];
-    const y: number[] = this.chartPointsUser.map(point => point.y) as number[];
-    const xNonEmpty = [];
-    const yNonEmpty = [];
-
-    x.forEach((x, index) => {
-      if(x !== null && y[index] !== null) {
-        xNonEmpty.push(x);
-        yNonEmpty.push(y[index]);
-      }
-    });
-
-    const pearsonCorrelation: number = this.correlationCalculationService.getPearsonCorrelation(
-      xNonEmpty,
-      yNonEmpty,
-    );
-
-    this.pearsonCorrelation = Math.round(pearsonCorrelation * 100) / 100;
-    this.pearsonCorrelationTitle = this.pearsonCorrelation >= 0 ? 'Positive Korrelation' : 'Negative Korrelation';
-    this.pearsonCorrelationExplanation = this.getCorrelationExplanation(
-      this.categories[0],
-      this.selectedCategory,
-      this.pearsonCorrelation,
-    );
   }
 
   /**
@@ -118,17 +101,18 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       filter,
     );
 
-    if (this.comparisonActive) {
-      this.chartPointsCompare = this.getChartpoints(
-        timeBuckets.map(x => x.data.compare),
-        this.multipleOptions,
-        category,
-        filter,
-      );
-    }
+    this.chartPointsCompare = this.comparisonActive ? this.getChartpoints(
+      timeBuckets.map(x => x.data.compare),
+      this.multipleOptions,
+      category,
+      filter,
+    ) : null;
 
     this.textY = this.getDisplayName(category);
-    this.setPearsonCorrelation();
+    this.setPearsonCorrelation(EDataOrigin.USER);
+    if(this.comparisonActive) {
+      this.setPearsonCorrelation(EDataOrigin.COMPARE);
+    }
   }
 
   onDropdownChange(timeBuckets: ITimeBucket<IBasicResponse<ICorrelation>>[], selectedOption: string): void {
@@ -141,10 +125,20 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       selectedOption,
     );
 
-    this.setPearsonCorrelation();
+    this.chartPointsCompare = this.comparisonActive ? this.getChartpoints(
+      timeBuckets.map(x => x.data.compare),
+      this.multipleOptions,
+      this.selectedCategory,
+      selectedOption,
+    ) : null;
+
+    this.setPearsonCorrelation(EDataOrigin.USER);
+    if(this.comparisonActive) {
+      this.setPearsonCorrelation(EDataOrigin.COMPARE);
+    }
   }
 
-  getChartpoints(correlations: ICorrelation[], multipleOptions: boolean, category: ECategory, filter: string): ChartPoint[] {
+  private getChartpoints(correlations: ICorrelation[], multipleOptions: boolean, category: ECategory, filter: string): ChartPoint[] {
     return correlations.map(correlation => {
       let x = correlation.option;
 
@@ -214,24 +208,67 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     }
   }
 
+  private setPearsonCorrelation(origin: EDataOrigin): void {
+    const chartPoints = origin === EDataOrigin.USER ? this.chartPointsUser : this.chartPointsCompare;
+    const title = origin === EDataOrigin.USER ? 'pearsonCorrelationTitleUser' : 'pearsonCorrelationTitleCompare';
+    const explanation = origin === EDataOrigin.USER ? 'pearsonCorrelationExplanationUser' : 'pearsonCorrelationExplanationCompare';
+    const correlationValue = origin === EDataOrigin.USER ? 'pearsonCorrelationUser' : 'pearsonCorrelationCompare';
+
+    const x: number[] = chartPoints.map(point => point.x) as number[];
+    const y: number[] = chartPoints.map(point => point.y) as number[];
+    const xNonEmpty = [];
+    const yNonEmpty = [];
+
+    x.forEach((x, index) => {
+      if (x !== null && y[index] !== null) {
+        xNonEmpty.push(x);
+        yNonEmpty.push(y[index]);
+      }
+    });
+
+    const pearsonCorrelation: number = this.correlationCalculationService.getPearsonCorrelation(
+      xNonEmpty,
+      yNonEmpty,
+    );
+
+    this[correlationValue] = Math.round(pearsonCorrelation * 100) / 100;
+
+    if (this.pearsonCorrelationUser === 0) {
+      this[title] = 'Keine Korrelation';
+    } else {
+      this[title] = this.pearsonCorrelationUser >= 0 ? 'Positive Korrelation' : 'Negative Korrelation';
+    }
+
+    this[explanation] = this.getCorrelationExplanation(
+      this.categories[0],
+      this.selectedCategory,
+      this.pearsonCorrelationUser,
+    );
+  }
+
   private getCorrelationExplanation(category1: ECategory, category2: ECategory, pearsonCorrelation: number): string {
     let explanation: string;
     const category2DisplayName = this.getDisplayName(category2);
+
+    if (pearsonCorrelation === 0) {
+      return '';
+    }
+
     switch (category1) {
       case ECategory.COMMUNICATION:
-        if (pearsonCorrelation >= 0) {
-          explanation = `Desto mehr du telefoniert hast desto höher war dein(e) ${category2DisplayName}`;
+        if (pearsonCorrelation > 0) {
+          explanation = `Desto mehr du telefoniert hast desto höher / besser war dein(e) ${category2DisplayName}`;
         }
         if (pearsonCorrelation < 0) {
-          explanation = `Desto mehr du telefoniert hast desto niedriger war dein(e) ${category2DisplayName}`;
+          explanation = `Desto mehr du telefoniert hast desto niedriger / schlechter war dein(e) ${category2DisplayName}`;
         }
         break;
       case ECategory.APP:
         if (pearsonCorrelation >= 0) {
-          explanation = `Desto mehr du ${this.selectedOptionDropdown} verwendet hast desto höher war dein(e) ${category2DisplayName}`;
+          explanation = `Desto mehr du ${this.selectedOptionDropdown} verwendet hast desto höher / besser war dein(e) ${category2DisplayName}`;
         }
         if (pearsonCorrelation < 0) {
-          explanation = `Desto mehr du ${this.selectedOptionDropdown} verwendet hast desto niedriger war dein(e) ${category2DisplayName}`;
+          explanation = `Desto mehr du ${this.selectedOptionDropdown} verwendet hast desto niedriger / schlechter war dein(e) ${category2DisplayName}`;
         }
         break;
     }

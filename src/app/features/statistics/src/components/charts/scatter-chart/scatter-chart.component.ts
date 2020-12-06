@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ChartOptions, ChartDataSets, ChartType, ChartPoint } from 'chart.js';
+import { EDataOrigin } from '../../../types/types';
+import { ColorService } from '../../../utils/color.service';
 
 @Component({
   selector: 'app-scatter-chart',
@@ -18,6 +20,8 @@ export class ScatterChartComponent implements OnChanges {
   datasets: ChartDataSets[];
   options: ChartOptions;
 
+  constructor(private colorService: ColorService) {}
+
   ngOnChanges(): void {
     console.log('values1', this.values1);
     console.log('values2', this.values2);
@@ -26,16 +30,16 @@ export class ScatterChartComponent implements OnChanges {
         {
           data: this.values1,
           pointRadius: 10,
-          pointBackgroundColor: 'red',
+          pointBackgroundColor: this.colorService.getChartColor(EDataOrigin.USER),
         },
       ];
     }
 
     if(this.values2 && this.datasets && this.datasets.length === 1) {
       this.datasets.push({
-        data: this.values2.map(point => ({ x: point.x ? (<number>point.x + 1) : point.x, y: point.y ? (<number>point.y + 1): point.y})),
-        pointRadius: 10,
-        pointBackgroundColor: 'blue',
+        data: this.values2,
+        pointRadius: 15,
+        pointBackgroundColor: this.colorService.getChartColor(EDataOrigin.COMPARE),
       });
     }
 

@@ -5,6 +5,7 @@ import { StatisticsDataAccessService } from 'app/features/statistics/src/data-ac
 import { environment } from 'environments/environment';
 import { GenericScatterComponent } from '../../generic-scatter/generic-scatter.component';
 import { CorrelationCalculationService } from '../../../../utils/correlation-calculation.service';
+import { ColorService } from '../../../../utils/color.service';
 
 @Component({
   selector: 'app-communication-scatter',
@@ -17,8 +18,9 @@ export class CommunicationScatterComponent extends GenericScatterComponent {
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
     correlationCalculationService: CorrelationCalculationService,
+    colorService: ColorService,
   ) {
-    super(statisticsDataAccessService, dateService, correlationCalculationService);
+    super(statisticsDataAccessService, dateService, correlationCalculationService, colorService);
     this.categories = [
       ECategory.COMMUNICATION,
       ECategory.STRESS,

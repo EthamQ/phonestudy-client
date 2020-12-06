@@ -3,6 +3,25 @@
     <app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory"
         [date]="dateFrom + ' - ' + dateTo" [description]="descriptionCorrelation"
         (categoryClicked)="setChartpoints(timeBuckets, $event, selectedOptionDropdown)">
+
+        <div class="header-text">
+
+            <div>
+                <span class="primary-color">Korrelation -1:</span> Die 2 Variablen haben einen vollständigen
+                negativen Zusammenhang
+            </div>
+
+            <div>
+                <span class="primary-color">Korrelation 0:</span> Die 2 Variablen haben keinen Zusammenhang
+            </div>
+
+            <div>
+                <span class="primary-color">Korrelation 1:</span> Die 2 Variablen haben einen vollständigen
+                positiven Zusammenhang
+            </div>
+
+        </div>
+
     </app-correlation-header>
 
     <div *ngIf="multipleOptions" class="dropdown-container">
@@ -22,7 +41,7 @@
 
     </div>
 
-    <div class="chart-section">
+    <div class="chart-section" [class.comparison-active]="comparisonActive">
 
         <div class="center">
             <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX"
@@ -30,42 +49,13 @@
             </app-scatter-chart>
         </div>
 
-        <div class="center">
+        <div class="correlation-info">
 
-            <div class="chart-text">
-                <div class="correlation-title">{{ pearsonCorrelationTitle }}</div>
+            <app-correlation-info [title]="pearsonCorrelationTitleUser" [explanation]="pearsonCorrelationExplanationUser"
+                [correlationValue]="pearsonCorrelationUser" [pointColor]="colorUser" [pointText]="'(Du)'"></app-correlation-info>
 
-                <div>
-                    <span class="primary-color">Korrelation 0:</span> Die 2 Variablen haben keinen Zusammenhang
-                </div>
-
-                <div>
-                    <span class="primary-color">Korrelation -1:</span> Die 2 Variablen haben einen vollständigen
-                    negativen Zusammenhang
-                </div>
-
-                <div>
-                    <span class="primary-color">Korrelation 1:</span> Die 2 Variablen haben einen vollständigen
-                    positiven Zusammenhang
-                </div>
-
-
-                <mat-slider class="cdk-focused" thumbLabel tickInterval="0.1" min="-1" max="1"
-                    [value]="pearsonCorrelation"></mat-slider>
-
-                <div class="slider-legend">
-                    <div class="slider-color">-1</div>
-                    <div class="slider-color center">0</div>
-                    <div class="slider-color right">1</div>
-                </div>
-
-                <div>{{ pearsonCorrelationExplanation }}</div>
-
-                <div class="hint">Achtung: desto weniger Daten es gibt desto weniger aussagekräftig ist das Ergebnis
-                </div>
-
-            </div>
-
+            <app-correlation-info *ngIf="comparisonActive" [title]="pearsonCorrelationTitleCompare" [explanation]="pearsonCorrelationExplanationCompare"
+                [correlationValue]="pearsonCorrelationCompare" [pointColor]="colorCompare" [pointText]="'(Alle)'"></app-correlation-info>
         </div>
 
     </div>

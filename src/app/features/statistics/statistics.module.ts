@@ -32,6 +32,7 @@ import { CommunicationPieComponent } from './src/components/categories/communica
 import { GenericBarComponent } from './src/components/categories/generic-bar/generic-bar.component';
 import { AppUsageScatterComponent } from './src/components/categories/app-usage/app-usage-scatter/app-usage-scatter.component';
 import { GenericScatterComponent } from './src/components/categories/generic-scatter/generic-scatter.component';
+import { CorrelationInfoComponent } from './src/components/categories/generic-scatter/ui/correlation-info/correlation-info.component';
 import { ScatterChartComponent } from './src/components/charts/scatter-chart/scatter-chart.component';
 import { ChartsModule } from 'ng2-charts';
 import { CommunicationScatterComponent } from './src/components/categories/communication/communication-scatter/communication-scatter.component';
@@ -76,6 +77,7 @@ import {MatSliderModule} from '@angular/material/slider';
     CommunicationScatterComponent,
     CorrelationHeaderComponent,
     GenericChartComponent,
+    CorrelationInfoComponent,
   ],
   providers: [StatisticsDataAccessService],
 })
