@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../charts';
-import { GenericChartComponent } from '../../generic-chart/generic-chart.component';
+import { GenericChartComponent } from '../generic-chart/generic-chart.component';
 
 @Component({
   selector: 'app-generic-pie',

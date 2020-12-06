@@ -36,7 +36,7 @@ export class BarChartComponent implements OnChanges {
     this.datasets = [{ data: this.values, backgroundColor: '#07c' }];
 
     if(this.values2 && this.values2.length > 0) {
-      this.datasets.push({ data: this.values2, backgroundColor: '#07c' });
+      this.datasets.push({ data: this.values2, backgroundColor: 'orange' });
     }
   }
 

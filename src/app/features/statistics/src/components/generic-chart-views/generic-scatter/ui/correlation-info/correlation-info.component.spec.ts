@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppMoodLineComponent } from './app-mood-line.component';
+import { CorrelationInfoComponent } from './correlation-info.component';
 
-describe('AppMoodLineComponent', () => {
-  let component: AppMoodLineComponent;
-  let fixture: ComponentFixture<AppMoodLineComponent>;
+describe('CorrelationInfoComponent', () => {
+  let component: CorrelationInfoComponent;
+  let fixture: ComponentFixture<CorrelationInfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppMoodLineComponent ]
+      declarations: [ CorrelationInfoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppMoodLineComponent);
+    fixture = TestBed.createComponent(CorrelationInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

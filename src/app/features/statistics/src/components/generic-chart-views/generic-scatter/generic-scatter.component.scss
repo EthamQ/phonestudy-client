@@ -1,0 +1,49 @@
+@import 'src/styles/theme';
+
+.header-text {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.primary-color {
+    color: $primary-blue;
+}
+
+.dropdown-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.chart-section {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    @media only screen and (max-width: 1000px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.correlation-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    @media only screen and (max-width: 700px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+app-scatter-chart {
+    max-width: 500px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.chart-text {
+    padding: 10px;
+}
+  

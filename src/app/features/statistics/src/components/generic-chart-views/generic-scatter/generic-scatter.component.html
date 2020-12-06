@@ -1,0 +1,70 @@
+<ng-container *ngIf="data$ | async as timeBuckets; else loading">
+
+    <app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory"
+        [date]="dateFrom + ' - ' + dateTo" [description]="descriptionCorrelation"
+        (categoryClicked)="setChartpoints(timeBuckets, $event, selectedOptionDropdown)">
+
+        <div class="header-text">
+
+            <div>
+                <span class="primary-color">Korrelation -1:</span> Die 2 Variablen haben einen vollständigen
+                negativen Zusammenhang
+            </div>
+
+            <div>
+                <span class="primary-color">Korrelation 0:</span> Die 2 Variablen haben keinen Zusammenhang
+            </div>
+
+            <div>
+                <span class="primary-color">Korrelation 1:</span> Die 2 Variablen haben einen vollständigen
+                positiven Zusammenhang
+            </div>
+
+        </div>
+
+    </app-correlation-header>
+
+    <div *ngIf="multipleOptions" class="dropdown-container">
+
+        <mat-form-field>
+
+            <mat-select [(value)]="selectedOptionDropdown"
+                (selectionChange)="onDropdownChange(timeBuckets, $event.value)">
+
+                <mat-option *ngFor="let option of activeUniqueOptions" [value]="option">
+                    {{ option }}
+                </mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <div class="chart-section" [class.comparison-active]="comparisonActive">
+
+        <div class="center">
+            <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX"
+                [textY]="textY">
+            </app-scatter-chart>
+        </div>
+
+        <div class="correlation-info">
+
+            <app-correlation-info [title]="pearsonCorrelationTitleUser" [explanation]="pearsonCorrelationExplanationUser"
+                [correlationValue]="pearsonCorrelationUser" [pointColor]="colorUser" [pointText]="'(Du)'"></app-correlation-info>
+
+            <app-correlation-info *ngIf="comparisonActive" [title]="pearsonCorrelationTitleCompare" [explanation]="pearsonCorrelationExplanationCompare"
+                [correlationValue]="pearsonCorrelationCompare" [pointColor]="colorCompare" [pointText]="'(Alle)'"></app-correlation-info>
+        </div>
+
+    </div>
+
+</ng-container>
+
+
+<ng-template #loading>
+
+    <app-loading-screen></app-loading-screen>
+
+</ng-template>

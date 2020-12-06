@@ -2,12 +2,12 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
-import { GenericBarComponent } from '../../generic-bar/generic-bar.component';
+import { GenericBarComponent } from '../../../generic-chart-views/generic-bar/generic-bar.component';
 import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-communication-bar',
-  templateUrl: '../../generic-bar/generic-bar.component.html',
+  templateUrl: '../../../generic-chart-views/generic-bar/generic-bar.component.html',
   styleUrls: ['./communication-bar.component.scss']
 })
 export class CommunicationBarComponent extends GenericBarComponent {

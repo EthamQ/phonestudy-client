@@ -4,12 +4,13 @@ import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { CorrelationCalculationService } from 'app/features/statistics/src/utils/correlation-calculation.service';
 import { environment } from 'environments/environment';
-import { GenericScatterComponent } from '../../generic-scatter/generic-scatter.component';
+import { GenericScatterComponent } from '../../../generic-chart-views/generic-scatter/generic-scatter.component';
+import { ColorService } from '../../../../utils/color.service';
 
 @Component({
   selector: 'app-app-usage-scatter',
-  templateUrl: '../../generic-scatter/generic-scatter.component.html',
-  styleUrls: ['../../generic-scatter/generic-scatter.component.scss'],
+  templateUrl: '../../../generic-chart-views/generic-scatter/generic-scatter.component.html',
+  styleUrls: ['../../../generic-chart-views/generic-scatter/generic-scatter.component.scss'],
 })
 export class AppUsageScatterComponent extends GenericScatterComponent {
 
@@ -17,8 +18,9 @@ export class AppUsageScatterComponent extends GenericScatterComponent {
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
     correlationCalculationService: CorrelationCalculationService,
+    colorService: ColorService,
   ) {
-    super(statisticsDataAccessService, dateService, correlationCalculationService);
+    super(statisticsDataAccessService, dateService, correlationCalculationService, colorService);
     this.categories = [
       ECategory.APP,
       ECategory.STRESS,
