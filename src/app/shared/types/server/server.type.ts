@@ -14,10 +14,20 @@ export interface IBasicResponse<T> {
     compare: T,
 }
 
+export interface IStatisticsWeek {
+    monday: IStatisticItem[],
+    tuesday: IStatisticItem[],
+    wednesday: IStatisticItem[],
+    thursday: IStatisticItem[],
+    friday: IStatisticItem[],
+    saturday: IStatisticItem[],
+    sunday: IStatisticItem[],
+};
+
 export interface IStatisticItem {
     option: string,
     value: number,
-    positivity: 0 | 1 | 2 | 3 | 4 | 5 | 6,
+    positivity?: 0 | 1 | 2 | 3 | 4 | 5 | 6,
 };
 
 export interface ICorrelationResponse {
@@ -40,5 +50,5 @@ export interface ICorrelation {
 export interface IRequestPayload {
     compareWith: 'none' | 'all' | 'demographic',
     type: 'simple' | 'correlation',
-    aggregation: 'length' | 'by-time-frame' | 'total' | 'average' | 'total-option-value' | 'total & average',
+    aggregation: 'total-by-weekday' | 'length' | 'by-time-frame' | 'total' | 'average-by-weekday' | 'total-option-value' | 'total & average',
 }

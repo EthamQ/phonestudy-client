@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DateService, ELocalStorageKey, LocalStorageService } from '@shared/services';
-import { IBasicResponse, IServerResponse, ITimeBucket, ICorrelation, IStatisticItem, IRequestPayload } from '@shared/types/server';
+import { IBasicResponse, IServerResponse, ITimeBucket, ICorrelation, IStatisticItem, IRequestPayload, IStatisticsWeek } from '@shared/types/server';
 import { StatisticsMappingService } from '../../data-mapping/services/statistics-mapping/statistics-mapping.service';
 
 export enum EAggregation {
@@ -31,6 +31,23 @@ export class StatisticsDataAccessService {
     aggregation: EAggregation,
     payload: IRequestPayload,
   ): Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]> {
+    return this.http.post(this.getUrl(
+      urlSuffix,
+      dateFrom,
+      days,
+      aggregation
+    ), payload).pipe(
+      map((response: IServerResponse<IBasicResponse<IStatisticItem[]>>) => this.statisticsMappingService.map(response)),
+    );
+  }
+
+  getStatisticsByWeekday(
+    urlSuffix: string,
+    dateFrom: string,
+    days: number,
+    aggregation: EAggregation,
+    payload: IRequestPayload,
+  ): Observable<ITimeBucket<IBasicResponse<IStatisticsWeek>>[]> {
     return this.http.post(this.getUrl(
       urlSuffix,
       dateFrom,

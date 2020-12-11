@@ -29,7 +29,7 @@ export class AppUsageBarComponent extends GenericBarComponent {
     this.requestPayload = {
       compareWith: environment.compareWith,
       type: 'simple',
-      aggregation: 'total',
+      aggregation: 'total-by-weekday',
     };
   }
 

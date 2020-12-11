@@ -29,7 +29,7 @@ export class CommunicationBarComponent extends GenericBarComponent {
     this.requestPayload = {
       compareWith: environment.compareWith,
       type: 'simple',
-      aggregation: 'total-option-value',
+      aggregation: 'total-by-weekday',
     };
   }
 }

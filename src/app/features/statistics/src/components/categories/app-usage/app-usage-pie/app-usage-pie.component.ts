@@ -32,7 +32,7 @@ export class AppUsagePieComponent extends GenericPieComponent {
     this.requestPayload = {
       compareWith: environment.compareWith,
       type: 'simple',
-      aggregation: 'total',
+      aggregation: 'total-option-value',
     };
 
   }

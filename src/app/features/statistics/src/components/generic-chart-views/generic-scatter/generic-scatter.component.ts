@@ -18,7 +18,7 @@ import { ColorService } from '../../../utils/color.service';
 })
 export class GenericScatterComponent extends GenericChartComponent implements OnInit {
 
-  daysToRequest = 14;
+  daysToRequest = 200;
   categories: ECategory[];
   selectedCategory: ECategory;
   multipleOptions: boolean;
@@ -56,14 +56,14 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   }
 
   ngOnInit(): void {
-    this.dateFrom = '2020-08-01';
+    this.dateFrom = '2020-04-20';
     this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
     this.data$ = this.statisticsDataAccessService.getCorrelation(
       this.urlSuffix,
       this.dateFrom,
       this.daysToRequest,
-      EAggregation.DAYS,
+      EAggregation.NO_AGGREGATION,
       this.requestPayload
     );
 
