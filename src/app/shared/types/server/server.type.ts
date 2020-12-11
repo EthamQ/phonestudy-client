@@ -17,7 +17,7 @@ export interface IBasicResponse<T> {
 export interface IStatisticItem {
     option: string,
     value: number,
-    weight: number,
+    positivity: 0 | 1 | 2 | 3 | 4 | 5 | 6,
 };
 
 export interface ICorrelationResponse {
@@ -40,5 +40,5 @@ export interface ICorrelation {
 export interface IRequestPayload {
     compareWith: 'none' | 'all' | 'demographic',
     type: 'simple' | 'correlation',
-    aggregation: 'length' | 'category' | 'total' | 'weight' | 'average' | 'total_response_object' | 'total & average',
+    aggregation: 'length' | 'by-time-frame' | 'total' | 'average' | 'total-option-value' | 'total & average',
 }

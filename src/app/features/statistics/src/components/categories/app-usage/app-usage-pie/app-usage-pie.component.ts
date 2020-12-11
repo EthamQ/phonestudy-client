@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { ColorService } from 'app/features/statistics/src/utils/color.service';
 import { environment } from 'environments/environment';
 import { EColorStyle } from '../../../charts';
 import { GenericPieComponent } from '../../../generic-chart-views/generic-pie/generic-pie.component';
@@ -16,8 +17,9 @@ export class AppUsagePieComponent extends GenericPieComponent {
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
+    colorService: ColorService,
   ) {
-    super(statisticsDataAccessService, dateService);
+    super(statisticsDataAccessService, dateService, colorService);
     this.category = ECategory.APP;
     this.colorStyle = EColorStyle.RANDOM;
 
