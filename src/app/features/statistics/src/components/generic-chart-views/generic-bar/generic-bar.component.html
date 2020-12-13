@@ -5,7 +5,7 @@
         <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="true"
             [arrowRightActive]="false" [description]="description"></app-statistic-header>
 
-        <div *ngIf="filterActive" class="dropdown-container">
+        <div *ngIf="uniqueOptions.length > 1" class="dropdown-container">
 
             <mat-form-field>
 

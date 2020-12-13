@@ -5,6 +5,7 @@ import { StatisticsDataAccessService } from 'app/features/statistics/src/data-ac
 import { EColorStyle } from '../../../charts';
 import { GenericPieComponent } from '../../../generic-chart-views/generic-pie/generic-pie.component';
 import { environment } from 'environments/environment';
+import { ColorService } from 'app/features/statistics/src/utils/color.service';
 
 @Component({
   selector: 'app-mood-pie',
@@ -16,10 +17,11 @@ export class MoodPieComponent extends GenericPieComponent {
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
+    colorService: ColorService,
     ) {
-      super(statisticsDataAccessService, dateService);
+      super(statisticsDataAccessService, dateService, colorService);
       this.category = ECategory.MOOD;
-      this.colorStyle = EColorStyle.DESCENDING;
+      this.colorStyle = EColorStyle.ASCENDING;
       
       this.comparisonActive = environment.compareWith !== 'none';
 
@@ -30,7 +32,7 @@ export class MoodPieComponent extends GenericPieComponent {
       this.requestPayload = {
         compareWith: environment.compareWith,
         type: 'simple',
-        aggregation: 'weight',
+        aggregation: 'total',
       };
     }
 

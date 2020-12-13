@@ -5,6 +5,7 @@ import { GenericPieComponent } from '../../../generic-chart-views/generic-pie/ge
 import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../../charts';
 import { environment } from 'environments/environment';
+import { ColorService, EColor } from 'app/features/statistics/src/utils/color.service';
 
 @Component({
   selector: 'app-stress-pie',
@@ -16,10 +17,11 @@ export class StressPieComponent extends GenericPieComponent {
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
+    colorService: ColorService,
     ) {
-      super(statisticsDataAccessService, dateService);
+      super(statisticsDataAccessService, dateService, colorService);
       this.category = ECategory.STRESS;
-      this.colorStyle = EColorStyle.DESCENDING;
+      this.colorStyle = EColorStyle.ASCENDING;
       this.comparisonActive = environment.compareWith !== 'none';
 
       this.urlSuffix = 'stress';
@@ -29,7 +31,7 @@ export class StressPieComponent extends GenericPieComponent {
       this.requestPayload = {
         compareWith: environment.compareWith,
         type: 'simple',
-        aggregation: 'weight',
+        aggregation: 'total',
       };
     }
 }

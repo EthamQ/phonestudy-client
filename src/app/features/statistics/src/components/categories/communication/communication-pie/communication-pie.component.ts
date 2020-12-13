@@ -5,6 +5,7 @@ import { StatisticsDataAccessService } from 'app/features/statistics/src/data-ac
 import { EColorStyle } from '../../../charts';
 import { GenericPieComponent } from '../../../generic-chart-views/generic-pie/generic-pie.component';
 import { environment } from 'environments/environment';
+import { ColorService } from 'app/features/statistics/src/utils/color.service';
 
 @Component({
   selector: 'app-communication-pie',
@@ -16,8 +17,9 @@ export class CommunicationPieComponent extends GenericPieComponent{
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
+    colorService: ColorService,
     ) {
-      super(statisticsDataAccessService, dateService);
+      super(statisticsDataAccessService, dateService, colorService);
       this.comparisonActive = environment.compareWith !== 'none';
       this.category = ECategory.COMMUNICATION;
       this.colorStyle = EColorStyle.RANDOM;
@@ -29,7 +31,7 @@ export class CommunicationPieComponent extends GenericPieComponent{
       this.requestPayload = {
         compareWith: environment.compareWith,
         type: 'simple',
-        aggregation: 'category',
+        aggregation: 'by-time-frame',
       };
     }
 }

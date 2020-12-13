@@ -28,7 +28,7 @@ export class MoodBarComponent extends GenericBarComponent {
     this.requestPayload = {
       compareWith: environment.compareWith,
       type: 'simple',
-      aggregation: 'average',
+      aggregation: 'average-by-weekday',
     };
   }
 

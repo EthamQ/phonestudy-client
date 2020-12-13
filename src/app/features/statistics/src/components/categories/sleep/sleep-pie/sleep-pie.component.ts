@@ -5,6 +5,7 @@ import { StatisticsDataAccessService } from 'app/features/statistics/src/data-ac
 import { GenericPieComponent } from '../../../generic-chart-views/generic-pie/generic-pie.component';
 import { EColorStyle } from '../../../charts';
 import { environment } from 'environments/environment';
+import { ColorService } from 'app/features/statistics/src/utils/color.service';
 
 @Component({
   selector: 'app-sleep-pie',
@@ -16,10 +17,11 @@ export class SleepPieComponent extends GenericPieComponent {
   constructor(
     statisticsDataAccessService: StatisticsDataAccessService,
     dateService: DateService,
+    colorService: ColorService,
   ) {
-    super(statisticsDataAccessService, dateService);
+    super(statisticsDataAccessService, dateService, colorService);
     this.category = ECategory.SLEEP;
-    this.colorStyle = EColorStyle.DESCENDING;
+    this.colorStyle = EColorStyle.ASCENDING;
     this.comparisonActive = environment.compareWith !== 'none';
 
     this.urlSuffix = 'sleep';
@@ -29,7 +31,7 @@ export class SleepPieComponent extends GenericPieComponent {
     this.requestPayload = {
       compareWith: environment.compareWith,
       type: 'simple',
-      aggregation: 'weight',
+      aggregation: 'total',
     };
   }
 
