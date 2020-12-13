@@ -6,7 +6,7 @@ import { ChartPoint } from 'chart.js';
 import { Observable } from 'rxjs';
 import { EAggregation, StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import * as _ from 'underscore';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { GenericChartComponent } from '../generic-chart/generic-chart.component';
 import { CorrelationCalculationService } from '../../../utils/correlation-calculation.service';
 import { EDataOrigin } from '../../../types/types';
@@ -35,6 +35,8 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   colorCompare = this.colorService.getChartColor(EDataOrigin.COMPARE);
 
   data$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]>;
+  dataUser: ICorrelation;
+  dataCompare: ICorrelation;
 
   textX = '';
   textY = '';
@@ -42,7 +44,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   chartPointsUser: ChartPoint[];
   chartPointsCompare: ChartPoint[];
 
-  uniqueOptions: string[] = [];
+  dropdownOptions: string[] = [];
   activeUniqueOptions: string[] = [];
   selectedOptionDropdown = '';
 
@@ -56,7 +58,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   }
 
   ngOnInit(): void {
-    this.dateFrom = '2020-04-20';
+    this.dateFrom = '2020-04-01';
     this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
     this.data$ = this.statisticsDataAccessService.getCorrelation(
@@ -70,40 +72,36 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     this.data$.pipe(
       take(1),
     ).subscribe(timeBuckets => {
-      console.log('timeBuckets', timeBuckets);
+      this.dataUser = timeBuckets[0].data.user;
+      this.dataCompare = timeBuckets[0].data.compare;
 
       if (this.multipleOptions) {
-        this.uniqueOptions = this.getUniqueOptions(timeBuckets);
         // By default the first option is preselected
-        this.selectedOptionDropdown = this.uniqueOptions[0];
+        this.dropdownOptions = this.getUniqueOptions(this.dataUser, ECategory.STRESS);
+        this.selectedOptionDropdown = this.dropdownOptions[0];
       }
 
-      this.setChartpoints(timeBuckets, ECategory.STRESS, this.selectedOptionDropdown);
+      this.setChartpoints(ECategory.STRESS, this.selectedOptionDropdown);
 
       this.setPearsonCorrelation(EDataOrigin.USER);
     });
   }
 
-  /**
-   * Updates the x and y values for the currently selected @param category and the option @param filter
-   */
-  setChartpoints(timeBuckets: ITimeBucket<IBasicResponse<ICorrelation>>[], category: ECategory, filter: string): void {
-    // Remove all options from the dropdown that don't have a x and y value fpr this category
-    this.activeUniqueOptions = this.getNonEmptyOptions(timeBuckets, category, this.uniqueOptions);
+  setChartpoints(category: ECategory, filter: string): void {
     this.descriptionCorrelation = `${this.description} ${this.getDisplayName(category)}`;
 
     this.selectedCategory = category;
 
+    console.log('setChartpoints', category, filter);
+
     this.chartPointsUser = this.getChartpoints(
-      timeBuckets.map(x => x.data.user),
-      this.multipleOptions,
+      this.dataUser,
       category,
       filter,
     );
 
     this.chartPointsCompare = this.comparisonActive ? this.getChartpoints(
-      timeBuckets.map(x => x.data.compare),
-      this.multipleOptions,
+      this.dataCompare,
       category,
       filter,
     ) : null;
@@ -115,56 +113,30 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     }
   }
 
-  onDropdownChange(timeBuckets: ITimeBucket<IBasicResponse<ICorrelation>>[], selectedOption: string): void {
+  onDropdownChange(selectedOption: string): void {
     this.selectedOptionDropdown = selectedOption;
+    this.setChartpoints(this.selectedCategory, selectedOption);
+  }
 
-    this.chartPointsUser = this.getChartpoints(
-      timeBuckets.map(x => x.data.user),
-      this.multipleOptions,
-      this.selectedCategory,
-      selectedOption,
-    );
-
-    this.chartPointsCompare = this.comparisonActive ? this.getChartpoints(
-      timeBuckets.map(x => x.data.compare),
-      this.multipleOptions,
-      this.selectedCategory,
-      selectedOption,
-    ) : null;
-
-    this.setPearsonCorrelation(EDataOrigin.USER);
-    if(this.comparisonActive) {
-      this.setPearsonCorrelation(EDataOrigin.COMPARE);
+  private getChartpoints(correlation: ICorrelation, category: ECategory, filter: string): ChartPoint[] {
+    switch (category) { 
+      case ECategory.STRESS:
+        return correlation.stress.filter(x => filter ? x.name === filter : true).map(c => ({ x: c.x, y: c.y }));
+      case ECategory.MOOD:
+        return correlation.mood.filter(x => filter ? x.name === filter : true).map(c => ({ x: c.x, y: c.y }));
+      case ECategory.SLEEP:
+        return correlation.sleep.filter(x => filter ? x.name === filter : true).map(c => ({ x: c.x, y: c.y }));
     }
   }
 
-  private getChartpoints(correlations: ICorrelation[], multipleOptions: boolean, category: ECategory, filter: string): ChartPoint[] {
-    return correlations.map(correlation => {
-      let x = correlation.option;
-
-      if (multipleOptions) {
-        const optionsFiltered = correlation.options.filter(x => x.name === filter);
-        x = optionsFiltered[0] ? optionsFiltered[0].value : null;
-      }
-
-      switch (category) {
-        case ECategory.STRESS:
-          return { x, y: correlation.stress };
-        case ECategory.MOOD:
-          return { x, y: correlation.mood };
-        case ECategory.SLEEP:
-          return { x, y: correlation.sleep };
-      }
-    });
-  }
-
-  private getUniqueOptions(timeBuckets: ITimeBucket<IBasicResponse<ICorrelation>>[]): string[] {
-    if (this.multipleOptions) {
-      const allOptions: string[][] = timeBuckets
-        .map(correlation => correlation.data.user.options.map(option => option.name),
-      );
-
-      return this.getUniqueStrings(_.flatten(allOptions));
+  private getUniqueOptions(correlation: ICorrelation, category: ECategory): string[] {
+    switch (category) { 
+      case ECategory.STRESS:
+        return this.getUniqueStrings(correlation.stress.map(x => x.name));
+      case ECategory.MOOD:
+        return this.getUniqueStrings(correlation.mood.map(x => x.name));
+      case ECategory.SLEEP:
+        return this.getUniqueStrings(correlation.sleep.map(x => x.name));
     }
   }
 
@@ -174,27 +146,6 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       set.add(s);
     });
     return Array.from(set);
-  }
-
-  private getNonEmptyOptions(timeBuckets: ITimeBucket<IBasicResponse<ICorrelation>>[], category: ECategory, options: string[]) {
-    let emptyOptions: string[] = [];
-
-    options.forEach(option => {
-      const chartPoints: ChartPoint[] = this.getChartpoints(
-        timeBuckets.map(x => x.data.user),
-        this.multipleOptions,
-        category,
-        option,
-      );
-
-      const chartPointsEmpty = chartPoints.every(point => (!point.x || !point.y));
-
-      if (chartPointsEmpty) {
-        emptyOptions.push(option);
-      }
-    });
-
-    return this.uniqueOptions.filter(x => !emptyOptions.includes(x));
   }
 
   private getDisplayName(category: ECategory) {
@@ -216,20 +167,11 @@ export class GenericScatterComponent extends GenericChartComponent implements On
 
     const x: number[] = chartPoints.map(point => point.x) as number[];
     const y: number[] = chartPoints.map(point => point.y) as number[];
-    const xNonEmpty = [];
-    const yNonEmpty = [];
-
-    x.forEach((x, index) => {
-      if (x !== null && y[index] !== null) {
-        xNonEmpty.push(x);
-        yNonEmpty.push(y[index]);
-      }
-    });
 
     const pearsonCorrelation: number = this.correlationCalculationService.getPearsonCorrelation(
-      xNonEmpty,
-      yNonEmpty,
-    );
+      x,
+      y,
+    ) || 0;
 
     this[correlationValue] = Math.round(pearsonCorrelation * 100) / 100;
 
@@ -246,7 +188,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     );
   }
 
-  private getCorrelationExplanation(category1: ECategory, category2: ECategory, pearsonCorrelation: number): string {
+  private getCorrelationExplanation(category1: ECategory, category2: ECategory, pearsonCorrelation: number): string {    
     let explanation: string;
     const category2DisplayName = this.getDisplayName(category2);
 

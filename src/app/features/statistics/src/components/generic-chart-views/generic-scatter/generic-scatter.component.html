@@ -2,7 +2,7 @@
 
     <app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory"
         [date]="dateFrom + ' - ' + dateTo" [description]="descriptionCorrelation"
-        (categoryClicked)="setChartpoints(timeBuckets, $event, selectedOptionDropdown)">
+        (categoryClicked)="setChartpoints($event, selectedOptionDropdown)">
 
         <div class="header-text">
 
@@ -29,9 +29,9 @@
         <mat-form-field>
 
             <mat-select [(value)]="selectedOptionDropdown"
-                (selectionChange)="onDropdownChange(timeBuckets, $event.value)">
+                (selectionChange)="onDropdownChange($event.value)">
 
-                <mat-option *ngFor="let option of activeUniqueOptions" [value]="option">
+                <mat-option *ngFor="let option of dropdownOptions" [value]="option">
                     {{ option }}
                 </mat-option>
 

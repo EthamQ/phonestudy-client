@@ -36,14 +36,16 @@ export interface ICorrelationResponse {
 }
 
 export interface ICorrelation {
-    option?: number,
-    options?: {
-        name: string,
-        value: number,
-    }[],
-    stress: number,
-    mood: number,
-    sleep: number,
+    option: string,
+    stress: ICoordinate[],
+    mood: ICoordinate[],
+    sleep: ICoordinate[],
+};
+
+export interface ICoordinate {
+    name: string,
+    x: number,
+    y: number,
 };
 
 
