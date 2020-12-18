@@ -1,9 +1,9 @@
-<ng-container *ngIf="valuesUser && (valuesCompare || !comparisonActive); else loading">
+<ng-container *ngIf="chartValues1; else loading">
 
     <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="false"
         [arrowRightActive]="true" [description]="description"></app-statistic-header>
 
-    <app-pie-chart class="chart" [class.big]="increaseWidthPieChart" [labels]="labels" [values1]="valuesUser" [values2]="valuesCompare" [colors]="colors">
+    <app-pie-chart class="chart" [class.big]="increaseWidthPieChart" [labels]="chartLables" [values1]="chartValues1" [values2]="chartValues2" [colors]="chartColors">
     </app-pie-chart>
 
 </ng-container>

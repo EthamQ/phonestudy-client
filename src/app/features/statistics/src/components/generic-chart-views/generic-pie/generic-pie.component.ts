@@ -1,85 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-import { DateService } from '@shared/services';
-import { ITimeBucket, IStatisticItem, IBasicResponse, IRequestPayloadPie } from '@shared/types/server';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IStatisticItem } from '@shared/types/server';
 import { ColorService, EColor } from '../../../utils/color.service';
 import { EColorStyle } from '../../charts';
 import { GenericChartComponent } from '../generic-chart/generic-chart.component';
 
 @Component({
   selector: 'app-generic-pie',
-  template: '',
+  templateUrl: './generic-pie.component.html',
+  styleUrls: ['./generic-pie.component.scss']
 })
-export class GenericPieComponent extends GenericChartComponent<IRequestPayloadPie> implements OnInit {
+export class GenericPieComponent extends GenericChartComponent implements OnChanges {
 
-  data1$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
-  data2$: Observable<ITimeBucket<IStatisticItem[]>[]>;
+  @Input() data1: IStatisticItem[];
+  @Input() data2: IStatisticItem[];
+  @Input() colorStyle: EColorStyle;
+
+  chartColors: EColor[];
+  chartLables: string[];
+  chartValues1: number[];
+  chartValues2: number[];
 
   increaseWidthPieChart: boolean;
 
-  colorStyle: EColorStyle;
-  colors: EColor[];
-
-  labels: string[];
-  valuesUser: number[];
-  valuesCompare: number[];
-
-  daysToRequest = 7;
-
   constructor(
-    private statisticsDataAccessService: StatisticsDataAccessService,
-    private dateService: DateService,
     private colorService: ColorService,
   ) {
     super();
   }
 
-  ngOnInit(): void {
-    this.dateFrom = '2020-04-20';
-    this.dateTo = this.dateService.addDays(this.dateFrom, 200);
-    console.log('this.dateFrom', this.dateFrom);
-    console.log('this.dateTo', this.dateTo);
-
-    this.data1$ = this.statisticsDataAccessService.getPieChartData(
-      this.urlSuffix,
-      this.dateFrom,
-      150,
-      EAggregation.NO_AGGREGATION,
-      this.requestPayload,
-    );
-
-    this.data1$.pipe(take(1)).subscribe(timeBuckets => {
-      const userItems: IStatisticItem[] = timeBuckets[0].data.user;
-      console.log('userItems', userItems);
-      const userItemsSortedByValueASC: IStatisticItem[] = [...userItems].sort((a, b) => a.value - b.value);
+  ngOnChanges(changes: SimpleChanges): void {
+    if ((changes.data1 || changes.data2) && this.data1) {
+      const chartValues1SortedByValueASC: IStatisticItem[] = [...this.data1].sort((a, b) => a.value - b.value);
 
       // All have to be in the same order to be displayed correctly
-      this.labels = userItemsSortedByValueASC.map(x => x.option);
-      this.valuesUser = userItemsSortedByValueASC.map(x => x.value);
-      if(this.colorStyle === EColorStyle.ASCENDING) {
-        this.colors = userItemsSortedByValueASC.map(x => this.colorService.getColorForPositivity(x.positivity));
+      this.chartLables = chartValues1SortedByValueASC.map(x => x.option);
+      this.chartValues1 = chartValues1SortedByValueASC.map(x => x.value);
+      if (this.colorStyle === EColorStyle.ASCENDING) {
+        this.chartColors = chartValues1SortedByValueASC.map(x => this.colorService.getColorForPositivity(x.positivity));
       }
-     
+
       // When there are too many labels the chart itself will decrease in size.
       // Therefore we increase its width.
-      this.increaseWidthPieChart = this.valuesUser.length > 10;
+      this.increaseWidthPieChart = this.chartValues1.length > 10;
 
-      if (this.comparisonActive) {
-        const compareItems: IStatisticItem[] = timeBuckets[0].data.compare;
-        console.log('compareItems', compareItems);
-        // They need to have the same order as the user items for it to have the correct colors
-        const compareItemsSortedByUserOption: IStatisticItem[] = compareItems.sort(
-          (a, b) =>
-            userItemsSortedByValueASC.findIndex(x => x.option === a.option)
-            - userItemsSortedByValueASC.findIndex(x => x.option === b.option)
-        );
-
-        this.valuesCompare = compareItemsSortedByUserOption.map(x => x.value);
+      if (!this.data2) {
+        return;
       }
-    });
 
+      // They need to have the same order as the other items for it to have the correct colors
+      const values2SortedByValues1: IStatisticItem[] = this.data2.sort(
+        (a, b) =>
+          chartValues1SortedByValueASC.findIndex(x => x.option === a.option)
+          - chartValues1SortedByValueASC.findIndex(x => x.option === b.option)
+      );
+
+      this.chartValues2 = values2SortedByValues1.map(x => x.value);
+    }
   }
-
 }

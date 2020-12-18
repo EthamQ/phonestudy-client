@@ -1,37 +1,65 @@
 import { Component } from '@angular/core';
 import { ECategory } from '@shared/types';
 import { DateService } from '@shared/services';
-import { GenericPieComponent } from '../../../generic-chart-views/generic-pie/generic-pie.component';
-import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { EAggregation, StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../../charts';
 import { environment } from 'environments/environment';
-import { ColorService, EColor } from 'app/features/statistics/src/utils/color.service';
+import { ITimeBucket, IBasicResponse, IStatisticItem } from '@shared/types/server';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stress-pie',
-  templateUrl: '../../../generic-chart-views/generic-pie/generic-pie.component.html',
-  styleUrls: ['../../../generic-chart-views/generic-pie/generic-pie.component.scss']
+  templateUrl: './stress-pie.component.html',
 })
-export class StressPieComponent extends GenericPieComponent {
+export class StressPieComponent {
+
+  data$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
+  dataUser$: Observable<IStatisticItem[]>;
+  dataCompare$: Observable<IStatisticItem[]>;
+
+  description = 'Verteilung Stresslevel insgesamt';
+  colorStyle = EColorStyle.ASCENDING;
+  category = ECategory.STRESS;
+  dateFrom: string;
+  dateTo: string;
 
   constructor(
-    statisticsDataAccessService: StatisticsDataAccessService,
-    dateService: DateService,
-    colorService: ColorService,
-    ) {
-      super(statisticsDataAccessService, dateService, colorService);
-      this.category = ECategory.STRESS;
-      this.colorStyle = EColorStyle.ASCENDING;
-      this.comparisonActive = environment.compareWith !== 'none';
+    private statisticsDataAccessService: StatisticsDataAccessService,
+    private dateService: DateService,
+  ) { }
 
-      this.urlSuffix = 'stress';
+  ngOnInit() {
+    this.dateFrom = '2020-04-20';
+    this.dateTo = this.dateService.addDays(this.dateFrom, 150);
 
-      this.description = 'Verteilung Stresslevel insgesamt';
-
-      this.requestPayload = {
+    this.data$ = this.statisticsDataAccessService.getPieChartData(
+      'stress',
+      this.dateFrom,
+      150,
+      EAggregation.NO_AGGREGATION,
+      {
         compareWith: environment.compareWith,
         type: 'simple',
         aggregation: 'total',
-      };
-    }
+      },
+    );
+
+    this.dataUser$ = this.data$.pipe(
+      map(timeBuckets => timeBuckets[0].data.user),
+    );
+
+    this.dataCompare$ = this.data$.pipe(
+      map(timeBuckets => {
+        const dataCompare = timeBuckets[0].data.compare;
+
+        if (dataCompare && dataCompare.length > 0) {
+          return dataCompare;
+        }
+
+        return null;
+      }),
+    );
+  }
+
 }
