@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
-import { ITimeBucket, IStatisticItem, IBasicResponse } from '@shared/types/server';
+import { ITimeBucket, IStatisticItem, IBasicResponse, IRequestPayloadPie } from '@shared/types/server';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { StatisticsDataAccessService, EAggregation } from '../../../data-access/services/statistics-data-access.service';
@@ -12,7 +12,7 @@ import { GenericChartComponent } from '../generic-chart/generic-chart.component'
   selector: 'app-generic-pie',
   template: '',
 })
-export class GenericPieComponent extends GenericChartComponent implements OnInit {
+export class GenericPieComponent extends GenericChartComponent<IRequestPayloadPie> implements OnInit {
 
   data1$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]>;
   data2$: Observable<ITimeBucket<IStatisticItem[]>[]>;
@@ -42,7 +42,7 @@ export class GenericPieComponent extends GenericChartComponent implements OnInit
     console.log('this.dateFrom', this.dateFrom);
     console.log('this.dateTo', this.dateTo);
 
-    this.data1$ = this.statisticsDataAccessService.getStatistics(
+    this.data1$ = this.statisticsDataAccessService.getPieChartData(
       this.urlSuffix,
       this.dateFrom,
       150,

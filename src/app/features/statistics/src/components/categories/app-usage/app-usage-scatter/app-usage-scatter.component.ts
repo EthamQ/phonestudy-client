@@ -6,6 +6,8 @@ import { CorrelationCalculationService } from 'app/features/statistics/src/utils
 import { environment } from 'environments/environment';
 import { GenericScatterComponent } from '../../../generic-chart-views/generic-scatter/generic-scatter.component';
 import { ColorService } from '../../../../utils/color.service';
+import { StringService } from '../../../../utils/string.service';
+import { CategoryService } from 'app/features/statistics/src/utils/category.service';
 
 @Component({
   selector: 'app-app-usage-scatter',
@@ -19,8 +21,17 @@ export class AppUsageScatterComponent extends GenericScatterComponent {
     dateService: DateService,
     correlationCalculationService: CorrelationCalculationService,
     colorService: ColorService,
+    stringService: StringService,
+    categoryService: CategoryService,
   ) {
-    super(statisticsDataAccessService, dateService, correlationCalculationService, colorService);
+    super(
+      statisticsDataAccessService,
+      dateService,
+      correlationCalculationService,
+      colorService,
+      stringService,
+      categoryService,
+    );
     this.categories = [
       ECategory.APP,
       ECategory.STRESS,

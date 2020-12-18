@@ -2,7 +2,7 @@
 
     <app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory"
         [date]="dateFrom + ' - ' + dateTo" [description]="descriptionCorrelation"
-        (categoryClicked)="setChartpoints($event, selectedOptionDropdown)">
+        (categoryClicked)="updateChartAndCorrelation($event, selectedOptionDropdown)">
 
         <div class="header-text">
 

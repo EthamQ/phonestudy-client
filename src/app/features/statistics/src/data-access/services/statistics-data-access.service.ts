@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DateService, ELocalStorageKey, LocalStorageService } from '@shared/services';
-import { IBasicResponse, IServerResponse, ITimeBucket, ICorrelation, IStatisticItem, IRequestPayload, IStatisticsWeek } from '@shared/types/server';
+import { IBasicResponse, IServerResponse, ITimeBucket, ICorrelation, IStatisticItem, IStatisticsWeek, IRequestPayloadBar, IRequestPayloadPie, IRequestPayloadScatter } from '@shared/types/server';
 import { StatisticsMappingService } from '../../data-mapping/services/statistics-mapping/statistics-mapping.service';
 
 export enum EAggregation {
@@ -24,12 +24,12 @@ export class StatisticsDataAccessService {
     private statisticsMappingService: StatisticsMappingService,
   ) { }
 
-  getStatistics(
+  getPieChartData(
     urlSuffix: string,
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
-    payload: IRequestPayload,
+    payload: IRequestPayloadPie,
   ): Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]> {
     return this.http.post(this.getUrl(
       urlSuffix,
@@ -41,12 +41,12 @@ export class StatisticsDataAccessService {
     );
   }
 
-  getStatisticsByWeekday(
+  getBarChartData(
     urlSuffix: string,
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
-    payload: IRequestPayload,
+    payload: IRequestPayloadBar,
   ): Observable<ITimeBucket<IBasicResponse<IStatisticsWeek>>[]> {
     return this.http.post(this.getUrl(
       urlSuffix,
@@ -58,12 +58,12 @@ export class StatisticsDataAccessService {
     );
   }
 
-  getCorrelation(
+  getScatterChartData(
     urlSuffix: string,
     dateFrom: string,
     days: number,
     aggregation: EAggregation,
-    payload: IRequestPayload,
+    payload: IRequestPayloadScatter,
   ): Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]> {
     return this.http.post(this.getUrl(
       urlSuffix,

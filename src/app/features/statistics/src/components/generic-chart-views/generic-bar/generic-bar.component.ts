@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DateService } from '@shared/services';
-import { ITimeBucket, IBasicResponse, IStatisticItem, IStatisticsWeek } from '@shared/types/server';
+import { ITimeBucket, IBasicResponse, IStatisticItem, IStatisticsWeek, IRequestPayloadBar } from '@shared/types/server';
 import { combineLatest, Observable, ReplaySubject, Subject } from 'rxjs';
 import { map, take, takeUntil, tap } from 'rxjs/operators';
 import { flatten } from 'underscore';
@@ -14,7 +14,7 @@ import { EDataOrigin } from '../../../types/types';
   templateUrl: './generic-bar.component.html',
   styleUrls: ['./generic-bar.component.scss'],
 })
-export class GenericBarComponent extends GenericChartComponent implements OnInit, OnDestroy {
+export class GenericBarComponent extends GenericChartComponent<IRequestPayloadBar> implements OnInit, OnDestroy {
   filterActive = false;
   daysToRequest = 200;
 
@@ -38,7 +38,7 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
     this.dateFrom = '2020-04-20';
     this.dateTo = this.dateService.addDays(this.dateFrom, this.daysToRequest);
 
-    this.timeBuckets$ = this.statisticsDataAccessService.getStatisticsByWeekday(
+    this.timeBuckets$ = this.statisticsDataAccessService.getBarChartData(
       this.urlSuffix,
       this.dateFrom,
       this.daysToRequest,

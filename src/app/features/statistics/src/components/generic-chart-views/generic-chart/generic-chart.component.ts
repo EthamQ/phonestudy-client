@@ -7,12 +7,12 @@ import { IRequestPayload } from '@shared/types/server';
   template: '',
   styleUrls: [],
 })
-export class GenericChartComponent {
+export class GenericChartComponent<T extends IRequestPayload> {
   comparisonActive: boolean;
   description = '';
   category: ECategory;
   urlSuffix: string;
   dateFrom: string;
   dateTo: string;
-  requestPayload: IRequestPayload;
+  requestPayload: T;
 }
