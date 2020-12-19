@@ -1,5 +1,5 @@
 
-<div *ngIf="datasets.length > 0">
+<div *ngIf="datasets.length > 0 && pieChartOptions">
     <canvas baseChart 
       [datasets]="datasets"
       [labels]="labels" 

@@ -50,7 +50,7 @@ export class StressBarComponent {
       map(timeBuckets => {
         const dataCompare = timeBuckets[0].data.compare;
 
-        if (dataCompare && environment.compareWith !== 'none') {
+        if (environment.compareWith !== 'none') {
           return dataCompare;
         }
 

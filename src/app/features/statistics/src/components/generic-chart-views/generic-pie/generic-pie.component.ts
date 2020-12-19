@@ -7,16 +7,22 @@ import { GenericChartComponent } from '../generic-chart/generic-chart.component'
 @Component({
   selector: 'app-generic-pie',
   templateUrl: './generic-pie.component.html',
-  styleUrls: ['./generic-pie.component.scss']
+  styleUrls: ['./generic-pie.component.scss'],
 })
 export class GenericPieComponent extends GenericChartComponent implements OnChanges {
 
   @Input() data1: IStatisticItem[];
   @Input() data2: IStatisticItem[];
+  @Input() chartTitle1: string;
+  @Input() chartTitle2: string;
   @Input() colorStyle: EColorStyle;
+  @Input() duplicateWhenCompare = true;
 
   chartColors: EColor[];
-  chartLables: string[];
+
+  chartLabels1: string[];
+  chartLabels2: string[];
+
   chartValues1: number[];
   chartValues2: number[];
 
@@ -30,13 +36,12 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes.data1 || changes.data2) && this.data1) {
-      const chartValues1SortedByValueASC: IStatisticItem[] = [...this.data1].sort((a, b) => a.value - b.value);
+      const sortedItems1: IStatisticItem[] = [...this.data1].sort((a, b) => b.value - a.value);
+      this.chartLabels1 = sortedItems1.map(x => x.option);
+      this.chartValues1 = sortedItems1.map(x => x.value);
 
-      // All have to be in the same order to be displayed correctly
-      this.chartLables = chartValues1SortedByValueASC.map(x => x.option);
-      this.chartValues1 = chartValues1SortedByValueASC.map(x => x.value);
       if (this.colorStyle === EColorStyle.ASCENDING) {
-        this.chartColors = chartValues1SortedByValueASC.map(x => this.colorService.getColorForPositivity(x.positivity));
+        this.chartColors = sortedItems1.map(x => this.colorService.getColorForPositivity(x.positivity));
       }
 
       // When there are too many labels the chart itself will decrease in size.
@@ -47,14 +52,9 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
         return;
       }
 
-      // They need to have the same order as the other items for it to have the correct colors
-      const values2SortedByValues1: IStatisticItem[] = this.data2.sort(
-        (a, b) =>
-          chartValues1SortedByValueASC.findIndex(x => x.option === a.option)
-          - chartValues1SortedByValueASC.findIndex(x => x.option === b.option)
-      );
-
-      this.chartValues2 = values2SortedByValues1.map(x => x.value);
+      const sortedItems2: IStatisticItem[] = [...this.data2].sort((a, b) => b.value - a.value);
+      this.chartLabels2 = sortedItems2.map(x => x.option);
+      this.chartValues2 = sortedItems2.map(x => x.value);
     }
   }
 }

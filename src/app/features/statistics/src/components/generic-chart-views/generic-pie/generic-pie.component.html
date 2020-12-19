@@ -3,7 +3,10 @@
     <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="false"
         [arrowRightActive]="true" [description]="description"></app-statistic-header>
 
-    <app-pie-chart class="chart" [class.big]="increaseWidthPieChart" [labels]="chartLables" [values1]="chartValues1" [values2]="chartValues2" [colors]="chartColors">
+    <app-pie-chart class="chart" [title]="chartTitle1" [class.big]="increaseWidthPieChart" [labels]="chartLabels1" [values1]="chartValues1" [colors]="chartColors">
+    </app-pie-chart>
+
+    <app-pie-chart *ngIf="chartValues2" class="chart" [title]="chartTitle2" [class.big]="increaseWidthPieChart" [labels]="chartLabels2" [values1]="chartValues2" [colors]="chartColors">
     </app-pie-chart>
 
 </ng-container>

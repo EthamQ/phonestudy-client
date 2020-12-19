@@ -23,6 +23,8 @@ export class StressPieComponent {
   category = ECategory.STRESS;
   dateFrom: string;
   dateTo: string;
+  chartTitle1: string;
+  chartTitle2: string;
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
@@ -53,7 +55,9 @@ export class StressPieComponent {
       map(timeBuckets => {
         const dataCompare = timeBuckets[0].data.compare;
 
-        if (dataCompare && dataCompare.length > 0) {
+        if (environment.compareWith !== 'none') {
+          this.chartTitle1 = 'Du';
+          this.chartTitle2 = 'Alle anderen Teilnehmer';
           return dataCompare;
         }
 

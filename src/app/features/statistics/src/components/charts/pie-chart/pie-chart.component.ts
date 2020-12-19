@@ -14,40 +14,42 @@ export enum EColorStyle {
 })
 export class PieChartComponent implements OnChanges {
 
+  @Input() title: string;
   @Input() labels: string[];
   @Input() values1: number[];
-  @Input() values2: number[];
   @Input() colors: EColor[];
 
   pieChartType: ChartType = 'pie';
   pieChartLegend = true;
-  pieChartOptions: ChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    aspectRatio: 10,
-  };
+  pieChartOptions: ChartOptions;
   datasets: ChartDataSets[] = [];
 
   ngOnChanges(): void {
-    console.log(this.values1);
-    this.datasets = [
-      this.getDataSets(this.values1, this.colors),
-    ];
-
-    if(this.values2) {
-      this.datasets.push(this.getDataSets(this.values2, this.colors));
-    }
-  }
-
-  getDataSets(values: number[], colors: string[]): ChartDataSets {
-    if(colors && colors.length > 0) {
-      return {
-        data: values,
-        backgroundColor: colors,
+    this.pieChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 10,
+      title: {
+        text: this.title,
+        display: !!this.title,
       }
-    }
+    };
 
-    return { data: values };
+    if(this.colors && this.colors.length > 0) {
+      this.datasets = [
+        {
+          data: this.values1,
+          backgroundColor: this.colors,
+        }
+      ];
+    } else {
+      this.datasets = [
+        {
+          data: this.values1,
+        }
+      ];
+    }
   }
+
 
 }
