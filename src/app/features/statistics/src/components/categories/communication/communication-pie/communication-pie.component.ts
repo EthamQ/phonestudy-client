@@ -53,13 +53,19 @@ export class CommunicationPieComponent {
       map(timeBuckets => {
         const dataCompare = timeBuckets[0].data.compare;
 
-        if (environment.compareWith !== 'none') {
-          this.chartTitle1 = 'Du';
-          this.chartTitle2 = 'Alle anderen Teilnehmer';
-          return dataCompare;
+        switch (environment.compareWith) {
+          case 'none':
+            return null;
+          case 'all':
+            this.chartTitle1 = 'Du';
+            this.chartTitle2 = 'Alle anderen Teilnehmer (Durchschnitt)';
+            return dataCompare;
+          case 'demographic':
+            this.chartTitle1 = 'Du';
+            this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1) (Durchschnitt)';
+            return dataCompare;
         }
-
-        return null;
+        
       }),
     );
   }

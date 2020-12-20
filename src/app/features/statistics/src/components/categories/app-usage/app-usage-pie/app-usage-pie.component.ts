@@ -25,7 +25,7 @@ export class AppUsagePieComponent {
   dateTo: string;
   chartTitle1: string;
   chartTitle2: string;
-  
+
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private dateService: DateService,
@@ -54,13 +54,19 @@ export class AppUsagePieComponent {
       map(timeBuckets => {
         const dataCompare = timeBuckets[0].data.compare;
 
-        if (environment.compareWith !== 'none') {
-          this.chartTitle1 = 'Du';
-          this.chartTitle2 = 'Alle anderen Teilnehmer (Durchschnitt)';
-          return dataCompare;
+        switch (environment.compareWith) {
+          case 'none':
+            return null;
+          case 'all':
+            this.chartTitle1 = 'Du';
+            this.chartTitle2 = 'Alle anderen Teilnehmer';
+            return dataCompare;
+          case 'demographic':
+            this.chartTitle1 = 'Du';
+            this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1)';
+            return dataCompare;
         }
 
-        return null;
       }),
     );
   }
