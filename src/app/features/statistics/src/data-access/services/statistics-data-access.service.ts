@@ -26,10 +26,10 @@ export class StatisticsDataAccessService {
 
   getPieChartData(
     urlSuffix: string,
-    dateFrom: string,
-    days: number,
-    aggregation: EAggregation,
-    payload: IRequestPayloadPie,
+    payload?: IRequestPayloadPie,
+    dateFrom?: string,
+    days?: number,
+    aggregation?: EAggregation,
   ): Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>[]> {
     return this.http.post(this.getUrl(
       urlSuffix,
@@ -81,11 +81,12 @@ export class StatisticsDataAccessService {
     days: number,
     aggregation: EAggregation
   ): string {
+    // Date and aggregation are determined in the backend so for now it is deactivated in the frontend.
     return `${this.baseUrl}/${urlSuffix}`
-      + `/${this.localStorageService.get(ELocalStorageKey.USERID)}`
-      + `/?date_from=${dateFrom}`
-      + `&date_to=${this.dateService.addDays(dateFrom, days)}`
-      + `&timely-aggregation=${this.getAggregationSeconds(aggregation, days)}`;
+      + `/${this.localStorageService.get(ELocalStorageKey.USERID)}`;
+      // + `/?date_from=${dateFrom}`
+      // + `&date_to=${this.dateService.addDays(dateFrom, days)}`
+      // + `&timely-aggregation=${this.getAggregationSeconds(aggregation, days)}`;
   }
 
   private getAggregationSeconds(aggregation: EAggregation, days: number): number {

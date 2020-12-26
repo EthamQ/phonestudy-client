@@ -12,7 +12,7 @@ export interface IEnvironment {
 export const environment: IEnvironment = {
   production: false,
   comparisonAll: false,
-  compareWith: 'demographic',
+  compareWith: 'all',
   comparisonDemographic: false,
 };
 

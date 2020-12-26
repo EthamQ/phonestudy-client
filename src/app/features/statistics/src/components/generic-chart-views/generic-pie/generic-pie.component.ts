@@ -18,7 +18,8 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
   @Input() colorStyle: EColorStyle;
   @Input() duplicateWhenCompare = true;
 
-  chartColors: EColor[];
+  chartColors1: EColor[];
+  chartColors2: EColor[];
 
   chartLabels1: string[];
   chartLabels2: string[];
@@ -41,7 +42,7 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
       this.chartValues1 = sortedItems1.map(x => x.value);
 
       if (this.colorStyle === EColorStyle.ASCENDING) {
-        this.chartColors = sortedItems1.map(x => this.colorService.getColorForPositivity(x.positivity));
+        this.chartColors1 = sortedItems1.map(x => this.colorService.getColorForPositivity(x.positivity));
       }
 
       // When there are too many labels the chart itself will decrease in size.
@@ -55,6 +56,10 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
       const sortedItems2: IStatisticItem[] = [...this.data2].sort((a, b) => b.value - a.value);
       this.chartLabels2 = sortedItems2.map(x => x.option);
       this.chartValues2 = sortedItems2.map(x => x.value);
+
+      if (this.colorStyle === EColorStyle.ASCENDING) {
+        this.chartColors2 = sortedItems2.map(x => this.colorService.getColorForPositivity(x.positivity));
+      }
     }
   }
 }
