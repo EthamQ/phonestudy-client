@@ -1,7 +1,18 @@
-<ng-container *ngIf="timebucket$ | async as timebucket">
+<ng-container *ngIf="timebucket$ | async as timebucket; else loading">
 
-    <app-generic-pie [data1]="dataUser$ | async" [data2]="dataCompare$ | async" [colorStyle]="colorStyle"
-        [category]="category" [description]="description" [dateFrom]="timebucket.from | dateFormat" [dateTo]="timebucket.until | dateFormat"
-        [chartTitle1]="chartTitle1" [chartTitle2]="chartTitle2"></app-generic-pie>
+    <ng-container *ngIf="dataUser$ | async as dataUser; else loading">
+
+        <app-generic-pie [data1]="dataUser" [data2]="dataCompare$ | async" [colorStyle]="colorStyle"
+            [category]="category" [description]="description" [dateFrom]="timebucket.from | dateFormat"
+            [dateTo]="timebucket.until | dateFormat" [chartTitle1]="chartTitle1" [chartTitle2]="chartTitle2">
+        </app-generic-pie>
+
+    </ng-container>
 
 </ng-container>
+
+<ng-template #loading>
+
+    <app-loading-screen></app-loading-screen>
+
+</ng-template>

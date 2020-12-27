@@ -27,6 +27,9 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
   chartValues1: number[];
   chartValues2: number[];
 
+  chartValues1IsEmpty: boolean;
+  chartValues2IsEmpty: boolean;
+
   increaseWidthPieChart: boolean;
 
   constructor(
@@ -40,6 +43,7 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
       const sortedItems1: IStatisticItem[] = [...this.data1].sort((a, b) => b.value - a.value);
       this.chartLabels1 = sortedItems1.map(x => x.option);
       this.chartValues1 = sortedItems1.map(x => x.value);
+      this.chartValues1IsEmpty = this.chartValues1.every(x => x < 1);
 
       if (this.colorStyle === EColorStyle.ASCENDING) {
         this.chartColors1 = sortedItems1.map(x => this.colorService.getColorForPositivity(x.positivity));
@@ -56,6 +60,7 @@ export class GenericPieComponent extends GenericChartComponent implements OnChan
       const sortedItems2: IStatisticItem[] = [...this.data2].sort((a, b) => b.value - a.value);
       this.chartLabels2 = sortedItems2.map(x => x.option);
       this.chartValues2 = sortedItems2.map(x => x.value);
+      this.chartValues2IsEmpty = this.chartValues2.every(x => x < 1);
 
       if (this.colorStyle === EColorStyle.ASCENDING) {
         this.chartColors2 = sortedItems2.map(x => this.colorService.getColorForPositivity(x.positivity));
