@@ -1,8 +1,8 @@
-<ng-container *ngIf="data$ | async as timeBuckets; else loading">
+<ng-container *ngIf="data1; else loading">
 
     <app-correlation-header [categories]="categories" [selectedCategory]="selectedCategory"
         [date]="dateFrom + ' - ' + dateTo" [description]="descriptionCorrelation"
-        (categoryClicked)="setChartpoints($event, selectedOptionDropdown)">
+        (categoryClicked)="updateChartAndCorrelation($event, selectedOptionDropdown)">
 
         <div class="header-text">
 
@@ -44,18 +44,18 @@
     <div class="chart-section" [class.comparison-active]="comparisonActive">
 
         <div class="center">
-            <app-scatter-chart [values1]="chartPointsUser" [values2]="chartPointsCompare" [textX]="textX"
+            <app-scatter-chart [values1]="chartPoints1" [values2]="chartPoints2" [textX]="textX"
                 [textY]="textY">
             </app-scatter-chart>
         </div>
 
         <div class="correlation-info">
 
-            <app-correlation-info [title]="pearsonCorrelationTitleUser" [explanation]="pearsonCorrelationExplanationUser"
-                [correlationValue]="pearsonCorrelationUser" [pointColor]="colorUser" [pointText]="comparisonActive ? '(Du)' : ''"></app-correlation-info>
+            <app-correlation-info [title]="pearsonCorrelationTitle1" [explanation]="pearsonCorrelationExplanation1"
+                [correlationValue]="pearsonCorrelation1" [pointColor]="color1" [pointText]="comparisonActive ? '(Du)' : ''"></app-correlation-info>
 
-            <app-correlation-info *ngIf="comparisonActive" [title]="pearsonCorrelationTitleCompare" [explanation]="pearsonCorrelationExplanationCompare"
-                [correlationValue]="pearsonCorrelationCompare" [pointColor]="colorCompare" [pointText]="'(Alle)'"></app-correlation-info>
+            <app-correlation-info *ngIf="chartPoints2" [title]="pearsonCorrelationTitle2" [explanation]="pearsonCorrelationExplanationCompare"
+                [correlationValue]="pearsonCorrelation2" [pointColor]="color2" [pointText]="'(Alle)'"></app-correlation-info>
         </div>
 
     </div>

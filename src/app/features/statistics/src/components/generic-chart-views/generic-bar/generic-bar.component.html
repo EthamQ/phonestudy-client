@@ -1,6 +1,6 @@
-<ng-container *ngIf="yAxis1$ | async as yAxis1; else loading">
+<ng-container *ngIf="yAxis1; else loading">
 
-    <ng-container  *ngIf="(uniqueOptions$ | async) as uniqueOptions; else loading">
+    <ng-container *ngIf="uniqueOptions; else loading">
 
         <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="true"
             [arrowRightActive]="false" [description]="description"></app-statistic-header>
@@ -21,9 +21,10 @@
 
         </div>
 
-        <app-bar-chart [values]="yAxis1" [values2]="yAxis2$ | async" [options]="xAxis"></app-bar-chart>
+        <app-bar-chart [values]="yAxis1" [values2]="yAxis2" [options]="xAxis"></app-bar-chart>
 
-</ng-container>
+    </ng-container>
+
 </ng-container>
 
 

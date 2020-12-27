@@ -1,37 +1,22 @@
 import { Component } from '@angular/core';
-import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../../charts';
-import { GenericPieComponent } from '../../../generic-chart-views/generic-pie/generic-pie.component';
 import { environment } from 'environments/environment';
-import { ColorService } from 'app/features/statistics/src/utils/color.service';
 
 @Component({
   selector: 'app-communication-pie',
-  templateUrl: '../../../generic-chart-views/generic-pie/generic-pie.component.html',
-  styleUrls: ['../../../generic-chart-views/generic-pie/generic-pie.component.scss']
+  templateUrl: './communication-pie.component.html',
 })
-export class CommunicationPieComponent extends GenericPieComponent{
+export class CommunicationPieComponent {
 
-  constructor(
-    statisticsDataAccessService: StatisticsDataAccessService,
-    dateService: DateService,
-    colorService: ColorService,
-    ) {
-      super(statisticsDataAccessService, dateService, colorService);
-      this.comparisonActive = environment.compareWith !== 'none';
-      this.category = ECategory.COMMUNICATION;
-      this.colorStyle = EColorStyle.RANDOM;
+  description = 'Häufigkeit Apps in dem Zeitraum geöffnet';
+  colorStyle = EColorStyle.RANDOM;
+  category = ECategory.COMMUNICATION;
+  endpoint = 'communication';
+  payload = {
+    compareWith: environment.compareWith,
+    type: 'simple',
+    aggregation: 'by-time-frame',
+  };
 
-      this.urlSuffix = 'communication';
-
-      this.description = 'Verteilung Minuten telefoniert insgesamt';
-
-      this.requestPayload = {
-        compareWith: environment.compareWith,
-        type: 'simple',
-        aggregation: 'by-time-frame',
-      };
-    }
 }

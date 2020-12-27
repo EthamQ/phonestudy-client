@@ -50,7 +50,25 @@ export interface ICoordinate {
 
 
 export interface IRequestPayload {
+    compareWith: string,
+    type: string,
+    aggregation: string,
+}
+
+export interface IRequestPayloadPie {
+    compareWith: 'none' | 'all' | 'demographic',
+    type: 'simple',
+    aggregation: 'total-option-value' | 'by-time-frame' | 'total',
+}
+
+export interface IRequestPayloadBar {
+    compareWith: 'none' | 'all' | 'demographic',
+    type: 'simple',
+    aggregation: 'average-by-weekday' | 'total-by-weekday',
+}
+
+export interface IRequestPayloadScatter {
     compareWith: 'none' | 'all' | 'demographic',
     type: 'simple' | 'correlation',
-    aggregation: 'total-by-weekday' | 'length' | 'by-time-frame' | 'total' | 'average-by-weekday' | 'total-option-value' | 'total & average',
+    aggregation: 'total & average',
 }

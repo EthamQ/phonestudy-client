@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ECategory } from '@shared/types';
 import { IRequestPayload } from '@shared/types/server';
 
@@ -8,11 +8,9 @@ import { IRequestPayload } from '@shared/types/server';
   styleUrls: [],
 })
 export class GenericChartComponent {
-  comparisonActive: boolean;
-  description = '';
-  category: ECategory;
-  urlSuffix: string;
-  dateFrom: string;
-  dateTo: string;
-  requestPayload: IRequestPayload;
+  @Input() description: string;
+  @Input() comparisonActive: boolean;
+  @Input() category: ECategory;
+  @Input() dateFrom: string;
+  @Input() dateTo: string;
 }

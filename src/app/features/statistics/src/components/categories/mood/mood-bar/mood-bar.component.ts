@@ -1,35 +1,62 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { DateService } from '@shared/services';
 import { ECategory } from '@shared/types';
-import { StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
+import { ITimeBucket, IBasicResponse, IStatisticsWeek } from '@shared/types/server';
+import { EAggregation, StatisticsDataAccessService } from 'app/features/statistics/src/data-access/services/statistics-data-access.service';
 import { environment } from 'environments/environment';
-import { GenericBarComponent } from '../../../generic-chart-views/generic-bar/generic-bar.component';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mood-bar',
-  templateUrl: '../../../generic-chart-views/generic-bar/generic-bar.component.html',
-  styleUrls: ['./mood-bar.component.scss']
+  templateUrl: './mood-bar.component.html',
 })
-export class MoodBarComponent extends GenericBarComponent {
+export class MoodBarComponent {
+  data$: Observable<ITimeBucket<IBasicResponse<IStatisticsWeek>>[]> 
+  dataUser$: Observable<IStatisticsWeek>;
+  dataCompare$: Observable<IStatisticsWeek>;
+
+  description = 'Verteilung Gefühlszustand pro Wochentag';
+  category = ECategory.MOOD;
+  dateFrom: string;
+  dateTo: string;
 
   constructor(
-    statisticsDataAccessService: StatisticsDataAccessService,
-    dateService: DateService,
-  ) {
-    super(statisticsDataAccessService, dateService);
-    this.category = ECategory.MOOD;
-    
-    this.comparisonActive = environment.compareWith !== 'none';
+    private statisticsDataAccessService: StatisticsDataAccessService,
+    private dateService: DateService,
+  ) { }
 
-    this.urlSuffix = 'mood';
+  ngOnInit(): void {
+    this.dateFrom = '2020-04-20';
+    this.dateTo = this.dateService.addDays(this.dateFrom, 150);
 
-    this.description = 'Verteilung Gefühlszustand pro Wochentag';
-    
-    this.requestPayload = {
-      compareWith: environment.compareWith,
-      type: 'simple',
-      aggregation: 'average-by-weekday',
-    };
+    this.data$ = this.statisticsDataAccessService.getBarChartData(
+      'mood',
+      this.dateFrom,
+      150,
+      EAggregation.NO_AGGREGATION,
+      {
+        compareWith: environment.compareWith,
+        type: 'simple',
+        aggregation: 'average-by-weekday',
+      },
+    );
+
+    this.dataUser$ = this.data$.pipe(
+      map(timeBuckets => timeBuckets[0].data.user),
+    );
+
+    this.dataCompare$ = this.data$.pipe(
+      map(timeBuckets => {
+        const dataCompare = timeBuckets[0].data.compare;
+
+        if (dataCompare && environment.compareWith !== 'none') {
+          return dataCompare;
+        }
+
+        return null;
+      }),
+    );
   }
 
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WordsPieComponent } from './words-pie.component';
+import { PieCategoryComponent } from './pie-category.component';
 
-describe('WordsPieComponent', () => {
-  let component: WordsPieComponent;
-  let fixture: ComponentFixture<WordsPieComponent>;
+describe('PieCategoryComponent', () => {
+  let component: PieCategoryComponent;
+  let fixture: ComponentFixture<PieCategoryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WordsPieComponent ]
+      declarations: [ PieCategoryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WordsPieComponent);
+    fixture = TestBed.createComponent(PieCategoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
