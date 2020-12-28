@@ -2,10 +2,10 @@
 
     <ng-container *ngIf="dataUser$ | async as dataUser; else loading">
 
-        <app-generic-pie [data1]="dataUser" [data2]="dataCompare$ | async" [colorStyle]="colorStyle"
+        <app-generic-bar [data1]="dataUser" [data2]="dataCompare$ | async"
             [category]="category" [description]="description" [dateFrom]="timebucket.from | dateFormat"
             [dateTo]="timebucket.until | dateFormat" [chartTitle1]="chartTitle1" [chartTitle2]="chartTitle2">
-        </app-generic-pie>
+        </app-generic-bar>
 
     </ng-container>
 

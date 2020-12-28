@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ECategory } from '@shared/types';
-import { ITimeBucket, IBasicResponse, IStatisticItem, IRequestPayloadPie } from '@shared/types/server';
+import { ITimeBucket, IBasicResponse, IRequestPayloadBar, IStatisticsWeek } from '@shared/types/server';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,31 +8,43 @@ import { StatisticsDataAccessService } from '../../../data-access/services/stati
 import { EColorStyle } from '../../charts';
 
 @Component({
-  selector: 'app-pie-category',
-  templateUrl: './pie-category.component.html',
-  styleUrls: ['./pie-category.component.scss']
+  selector: 'app-bar-category',
+  templateUrl: './bar-category.component.html',
+  styleUrls: ['./bar-category.component.scss']
 })
-export class PieCategoryComponent implements OnInit {
+export class BarCategoryComponent implements OnInit {
 
   @Input() description: string;
   @Input() colorStyle: EColorStyle;
   @Input() category: ECategory;
-  @Input() payload: IRequestPayloadPie;
+  @Input() payload: IRequestPayloadBar;
   @Input() endpoint: string;
 
-  timebucket$: Observable<ITimeBucket<IBasicResponse<IStatisticItem[]>>>;
-  dataUser$: Observable<IStatisticItem[]>;
-  dataCompare$: Observable<IStatisticItem[]>;
+  timebucket$: Observable<ITimeBucket<IBasicResponse<IStatisticsWeek>>>;
+  dataUser$: Observable<IStatisticsWeek>;
+  dataCompare$: Observable<IStatisticsWeek>;
 
   chartTitle1: string;
   chartTitle2: string;
+
+  get statisticWeekEmpty(): IStatisticsWeek {
+    return {
+      monday: [],
+      tuesday: [],
+      wednesday: [],
+      thursday: [],
+      friday: [],
+      saturday: [],
+      sunday: [],
+    }
+  }
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
   ) { }
 
   ngOnInit() {
-    this.timebucket$ = this.statisticsDataAccessService.getPieChartData(
+    this.timebucket$ = this.statisticsDataAccessService.getBarChartData(
       this.endpoint,
       this.payload,
     ).pipe(
@@ -45,7 +57,7 @@ export class PieCategoryComponent implements OnInit {
 
     this.dataCompare$ = this.timebucket$.pipe(
       map(timeBucket => {
-        const dataCompare: IStatisticItem[] = timeBucket.data.compare;
+        const dataCompare: IStatisticsWeek = timeBucket.data.compare;
 
         switch (environment.compareWith) {
           case 'none':
@@ -53,11 +65,11 @@ export class PieCategoryComponent implements OnInit {
           case 'all':
             this.chartTitle1 = 'Du';
             this.chartTitle2 = 'Alle anderen Teilnehmer';
-            return dataCompare || [];
+            return dataCompare || this.statisticWeekEmpty;
           case 'demographic':
             this.chartTitle1 = 'Du';
             this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1)';
-            return dataCompare || [];
+            return dataCompare || this.statisticWeekEmpty;
         }
 
       }),

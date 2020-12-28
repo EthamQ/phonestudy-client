@@ -1,10 +1,19 @@
-.chart {
+app-pie-chart {
     margin-top: 30px;
+
+    &.no-data {
+        height: 100px;
+    }
 }
 
 .placeholder-chart {
     display: flex;
     justify-content: center;
+}
+
+.data-empty {
+    position: relative;;
+    text-align: center;
 }
 
 .loading-chart {

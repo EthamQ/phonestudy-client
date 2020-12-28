@@ -43,10 +43,10 @@ export class StatisticsDataAccessService {
 
   getBarChartData(
     urlSuffix: string,
-    dateFrom: string,
-    days: number,
-    aggregation: EAggregation,
     payload: IRequestPayloadBar,
+    dateFrom?: string,
+    days?: number,
+    aggregation?: EAggregation,
   ): Observable<ITimeBucket<IBasicResponse<IStatisticsWeek>>[]> {
     return this.http.post(this.getUrl(
       urlSuffix,
