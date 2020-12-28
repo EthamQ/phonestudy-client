@@ -3,13 +3,13 @@
     <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="true"
         [arrowRightActive]="false" [description]="description">
 
-        <div>
+        <div *ngIf="chartTitle1">
             <app-point [pointColor]="color1"></app-point>
             <span>{{chartTitle1}}</span>
             <div *ngIf="yAxis1IsEmpty">(Es gibt noch nicht genügend Daten um Statistiken anzuzeigen)</div>
         </div>
 
-        <div>
+        <div *ngIf="chartTitle2">
             <app-point [pointColor]="color2"></app-point>
             <span>{{chartTitle2}}</span>
             <div *ngIf="yAxis2IsEmpty">(Es gibt noch nicht genügend Daten um Statistiken anzuzeigen)</div>

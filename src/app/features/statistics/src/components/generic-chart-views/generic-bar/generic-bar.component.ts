@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { IStatisticItem, IStatisticsWeek } from '@shared/types/server';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { flatten } from 'underscore';
 import { GenericChartComponent } from '../generic-chart/generic-chart.component';
@@ -21,7 +21,7 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   @Input() chartTitle1: string;
   @Input() chartTitle2: string;
 
-  filterByOption$: Subject<string> = new Subject<string>();
+  filterByOption$: ReplaySubject<string> = new ReplaySubject<string>(1);
   destroy$: Subject<void> = new Subject<void>();
 
   uniqueOptions: string[];
@@ -57,13 +57,14 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
 
   ngOnChanges(changes: SimpleChanges): void {
     if((changes.data1 || changes.data2) && this.data1) {
-      this.uniqueOptions = this.getUniqueOptions(flatten(Object.values(this.data1)));
+      this.uniqueOptions = this.getUniqueOptions(flatten(Object.values(this.data1)));      
       this.filterByOption$.next(this.uniqueOptions[0]);
     }
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getValuesMatchingFilter(week: IStatisticsWeek, filter: string): number[] {    
@@ -85,7 +86,6 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
       sunday ? sunday.value : 0,
     ];
   }
-
 
   onSelectionChange(option: string): void {
     this.filterByOption$.next(option);
