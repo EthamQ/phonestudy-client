@@ -46,14 +46,9 @@ mat-slider {
     color: #ff4081;
 }
 
-.point {
-    display: inline-block;
+app-point {
     position: relative;
     top: 2px;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background-color: black;
 }
 
 .point-text {

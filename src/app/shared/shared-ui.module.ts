@@ -7,6 +7,7 @@ import { CategoryCardMultiComponent } from './components/category-cards/category
 import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DateFormatPipe } from './pipes/date-format.pipe';
+import { PointComponent } from './components/point/point.component';
 
 @NgModule({
   imports: [CommonModule, MatProgressBarModule,],
@@ -17,8 +18,17 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
       CategoryCardMultiComponent,
       LoadingScreenComponent,
       DateFormatPipe,
+      PointComponent,
     ],
-    exports: [CategoryCardComponent, CategoryCardMultiComponent, CategoryTextPipe, DateRangePipe, LoadingScreenComponent, DateFormatPipe],
+    exports: [
+      CategoryCardComponent,
+      CategoryCardMultiComponent,
+      CategoryTextPipe,
+      DateRangePipe,
+      LoadingScreenComponent,
+      DateFormatPipe,
+      PointComponent,
+    ],
     providers: [],
   })
   export class SharedModule { }

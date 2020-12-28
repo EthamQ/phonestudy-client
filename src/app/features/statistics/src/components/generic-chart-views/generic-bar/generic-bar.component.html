@@ -1,33 +1,41 @@
-<ng-container *ngIf="yAxis1; else loading">
+<ng-container *ngIf="yAxis1 && uniqueOptions; else loading">
 
-    <ng-container *ngIf="uniqueOptions; else loading">
+    <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="true"
+        [arrowRightActive]="false" [description]="description">
 
-        <app-statistic-header [category]="category" [date]="dateFrom + ' - ' + dateTo" [arrowLeftActive]="true"
-            [arrowRightActive]="false" [description]="description"></app-statistic-header>
-
-        <div *ngIf="uniqueOptions.length > 1" class="dropdown-container">
-
-            <mat-form-field>
-
-                <mat-select [value]="uniqueOptions[0]" (selectionChange)="onSelectionChange($event.value)">
-
-                    <mat-option *ngFor="let option of uniqueOptions" [value]="option">
-                        {{ option }}
-                    </mat-option>
-
-                </mat-select>
-
-            </mat-form-field>
-
+        <div>
+            <app-point [pointColor]="color1"></app-point>
+            <span>{{chartTitle1}}</span>
+            <div *ngIf="yAxis1IsEmpty">(Es gibt noch nicht genügend Daten um Statistiken anzuzeigen)</div>
         </div>
 
-        <app-bar-chart [values]="yAxis1" [values2]="yAxis2" [options]="xAxis"></app-bar-chart>
+        <div>
+            <app-point [pointColor]="color2"></app-point>
+            <span>{{chartTitle2}}</span>
+            <div *ngIf="yAxis2IsEmpty">(Es gibt noch nicht genügend Daten um Statistiken anzuzeigen)</div>
+        </div>
 
-    </ng-container>
+    </app-statistic-header>
+
+    <div *ngIf="uniqueOptions.length > 1" class="dropdown-container">
+
+        <mat-form-field>
+
+            <mat-select [value]="uniqueOptions[0]" (selectionChange)="onSelectionChange($event.value)">
+
+                <mat-option *ngFor="let option of uniqueOptions" [value]="option">
+                    {{ option }}
+                </mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <app-bar-chart [values]="yAxis1" [values2]="yAxis2" [options]="xAxis"></app-bar-chart>
 
 </ng-container>
-
-
 
 <ng-template #loading>
 

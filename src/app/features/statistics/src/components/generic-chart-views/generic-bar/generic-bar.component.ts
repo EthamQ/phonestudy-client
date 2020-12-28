@@ -6,6 +6,8 @@ import { flatten } from 'underscore';
 import { GenericChartComponent } from '../generic-chart/generic-chart.component';
 import { Input } from '@angular/core';
 import { StringService } from '../../../utils/string.service';
+import { ColorService } from '../../../utils/color.service';
+import { EDataOrigin } from '../../../types/types';
 
 @Component({
   selector: 'app-generic-bar',
@@ -27,8 +29,15 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   yAxis1: number[];
   yAxis2: number[];
 
+  yAxis1IsEmpty: boolean;
+  yAxis2IsEmpty: boolean;
+
+  color1 = this.colorService.getChartColor(EDataOrigin.USER);
+  color2 = this.colorService.getChartColor(EDataOrigin.COMPARE);
+
   constructor(
     private stringService: StringService,
+    private colorService: ColorService,
   ) {
     super();
   }
@@ -37,9 +46,11 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
     this.filterByOption$.pipe(takeUntil(this.destroy$))
     .subscribe((filter: string) => {
       this.yAxis1 = this.getValuesMatchingFilter(this.data1, filter);
+      this.yAxis1IsEmpty = this.yAxis1.every(x => x < 1);
 
       if(this.data2) {
         this.yAxis2 = this.getValuesMatchingFilter(this.data2, filter);
+        this.yAxis2IsEmpty = this.yAxis2.every(x => x < 1);
       }
     });
   }

@@ -64,6 +64,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       this.updateChartAndCorrelation(ECategory.STRESS, this.selectedOptionDropdown);
 
       this.setPearsonCorrelation(1);
+      this.setPearsonCorrelation(2);
     }
   }
 
