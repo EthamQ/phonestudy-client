@@ -42,6 +42,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { GenericChartComponent } from './src/components/generic-chart-views/generic-chart/generic-chart.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { PieCategoryComponent } from './src/components/categories/pie-category/pie-category.component';
+import { BarCategoryComponent } from './src/components/categories/bar-category/bar-category.component';
 
 @NgModule({
   imports: [
@@ -80,6 +81,7 @@ import { PieCategoryComponent } from './src/components/categories/pie-category/p
     GenericChartComponent,
     CorrelationInfoComponent,
     PieCategoryComponent,
+    BarCategoryComponent,
   ],
   providers: [StatisticsDataAccessService],
 })
