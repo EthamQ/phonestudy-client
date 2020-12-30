@@ -61,10 +61,10 @@ export class StatisticsDataAccessService {
 
   getScatterChartData(
     urlSuffix: string,
-    dateFrom: string,
-    days: number,
-    aggregation: EAggregation,
     payload: IRequestPayloadScatter,
+    dateFrom?: string,
+    days?: number,
+    aggregation?: EAggregation,
   ): Observable<ITimeBucket<IBasicResponse<ICorrelation>>[]> {
     return this.http.post(this.getUrl(
       urlSuffix,

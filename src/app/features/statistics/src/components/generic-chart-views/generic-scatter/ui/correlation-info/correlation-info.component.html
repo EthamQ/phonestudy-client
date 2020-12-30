@@ -4,9 +4,11 @@
 
         <div class="title-container">
             <app-point [pointColor]="pointColor"></app-point>
-            <span class="point-text" [style.color]="pointColor">{{ pointText }}</span>
-            <span class="title">{{ title }}</span>
+            <span class="point-text" [style.color]="pointColor">{{ pointText || '' }}</span>
+            <div class="title">{{ title || ''}}</div>
         </div>
+
+        <ng-container *ngIf="!placeholder; else placeholderTpl">
 
         <div class="center">
 
@@ -32,6 +34,14 @@
 
         <div class="hint">Achtung: desto weniger Daten es gibt desto weniger aussagekräftig ist das Ergebnis
         </div>
+
+    </ng-container>
+
+    <ng-template #placeholderTpl>
+        <div class="title-container">
+            {{ placeholder }}
+        </div>
+    </ng-template>
 
     </div>
 

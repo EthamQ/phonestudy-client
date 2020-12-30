@@ -22,7 +22,7 @@ const children: Routes = [
 
 const routes: Routes = [
   { 
-    path: 'startV1TgpPR',
+    path: 'v1TgpPR',
     component: FirstOutletComponent,
     data: {
       compareWith: 'none',
@@ -30,7 +30,7 @@ const routes: Routes = [
     children,
   },
   { 
-    path: 'startV2zSS0H',
+    path: 'v2zSS0H',
     component: FirstOutletComponent,
     data: {
       compareWith: 'all',
@@ -38,7 +38,7 @@ const routes: Routes = [
     children,
   },
   { 
-    path: 'startV3d3evD',
+    path: 'v3d3evD',
     component: FirstOutletComponent,
     data: {
       compareWith: 'demographic',
