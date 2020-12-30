@@ -7,7 +7,7 @@ export class DateFormatPipe implements PipeTransform {
 
   transform(date: string): string {
     const asDate = new Date(date);
-    return `${asDate.getDate()}/${asDate.getMonth()}/${asDate.getFullYear()}`;
+    return `${asDate.getDate()}/${asDate.getMonth() + 1}/${asDate.getFullYear()}`;
   }
 
 }

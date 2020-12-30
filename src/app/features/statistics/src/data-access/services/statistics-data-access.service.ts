@@ -15,6 +15,7 @@ export enum EAggregation {
 export class StatisticsDataAccessService {
 
   private readonly baseUrl = 'http://localhost:3000/datafeatures';
+  // private readonly baseUrl = 'https://quality.phonestudy.psy.lmu.de:9023/datafeatures';
   private readonly SECONDS_DAY = 86400;
 
   constructor(

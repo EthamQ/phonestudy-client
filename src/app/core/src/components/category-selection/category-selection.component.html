@@ -7,7 +7,7 @@
     <div class="statistics" *ngFor="let card of statisticCards">
 
         <app-category-card class="clickable" [category]="card.category"
-            [routerLink]="['../detail/statistics', card.url, '1']">
+            [routerLink]="['./detail/statistics', card.url, '1']">
         </app-category-card>
 
     </div>
@@ -26,7 +26,7 @@
     <div class="statistics" *ngFor="let card of statisticCardsCorrelation">
 
         <app-category-card-multi class="clickable" [categories]="card.categories"
-            [routerLink]="['../detail/statistics', card.url, '1']">
+            [routerLink]="['./detail/statistics', card.url, '1']">
         </app-category-card-multi>
 
     </div>

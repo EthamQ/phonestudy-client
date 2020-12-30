@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
 import { ITimeBucket, IBasicResponse, IRequestPayloadBar, IStatisticsWeek } from '@shared/types/server';
 import { environment } from 'environments/environment';
@@ -41,12 +42,16 @@ export class BarCategoryComponent implements OnInit {
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+    const compareWithRoute: ActivatedRoute = this.activatedRoute.pathFromRoot.find(x => x.routeConfig && x.routeConfig.data && x.routeConfig.data.compareWith)
+    const compareWith: 'none' | 'all' | 'demographic' = compareWithRoute ? compareWithRoute.routeConfig.data.compareWith : 'none';
+
     this.timebucket$ = this.statisticsDataAccessService.getBarChartData(
       this.endpoint,
-      this.payload,
+      { ...this.payload, compareWith },
     ).pipe(
       map(timeBuckets => timeBuckets[0]),
     );
@@ -59,7 +64,7 @@ export class BarCategoryComponent implements OnInit {
       map(timeBucket => {
         const dataCompare: IStatisticsWeek = timeBucket.data.compare;
 
-        switch (environment.compareWith) {
+        switch (compareWith) {
           case 'none':
             return null;
           case 'all':

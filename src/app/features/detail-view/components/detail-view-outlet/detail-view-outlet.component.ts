@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-view-outlet',
   templateUrl: './detail-view-outlet.component.html',
   styleUrls: ['./detail-view-outlet.component.scss']
 })
-export class DetailViewOutletComponent implements OnInit {
+export class DetailViewOutletComponent {
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
+  onClickHome(): void {
+    this.router.navigate(['/' + this.router.url.split('/').filter(x => !!x)[0]]);
   }
 
 }
