@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
 import { ITimeBucket, IBasicResponse, IRequestPayloadScatter, ICorrelation } from '@shared/types/server';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 
 @Component({
@@ -52,13 +52,16 @@ export class ScatterCategoryComponent implements OnInit {
       { ...this.payload, compareWith },
     ).pipe(
       map(timeBuckets => timeBuckets[0]),
+      take(1),
     );
 
     this.dataUser$ = this.timebucket$.pipe(
       map(timeBucket => timeBucket.data.user),
+      take(1),
     );
 
     this.dataCompare$ = this.timebucket$.pipe(
+      take(1),
       map(timeBucket => {
         const dataCompare: ICorrelation = timeBucket.data.compare;
 

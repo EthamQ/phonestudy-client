@@ -2,9 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
 import { ITimeBucket, IBasicResponse, IStatisticItem, IRequestPayloadPie } from '@shared/types/server';
-import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../charts';
 
@@ -41,14 +40,17 @@ export class PieCategoryComponent implements OnInit {
       this.endpoint,
       { ...this.payload, compareWith },
     ).pipe(
+      take(1),
       map(timeBuckets => timeBuckets[0]),
     );
 
     this.dataUser$ = this.timebucket$.pipe(
+      take(1),
       map(timeBucket => timeBucket.data.user),
     );
 
     this.dataCompare$ = this.timebucket$.pipe(
+      take(1),
       map(timeBucket => {
         const dataCompare: IStatisticItem[] = timeBucket.data.compare;
 
