@@ -5,6 +5,7 @@ import { ITimeBucket, IBasicResponse, IRequestPayloadScatter, ICorrelation } fro
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
+import { CustomGoogleAnalyticsService } from '../../../../../../shared/services/custom-google-analytics.service';
 
 @Component({
   selector: 'app-scatter-category',
@@ -40,12 +41,15 @@ export class ScatterCategoryComponent implements OnInit {
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
     private activatedRoute: ActivatedRoute,
+    private googleAnalyticsService: CustomGoogleAnalyticsService,
   ) { }
 
   ngOnInit() {
     const compareWithRoute: ActivatedRoute = this.activatedRoute.pathFromRoot.find(x => x.routeConfig && x.routeConfig.data && x.routeConfig.data.compareWith)
     const compareWith: 'none' | 'all' | 'demographic' = compareWithRoute ? compareWithRoute.routeConfig.data.compareWith : 'none';
     this.comparisonActive = compareWith !== 'none';
+
+    this.googleAnalyticsService.sendChartVisitEvent('scatter', compareWith, this.categories[0]);
 
     this.timebucket$ = this.statisticsDataAccessService.getScatterChartData(
       this.endpoint,
