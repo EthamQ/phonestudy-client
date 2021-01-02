@@ -32,11 +32,11 @@
 }
 
 .img-container {
-    display: flex;
-    justify-content: center;
     margin-top: 5px;
 }
 
 img {
     width: 60%;
+    display: block;
+    margin: 0 auto;
 }
