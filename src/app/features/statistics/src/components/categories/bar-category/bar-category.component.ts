@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
 import { ITimeBucket, IBasicResponse, IRequestPayloadBar, IStatisticsWeek } from '@shared/types/server';
-import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { map, take, tap } from 'rxjs/operators';
 import { StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../charts';
 import { CustomGoogleAnalyticsService } from '../../../../../../shared/services/custom-google-analytics.service';
@@ -21,7 +21,7 @@ export class BarCategoryComponent implements OnInit {
   @Input() payload: IRequestPayloadBar;
   @Input() endpoint: string;
 
-  timebucket$: Observable<ITimeBucket<IBasicResponse<IStatisticsWeek>>>;
+  timebucket$: ReplaySubject<ITimeBucket<IBasicResponse<IStatisticsWeek>>> = new ReplaySubject();
   dataUser$: Observable<IStatisticsWeek>;
   dataCompare$: Observable<IStatisticsWeek>;
 
@@ -52,17 +52,17 @@ export class BarCategoryComponent implements OnInit {
 
     this.googleAnalyticsService.sendChartVisitEvent('bar', compareWith, this.category);
 
-    this.timebucket$ = this.statisticsDataAccessService.getBarChartData(
+    this.statisticsDataAccessService.getBarChartData(
       this.endpoint,
       { ...this.payload, compareWith },
     ).pipe(
-      map(timeBuckets => timeBuckets[0]),
       take(1),
-    );
+      map(timeBuckets => timeBuckets[0]),
+    ).subscribe(x => this.timebucket$.next(x));
 
     this.dataUser$ = this.timebucket$.pipe(
-      map(timeBucket => timeBucket.data.user),
       take(1),
+      map(timeBucket => timeBucket.data.user),
     );
 
     this.dataCompare$ = this.timebucket$.pipe(
@@ -82,7 +82,6 @@ export class BarCategoryComponent implements OnInit {
             this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1)';
             return dataCompare || this.statisticWeekEmpty;
         }
-
       }),
     );
   }

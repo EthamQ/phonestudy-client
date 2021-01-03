@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DateService, ELocalStorageKey, LocalStorageService } from '@shared/services';
@@ -14,8 +14,8 @@ export enum EAggregation {
 @Injectable()
 export class StatisticsDataAccessService {
 
-  private readonly baseUrl = 'http://localhost:3000/datafeatures';
-  // private readonly baseUrl = 'https://quality.phonestudy.psy.lmu.de:9023/datafeatures';
+  // private readonly baseUrl = 'http://localhost:3000/datafeatures';
+  private readonly baseUrl = 'https://quality.phonestudy.psy.lmu.de:9023/datafeatures';
   private readonly SECONDS_DAY = 86400;
 
   constructor(
@@ -38,6 +38,7 @@ export class StatisticsDataAccessService {
       days,
       aggregation
     ), payload).pipe(
+      take(1),
       map((response: IServerResponse<IBasicResponse<IStatisticItem[]>>) => this.statisticsMappingService.map(response)),
     );
   }
@@ -55,6 +56,7 @@ export class StatisticsDataAccessService {
       days,
       aggregation
     ), payload).pipe(
+      take(1),
       map((response: IServerResponse<IBasicResponse<IStatisticItem[]>>) => this.statisticsMappingService.map(response)),
     );
   }
@@ -72,6 +74,7 @@ export class StatisticsDataAccessService {
       days,
       aggregation
     ), payload).pipe(
+      take(1),
       map((response: IServerResponse<IBasicResponse<ICorrelation>>) => this.statisticsMappingService.map(response)),
     );
   }

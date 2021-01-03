@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
 import { ITimeBucket, IBasicResponse, IRequestPayloadScatter, ICorrelation } from '@shared/types/server';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import { CustomGoogleAnalyticsService } from '../../../../../../shared/services/custom-google-analytics.service';
@@ -21,7 +21,7 @@ export class ScatterCategoryComponent implements OnInit {
   @Input() textX: string;
   @Input() multipleOptions: boolean;
 
-  timebucket$: Observable<ITimeBucket<IBasicResponse<ICorrelation>>>;
+  timebucket$: ReplaySubject<ITimeBucket<IBasicResponse<ICorrelation>>> = new ReplaySubject();
   dataUser$: Observable<ICorrelation>;
   dataCompare$: Observable<ICorrelation>;
 
@@ -51,13 +51,13 @@ export class ScatterCategoryComponent implements OnInit {
 
     this.googleAnalyticsService.sendChartVisitEvent('scatter', compareWith, this.categories[0]);
 
-    this.timebucket$ = this.statisticsDataAccessService.getScatterChartData(
+    this.statisticsDataAccessService.getScatterChartData(
       this.endpoint,
       { ...this.payload, compareWith },
     ).pipe(
-      map(timeBuckets => timeBuckets[0]),
       take(1),
-    );
+      map(timeBuckets => timeBuckets[0]),
+    ).subscribe(x => this.timebucket$.next(x));
 
     this.dataUser$ = this.timebucket$.pipe(
       map(timeBucket => timeBucket.data.user),
