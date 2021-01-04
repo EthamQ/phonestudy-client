@@ -29,7 +29,7 @@ export class ScatterChartComponent implements OnChanges {
       this.datasets = [
         {
           data: this.values1,
-          pointRadius: 10,
+          pointRadius: 7,
           pointBackgroundColor: this.colorService.getChartColor(EDataOrigin.USER),
         },
       ];
@@ -38,7 +38,7 @@ export class ScatterChartComponent implements OnChanges {
     if(this.values2 && this.datasets && this.datasets.length === 1) {
       this.datasets.push({
         data: this.values2,
-        pointRadius: 15,
+        pointRadius: 11,
         pointBackgroundColor: this.colorService.getChartColor(EDataOrigin.COMPARE),
       });
     }
