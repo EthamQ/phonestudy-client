@@ -9,6 +9,10 @@
     color: $primary-blue;
 }
 
+.subheading {
+    margin-top: 10px;
+}
+
 .grid-1 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
