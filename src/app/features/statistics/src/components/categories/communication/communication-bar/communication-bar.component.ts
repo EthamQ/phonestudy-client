@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
 export class CommunicationBarComponent {
 
   description = 'Verteilung Minuten telefoniert pro Wochentag';
+  textY = 'Anzahl Minuten telefoniert insgesamt';
   category = ECategory.COMMUNICATION;
   endpoint = 'communication';
   payload: IRequestPayloadBar = {

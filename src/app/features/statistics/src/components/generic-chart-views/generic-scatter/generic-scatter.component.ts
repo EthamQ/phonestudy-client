@@ -23,6 +23,8 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   @Input() color1 = this.colorService.getChartColor(EDataOrigin.USER);
   @Input() color2 = this.colorService.getChartColor(EDataOrigin.COMPARE);
   @Input() textX: string;
+  @Input() chartTitle1: string;
+  @Input() chartTitle2: string;
 
   textY = '';
   dropdownOptions: string[] = [];
@@ -44,6 +46,9 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   chartPoints1: ChartPoint[];
   chartPoints2: ChartPoint[];
 
+  chartPoints1Empty: boolean;
+  chartPoints2Empty: boolean;
+
   constructor(
     private correlationCalculationService: CorrelationCalculationService,
     private colorService: ColorService,
@@ -64,7 +69,12 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       this.updateChartAndCorrelation(ECategory.STRESS, this.selectedOptionDropdown);
 
       this.setPearsonCorrelation(1);
+
+      if(this.data2) {
+        this.setPearsonCorrelation(2);
+      }
     }
+    
   }
 
   updateChartAndCorrelation(category: ECategory, filter: string): void {
@@ -72,7 +82,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
 
     this.selectedCategory = category;
 
-    this.textY = this.categoryService.getDisplayName(category);
+    this.textY = this.categoryService.getAxisExplanation(category);
 
     this.chartPoints1 = this.getCorrelationAsChartpoints(
       this.data1,
@@ -85,6 +95,14 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       category,
       filter,
     ) : null;
+
+    if(this.chartPoints1 && this.chartPoints1.length === 0) {
+      this.chartPoints1Empty = true;
+    }
+
+    if(this.chartPoints2 && this.chartPoints2.length === 0) {
+      this.chartPoints2Empty = true;
+    }
 
     if (this.comparisonActive) {
       this.setPearsonCorrelation(1);
@@ -123,8 +141,14 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   }
 
   private setPearsonCorrelation(type: number): void {
-    const x: number[] = this.getChartpoints(type).map(point => point.x) as number[];
-    const y: number[] = this.getChartpoints(type).map(point => point.y) as number[];
+    const chartPoints: ChartPoint[] = this.getChartpoints(type);
+
+    if(!chartPoints) {
+      return;
+    }
+
+    const x: number[] = chartPoints.map(point => point.x) as number[];
+    const y: number[] = chartPoints.map(point => point.y) as number[];
 
     const pearsonCorrelation: number = this.correlationCalculationService.getPearsonCorrelation(
       x,
@@ -147,7 +171,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     const explanation: string = this.getCorrelationExplanation(
       this.categories[0],
       this.selectedCategory,
-      this.pearsonCorrelation1,
+      this.getCorrelationValue(type),
     );
 
     this.setCorrelationExplanation(type, explanation);
@@ -207,6 +231,15 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     }
     if (type === 2) {
       this.pearsonCorrelation2 = value;
+    }
+  }
+
+  private getCorrelationValue(type: number): number {
+    if (type === 1) {
+      return this.pearsonCorrelation1;
+    }
+    if (type === 2) {
+      return this.pearsonCorrelation2;
     }
   }
 

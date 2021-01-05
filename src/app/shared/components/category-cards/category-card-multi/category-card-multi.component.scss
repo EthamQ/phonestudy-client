@@ -30,11 +30,13 @@
 }
 
 .main-image {
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
 
     img {
         width: 35%;
+        display: block;
+        margin: 0 auto;
     }
 }
 
@@ -45,4 +47,6 @@
 
 .small-image {
     width: 80%;
+    display: block;
+    margin: 0 auto;
 }

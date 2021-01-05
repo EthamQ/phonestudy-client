@@ -14,13 +14,15 @@ export class AuthentificationGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const userId: string = next.params.userId;
+    const baseUrl = '/' + state.url.split('/').filter(x => !!x)[0];
+
     if (userId) {
       this.localStorageService.set(ELocalStorageKey.USERID, userId);
-      return this.router.parseUrl('/');
+      return this.router.parseUrl(baseUrl);
     }
 
     if (!userId && !!this.localStorageService.get(ELocalStorageKey.USERID)) {
-      return this.router.parseUrl('/');
+      return this.router.parseUrl(baseUrl);
     }
 
     return false;

@@ -43,6 +43,7 @@ import { GenericChartComponent } from './src/components/generic-chart-views/gene
 import { MatSliderModule } from '@angular/material/slider';
 import { PieCategoryComponent } from './src/components/categories/pie-category/pie-category.component';
 import { BarCategoryComponent } from './src/components/categories/bar-category/bar-category.component';
+import { ScatterCategoryComponent } from './src/components/categories/scatter-category/scatter-category.component';
 
 @NgModule({
   imports: [
@@ -82,6 +83,7 @@ import { BarCategoryComponent } from './src/components/categories/bar-category/b
     CorrelationInfoComponent,
     PieCategoryComponent,
     BarCategoryComponent,
+    ScatterCategoryComponent,
   ],
   providers: [StatisticsDataAccessService],
 })

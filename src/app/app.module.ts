@@ -9,6 +9,9 @@ import { SharedModule } from '@shared/shared-ui.module';
 import { AuthenticationComponent } from '@core/components/authentication/authentication.component';
 import { ErrorComponent } from '@core/components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FirstOutletComponent } from './features/first-outlet/first-outlet.component';
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+
 
 
 @NgModule({
@@ -17,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CategorySelectionComponent,
     AuthenticationComponent,
     ErrorComponent,
+    FirstOutletComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,6 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
+    NgxGoogleAnalyticsModule.forRoot('UA-186205661-1'),
+    NgxGoogleAnalyticsRouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

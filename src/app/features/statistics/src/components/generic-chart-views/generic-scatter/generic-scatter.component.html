@@ -28,8 +28,7 @@
 
         <mat-form-field>
 
-            <mat-select [(value)]="selectedOptionDropdown"
-                (selectionChange)="onDropdownChange($event.value)">
+            <mat-select [(value)]="selectedOptionDropdown" (selectionChange)="onDropdownChange($event.value)">
 
                 <mat-option *ngFor="let option of dropdownOptions" [value]="option">
                     {{ option }}
@@ -44,18 +43,24 @@
     <div class="chart-section" [class.comparison-active]="comparisonActive">
 
         <div class="center">
-            <app-scatter-chart [values1]="chartPoints1" [values2]="chartPoints2" [textX]="textX"
-                [textY]="textY">
+            <app-scatter-chart [values1]="chartPoints1" [values2]="chartPoints2" [textX]="textX" [textY]="textY">
             </app-scatter-chart>
         </div>
 
         <div class="correlation-info">
 
             <app-correlation-info [title]="pearsonCorrelationTitle1" [explanation]="pearsonCorrelationExplanation1"
-                [correlationValue]="pearsonCorrelation1" [pointColor]="color1" [pointText]="comparisonActive ? '(Du)' : ''"></app-correlation-info>
+                [correlationValue]="pearsonCorrelation1" [pointColor]="color1"
+                [pointText]="'(' + (chartTitle1 || '') + ')'"
+                [placeholder]="chartPoints1Empty ? 'Nicht genügend Daten um etwas anzuzeigen' : null">
+            </app-correlation-info>
 
-            <app-correlation-info *ngIf="chartPoints2" [title]="pearsonCorrelationTitle2" [explanation]="pearsonCorrelationExplanationCompare"
-                [correlationValue]="pearsonCorrelation2" [pointColor]="color2" [pointText]="'(Alle)'"></app-correlation-info>
+            <app-correlation-info *ngIf="chartPoints2" [title]="pearsonCorrelationTitle2"
+                [explanation]="pearsonCorrelationExplanation2" [correlationValue]="pearsonCorrelation2"
+                [pointColor]="color2" [pointText]="'(' + (chartTitle2 || '') + ')'"
+                [placeholder]="chartPoints2Empty ? 'Nicht genügend Daten um etwas anzuzeigen' : null">
+            </app-correlation-info>
+
         </div>
 
     </div>

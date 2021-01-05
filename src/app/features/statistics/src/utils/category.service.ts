@@ -18,4 +18,15 @@ export class CategoryService {
     }
   }
 
+  getAxisExplanation(category: ECategory) {
+    switch (category) {
+      case ECategory.STRESS:
+        return '1 (sehr entspannt) - 6 (sehr gestresst)';
+      case ECategory.MOOD:
+        return '1 (sehr angenehm) - 6 (sehr unangenehm)';
+      case ECategory.SLEEP:
+        return '1 (sehr gut) - 6 (sehr schlecht)';
+    }
+  }
+
 }

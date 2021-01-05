@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { IStatisticItem, IStatisticsWeek } from '@shared/types/server';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { flatten } from 'underscore';
 import { GenericChartComponent } from '../generic-chart/generic-chart.component';
 import { Input } from '@angular/core';
 import { StringService } from '../../../utils/string.service';
+import { ColorService } from '../../../utils/color.service';
+import { EDataOrigin } from '../../../types/types';
 
 @Component({
   selector: 'app-generic-bar',
@@ -18,8 +20,9 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   @Input() data2: IStatisticsWeek;
   @Input() chartTitle1: string;
   @Input() chartTitle2: string;
+  @Input() textY: string;
 
-  filterByOption$: Subject<string> = new Subject<string>();
+  filterByOption$: ReplaySubject<string> = new ReplaySubject<string>(1);
   destroy$: Subject<void> = new Subject<void>();
 
   uniqueOptions: string[];
@@ -27,8 +30,15 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   yAxis1: number[];
   yAxis2: number[];
 
+  yAxis1IsEmpty: boolean;
+  yAxis2IsEmpty: boolean;
+
+  color1 = this.colorService.getChartColor(EDataOrigin.USER);
+  color2 = this.colorService.getChartColor(EDataOrigin.COMPARE);
+
   constructor(
     private stringService: StringService,
+    private colorService: ColorService,
   ) {
     super();
   }
@@ -37,22 +47,25 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
     this.filterByOption$.pipe(takeUntil(this.destroy$))
     .subscribe((filter: string) => {
       this.yAxis1 = this.getValuesMatchingFilter(this.data1, filter);
+      this.yAxis1IsEmpty = this.yAxis1.every(x => x < 1);
 
       if(this.data2) {
         this.yAxis2 = this.getValuesMatchingFilter(this.data2, filter);
+        this.yAxis2IsEmpty = this.yAxis2.every(x => x < 1);
       }
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if((changes.data1 || changes.data2) && this.data1) {
-      this.uniqueOptions = this.getUniqueOptions(flatten(Object.values(this.data1)));
+      this.uniqueOptions = this.getUniqueOptions(flatten(Object.values(this.data1)));      
       this.filterByOption$.next(this.uniqueOptions[0]);
     }
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getValuesMatchingFilter(week: IStatisticsWeek, filter: string): number[] {    
@@ -74,7 +87,6 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
       sunday ? sunday.value : 0,
     ];
   }
-
 
   onSelectionChange(option: string): void {
     this.filterByOption$.next(option);

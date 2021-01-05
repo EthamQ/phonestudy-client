@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { ECategory } from '@shared/types';
-import { IRequestPayload } from '@shared/types/server';
 
 @Component({
   selector: 'app-generic-chart',
@@ -13,4 +12,5 @@ export class GenericChartComponent {
   @Input() category: ECategory;
   @Input() dateFrom: string;
   @Input() dateTo: string;
+
 }

@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
 import { ITimeBucket, IBasicResponse, IRequestPayloadBar, IStatisticsWeek } from '@shared/types/server';
-import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { map, take, tap } from 'rxjs/operators';
 import { StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../charts';
+import { CustomGoogleAnalyticsService } from '../../../../../../shared/services/custom-google-analytics.service';
 
 @Component({
   selector: 'app-bar-category',
@@ -19,8 +20,9 @@ export class BarCategoryComponent implements OnInit {
   @Input() category: ECategory;
   @Input() payload: IRequestPayloadBar;
   @Input() endpoint: string;
+  @Input() textY: string;
 
-  timebucket$: Observable<ITimeBucket<IBasicResponse<IStatisticsWeek>>>;
+  timebucket$: ReplaySubject<ITimeBucket<IBasicResponse<IStatisticsWeek>>> = new ReplaySubject();
   dataUser$: Observable<IStatisticsWeek>;
   dataCompare$: Observable<IStatisticsWeek>;
 
@@ -41,37 +43,46 @@ export class BarCategoryComponent implements OnInit {
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
+    private activatedRoute: ActivatedRoute,
+    private googleAnalyticsService: CustomGoogleAnalyticsService,
   ) { }
 
   ngOnInit() {
-    this.timebucket$ = this.statisticsDataAccessService.getBarChartData(
+    const compareWithRoute: ActivatedRoute = this.activatedRoute.pathFromRoot.find(x => x.routeConfig && x.routeConfig.data && x.routeConfig.data.compareWith)
+    const compareWith: 'none' | 'all' | 'demographic' = compareWithRoute ? compareWithRoute.routeConfig.data.compareWith : 'none';
+
+    this.googleAnalyticsService.sendChartVisitEvent('bar', compareWith, this.category);
+
+    this.statisticsDataAccessService.getBarChartData(
       this.endpoint,
-      this.payload,
+      { ...this.payload, compareWith },
     ).pipe(
+      take(1),
       map(timeBuckets => timeBuckets[0]),
-    );
+    ).subscribe(x => this.timebucket$.next(x));
 
     this.dataUser$ = this.timebucket$.pipe(
+      take(1),
       map(timeBucket => timeBucket.data.user),
     );
 
     this.dataCompare$ = this.timebucket$.pipe(
+      take(1),
       map(timeBucket => {
         const dataCompare: IStatisticsWeek = timeBucket.data.compare;
 
-        switch (environment.compareWith) {
+        switch (compareWith) {
           case 'none':
             return null;
           case 'all':
             this.chartTitle1 = 'Du';
-            this.chartTitle2 = 'Alle anderen Teilnehmer';
+            this.chartTitle2 = 'Alle anderen Teilnehmer (Durchschnitt)';
             return dataCompare || this.statisticWeekEmpty;
           case 'demographic':
             this.chartTitle1 = 'Du';
-            this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1)';
+            this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1) (Durchschnitt)';
             return dataCompare || this.statisticWeekEmpty;
         }
-
       }),
     );
   }
