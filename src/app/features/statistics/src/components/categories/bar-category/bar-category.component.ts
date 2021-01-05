@@ -20,6 +20,7 @@ export class BarCategoryComponent implements OnInit {
   @Input() category: ECategory;
   @Input() payload: IRequestPayloadBar;
   @Input() endpoint: string;
+  @Input() textY: string;
 
   timebucket$: ReplaySubject<ITimeBucket<IBasicResponse<IStatisticsWeek>>> = new ReplaySubject();
   dataUser$: Observable<IStatisticsWeek>;
@@ -75,11 +76,11 @@ export class BarCategoryComponent implements OnInit {
             return null;
           case 'all':
             this.chartTitle1 = 'Du';
-            this.chartTitle2 = 'Alle anderen Teilnehmer';
+            this.chartTitle2 = 'Alle anderen Teilnehmer (Durchschnitt)';
             return dataCompare || this.statisticWeekEmpty;
           case 'demographic':
             this.chartTitle1 = 'Du';
-            this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1)';
+            this.chartTitle2 = 'Alle Teilnehmer in deinem Alter (+-1) (Durchschnitt)';
             return dataCompare || this.statisticWeekEmpty;
         }
       }),

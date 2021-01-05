@@ -2,7 +2,7 @@
 
     <ng-container *ngIf="dataUser$ | async as dataUser; else loading">
 
-        <app-generic-bar [data1]="dataUser" [data2]="dataCompare$ | async"
+        <app-generic-bar [data1]="dataUser" [data2]="dataCompare$ | async" [textY]="textY"
             [category]="category" [description]="description" [dateFrom]="timebucket.from | dateFormat"
             [dateTo]="timebucket.until | dateFormat" [chartTitle1]="chartTitle1" [chartTitle2]="chartTitle2">
         </app-generic-bar>

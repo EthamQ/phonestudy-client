@@ -9,8 +9,8 @@ import { EColorStyle } from '../../../charts';
 })
 export class AppUsageScatterComponent {
 
-  description = 'Korrelation App-Benutzung und';
-  textX = 'App geöffnet';
+  description = '(Nur Apps die du benutzt hast) Korrelation Anzahl aufgezeichneter App Aktivitäten und';
+  textX = 'Aufgezeichnete App-Aktivitäten';
   colorStyle = EColorStyle.RANDOM;
   payload = {
     compareWith: environment.compareWith,

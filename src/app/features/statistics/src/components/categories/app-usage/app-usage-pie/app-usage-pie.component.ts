@@ -9,7 +9,7 @@ import { EColorStyle } from '../../../charts';
 })
 export class AppUsagePieComponent {
 
-  description = 'Häufigkeit Apps in dem Zeitraum geöffnet';
+  description = 'Anzahl aufgezeichneter Aktivitäten von Apps';
   colorStyle = EColorStyle.RANDOM;
   category = ECategory.APP;
   endpoint = 'app';

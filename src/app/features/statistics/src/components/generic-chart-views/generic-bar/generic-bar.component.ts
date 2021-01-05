@@ -20,6 +20,7 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   @Input() data2: IStatisticsWeek;
   @Input() chartTitle1: string;
   @Input() chartTitle2: string;
+  @Input() textY: string;
 
   filterByOption$: ReplaySubject<string> = new ReplaySubject<string>(1);
   destroy$: Subject<void> = new Subject<void>();

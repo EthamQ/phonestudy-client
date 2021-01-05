@@ -82,7 +82,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
 
     this.selectedCategory = category;
 
-    this.textY = this.categoryService.getDisplayName(category);
+    this.textY = this.categoryService.getAxisExplanation(category);
 
     this.chartPoints1 = this.getCorrelationAsChartpoints(
       this.data1,

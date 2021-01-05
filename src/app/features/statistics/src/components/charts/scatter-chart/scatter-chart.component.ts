@@ -23,8 +23,6 @@ export class ScatterChartComponent implements OnChanges {
   constructor(private colorService: ColorService) {}
 
   ngOnChanges(): void {
-    console.log('values1', this.values1);
-    console.log('values2', this.values2);
     if(this.values1) {
       this.datasets = [
         {

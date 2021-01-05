@@ -9,7 +9,8 @@ import { environment } from 'environments/environment';
 })
 export class AppUsageBarComponent {
 
-  description = 'Verteilung App-Benutzung pro Wochentag';
+  description = 'Anzahl aufgezeichneter Aktivitäten von Apps pro Wochentag (Nur Apps die du benutzt hast)';
+  textY = 'Aufgezeichnete App-Aktivitäten';
   category = ECategory.APP;
   endpoint = 'app';
   payload: IRequestPayloadBar = {
