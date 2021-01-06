@@ -32,8 +32,6 @@ export class BarChartComponent implements OnChanges {
   };
 
   ngOnChanges(): void {
-    console.log('values 1', this.values);
-    console.log('alues 2', this.values2);
     this.datasets = [{ data: this.values, backgroundColor: '#07c' }];
 
     if(this.values2 && this.values2.length > 0) {

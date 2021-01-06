@@ -23,9 +23,9 @@ export class CategoryService {
       case ECategory.STRESS:
         return '1 (sehr entspannt) - 6 (sehr gestresst)';
       case ECategory.MOOD:
-        return '1 (sehr angenehm) - 6 (sehr unangenehm)';
+        return '1 (sehr unangenehm) - 6 (sehr angenehm)';
       case ECategory.SLEEP:
-        return '1 (sehr gut) - 6 (sehr schlecht)';
+        return '1 (sehr schlecht) - 6 (sehr gut)';
     }
   }
 

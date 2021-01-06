@@ -13,7 +13,7 @@ export class MoodBarComponent {
   constructor(private categoryService: CategoryService) {}
 
   description = 'Verteilung Gefühlszustand pro Wochentag';
-  textY = `${this.categoryService.getDisplayName(ECategory.MOOD)}; ${this.categoryService.getAxisExplanation(ECategory.MOOD)}`;
+  textY = this.categoryService.getAxisExplanation(ECategory.MOOD);
   category = ECategory.MOOD;
   endpoint = 'mood';
   payload: IRequestPayloadBar = {

@@ -12,7 +12,7 @@ export class SleepBarComponent {
   constructor(private categoryService: CategoryService) {}
 
   description = 'Verteilung Schlafqualität pro Wochentag';
-  textY = `${this.categoryService.getDisplayName(ECategory.SLEEP)}; ${this.categoryService.getAxisExplanation(ECategory.SLEEP)}`;
+  textY = this.categoryService.getAxisExplanation(ECategory.SLEEP);
   category = ECategory.SLEEP;
   endpoint = 'sleep';
   payload: IRequestPayloadBar = {

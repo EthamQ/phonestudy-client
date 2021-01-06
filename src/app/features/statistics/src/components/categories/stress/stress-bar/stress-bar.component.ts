@@ -13,7 +13,7 @@ export class StressBarComponent {
   constructor(private categoryService: CategoryService) {}
 
   description = 'Verteilung Stresslevel pro Wochentag';
-  textY = `${this.categoryService.getDisplayName(ECategory.STRESS)}; ${this.categoryService.getAxisExplanation(ECategory.STRESS)}`;
+  textY = this.categoryService.getAxisExplanation(ECategory.STRESS);
   category = ECategory.STRESS;
   endpoint = 'stress';
   payload: IRequestPayloadBar = {
