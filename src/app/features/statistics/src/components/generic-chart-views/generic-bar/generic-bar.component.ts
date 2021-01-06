@@ -8,6 +8,7 @@ import { Input } from '@angular/core';
 import { StringService } from '../../../utils/string.service';
 import { ColorService } from '../../../utils/color.service';
 import { EDataOrigin } from '../../../types/types';
+import { CustomGoogleAnalyticsService, EGaEventAction } from '@shared/services/custom-google-analytics.service';
 
 @Component({
   selector: 'app-generic-bar',
@@ -39,6 +40,7 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   constructor(
     private stringService: StringService,
     private colorService: ColorService,
+    private googleAnalyticsService: CustomGoogleAnalyticsService,
   ) {
     super();
   }
@@ -89,6 +91,7 @@ export class GenericBarComponent extends GenericChartComponent implements OnInit
   }
 
   onSelectionChange(option: string): void {
+    this.googleAnalyticsService.sendGaEvent(EGaEventAction.CLICK_DROPDOWN, option);
     this.filterByOption$.next(option);
   }
 

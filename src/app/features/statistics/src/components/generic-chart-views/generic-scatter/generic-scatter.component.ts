@@ -9,6 +9,7 @@ import { EDataOrigin } from '../../../types/types';
 import { ColorService } from '../../../utils/color.service';
 import { StringService } from '../../../utils/string.service';
 import { CategoryService } from '../../../utils/category.service';
+import { CustomGoogleAnalyticsService, EGaEventAction } from '@shared/services/custom-google-analytics.service';
 
 @Component({
   selector: 'app-generic-scatter',
@@ -54,6 +55,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     private colorService: ColorService,
     private stringService: StringService,
     private categoryService: CategoryService,
+    private googleAnalyticsService: CustomGoogleAnalyticsService,
   ) {
     super();
   }
@@ -77,7 +79,12 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     
   }
 
-  updateChartAndCorrelation(category: ECategory, filter: string): void {
+  onCategoryClicked(category: ECategory, filter: string): void {
+    this.googleAnalyticsService.sendGaEvent(EGaEventAction.CLICK_CATEGORY, category);
+    this.updateChartAndCorrelation(category, filter);
+  }
+
+  private updateChartAndCorrelation(category: ECategory, filter: string): void {
     this.descriptionCorrelation = `${this.description} ${this.categoryService.getDisplayName(category)}`;
 
     this.selectedCategory = category;
@@ -97,7 +104,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
     ) : null;
 
     this.chartPoints1Empty = this.chartPoints1 && this.chartPoints1.length === 0;
-    
+
     this.chartPoints2Empty = this.chartPoints2 && this.chartPoints2.length === 0;
 
     if (this.comparisonActive) {
@@ -109,6 +116,7 @@ export class GenericScatterComponent extends GenericChartComponent implements On
   }
 
   onDropdownChange(selectedOption: string): void {
+    this.googleAnalyticsService.sendGaEvent(EGaEventAction.CLICK_DROPDOWN, selectedOption);
     this.selectedOptionDropdown = selectedOption;
     this.updateChartAndCorrelation(this.selectedCategory, selectedOption);
   }

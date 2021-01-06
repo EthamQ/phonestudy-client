@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
+import { ApplicationInfoService } from '@shared/services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-category-selection',
@@ -30,13 +31,10 @@ export class CategorySelectionComponent implements OnInit {
 
   subtitle = '';
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private applicationInfoService: ApplicationInfoService, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    const compareWithRoute: ActivatedRoute = this.activatedRoute.pathFromRoot.find(x => x.routeConfig && x.routeConfig.data && x.routeConfig.data.compareWith)
-    const compareWith: 'none' | 'all' | 'demographic' = compareWithRoute ? compareWithRoute.routeConfig.data.compareWith : 'none';
-    
-    switch(compareWith) {
+    switch(this.applicationInfoService.getCompareWith(this.activatedRoute.pathFromRoot)) {
       case 'all': 
         this.subtitle = 'Deine Daten im Vergleich zu deren aller anderen Teilnehmer';
         break;

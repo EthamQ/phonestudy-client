@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ECategory } from '@shared/types';
 import { ITimeBucket, IBasicResponse, IRequestPayloadBar, IStatisticsWeek } from '@shared/types/server';
 import { Observable, ReplaySubject } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { StatisticsDataAccessService } from '../../../data-access/services/statistics-data-access.service';
 import { EColorStyle } from '../../charts';
-import { CustomGoogleAnalyticsService } from '../../../../../../shared/services/custom-google-analytics.service';
+import { ApplicationInfoService } from '@shared/services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bar-category',
@@ -43,15 +43,12 @@ export class BarCategoryComponent implements OnInit {
 
   constructor(
     private statisticsDataAccessService: StatisticsDataAccessService,
+    private applicationInfoService: ApplicationInfoService,
     private activatedRoute: ActivatedRoute,
-    private googleAnalyticsService: CustomGoogleAnalyticsService,
   ) { }
 
-  ngOnInit() {
-    const compareWithRoute: ActivatedRoute = this.activatedRoute.pathFromRoot.find(x => x.routeConfig && x.routeConfig.data && x.routeConfig.data.compareWith)
-    const compareWith: 'none' | 'all' | 'demographic' = compareWithRoute ? compareWithRoute.routeConfig.data.compareWith : 'none';
-
-    this.googleAnalyticsService.sendChartVisitEvent('bar', compareWith, this.category);
+  ngOnInit(): void {
+    const compareWith: 'none' | 'all' | 'demographic' = this.applicationInfoService.getCompareWith(this.activatedRoute.pathFromRoot);
 
     this.statisticsDataAccessService.getBarChartData(
       this.endpoint,

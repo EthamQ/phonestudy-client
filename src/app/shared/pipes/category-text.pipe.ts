@@ -16,8 +16,6 @@ export class CategoryTextPipe implements PipeTransform {
         return 'Schlafqualität';
       case ECategory.COMMUNICATION:
         return 'Kommunikation';
-      case ECategory.WORDS:
-        return 'Getippte Wörter';
       case ECategory.APP:
         return 'App Benutzung';;
     }

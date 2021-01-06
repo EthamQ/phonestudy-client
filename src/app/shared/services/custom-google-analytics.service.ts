@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ECategory } from '@shared/types';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { ELocalStorageKey, LocalStorageService } from './local-storage.service';
+import { ApplicationInfoService } from './application-info.service';
+
+export enum EGaEventAction {
+  CLICK_CATEGORY = 'CLICK_CATEGORY',
+  CLICK_DROPDOWN = 'CLICK_DROPDOWN',
+}
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +14,10 @@ export class CustomGoogleAnalyticsService {
 
   constructor(
     private gaService: GoogleAnalyticsService,
-    private localStorageService: LocalStorageService,
+    private applicationInfoService: ApplicationInfoService,
     ) { }
 
-    sendChartVisitEvent(chart: string, compareWith: string, category: ECategory): void {
-      const username: string = this.localStorageService.get(ELocalStorageKey.USERID);
-      this.gaService.event('visit_chart', chart, `${username} | ${compareWith} | ${category}`);
+    sendGaEvent(action: EGaEventAction, value = ''): void {
+      this.gaService.event(action, this.applicationInfoService.getCurrentRoute(), value);
     }
 }

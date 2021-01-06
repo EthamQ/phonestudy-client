@@ -3,6 +3,5 @@ export enum ECategory {
     MOOD = 'mood',
     SLEEP = 'sleep',
     COMMUNICATION = 'communication',
-    WORDS = 'words',
     APP = 'app',
 }
