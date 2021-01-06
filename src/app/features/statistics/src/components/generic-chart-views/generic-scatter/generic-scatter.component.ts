@@ -96,13 +96,9 @@ export class GenericScatterComponent extends GenericChartComponent implements On
       filter,
     ) : null;
 
-    if(this.chartPoints1 && this.chartPoints1.length === 0) {
-      this.chartPoints1Empty = true;
-    }
-
-    if(this.chartPoints2 && this.chartPoints2.length === 0) {
-      this.chartPoints2Empty = true;
-    }
+    this.chartPoints1Empty = this.chartPoints1 && this.chartPoints1.length === 0;
+    
+    this.chartPoints2Empty = this.chartPoints2 && this.chartPoints2.length === 0;
 
     if (this.comparisonActive) {
       this.setPearsonCorrelation(1);
