@@ -61,6 +61,7 @@ export class ScatterChartComponent implements OnChanges {
           scaleLabel: {
             display: true,
             labelString: this.textY,
+            fontSize: 8,
           },
           ticks: {
             suggestedMin: 0,

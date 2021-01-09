@@ -3,6 +3,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { ApplicationInfoService } from './application-info.service';
 
 export enum EGaEventAction {
+  OPEN_START_PAGE = 'OPEN_START_PAGE',
   CLICK_CATEGORY = 'CLICK_CATEGORY',
   CLICK_DROPDOWN = 'CLICK_DROPDOWN',
 }

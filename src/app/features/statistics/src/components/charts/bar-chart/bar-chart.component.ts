@@ -50,6 +50,7 @@ export class BarChartComponent implements OnChanges {
           scaleLabel: {
             display: true,
             labelString: this.textY,
+            fontSize: 8,
           },
         }]
       },

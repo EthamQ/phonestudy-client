@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ECategory } from '@shared/types';
-import { ApplicationInfoService } from '@shared/services';
+import { ApplicationInfoService, ELocalStorageKey } from '@shared/services';
 import { ActivatedRoute } from '@angular/router';
+import { LocalStorageService } from '@shared/services';
+import { CustomGoogleAnalyticsService, EGaEventAction } from '@shared/services/custom-google-analytics.service';
 
 @Component({
   selector: 'app-category-selection',
@@ -31,9 +33,16 @@ export class CategorySelectionComponent implements OnInit {
 
   subtitle = '';
 
-  constructor(private applicationInfoService: ApplicationInfoService, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private applicationInfoService: ApplicationInfoService,
+    private activatedRoute: ActivatedRoute,
+    private gaService: CustomGoogleAnalyticsService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit() {
+    this.gaService.sendGaEvent(EGaEventAction.OPEN_START_PAGE, this.localStorageService.get(ELocalStorageKey.USERID));
+    
     switch(this.applicationInfoService.getCompareWith(this.activatedRoute.pathFromRoot)) {
       case 'all': 
         this.subtitle = 'Deine Daten im Vergleich zu deren aller anderen Teilnehmer';
