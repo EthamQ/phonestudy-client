@@ -9,14 +9,14 @@ import { EColorStyle } from '../../../charts';
 })
 export class AppUsagePieComponent {
 
-  description = 'Anzahl aufgezeichneter Aktivitäten von Apps';
+  description = 'Anzahl aufgezeichneter Aktivitäten von Apps (Top 30)';
   colorStyle = EColorStyle.RANDOM;
   category = ECategory.APP;
   endpoint = 'app';
   payload = {
     compareWith: environment.compareWith,
     type: 'simple',
-    aggregation: 'total-option-value',
+    aggregation: 'total',
   };
 
 }

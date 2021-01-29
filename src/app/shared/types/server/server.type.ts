@@ -58,13 +58,13 @@ export interface IRequestPayload {
 export interface IRequestPayloadPie {
     compareWith: 'none' | 'all' | 'demographic',
     type: 'simple',
-    aggregation: 'total-option-value' | 'by-time-frame' | 'total',
+    aggregation: 'total' | 'by-time-frame' | 'total',
 }
 
 export interface IRequestPayloadBar {
     compareWith: 'none' | 'all' | 'demographic',
     type: 'simple',
-    aggregation: 'average-by-weekday' | 'total-by-weekday',
+    aggregation: 'average-by-weekday',
 }
 
 export interface IRequestPayloadScatter {

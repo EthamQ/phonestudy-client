@@ -16,7 +16,7 @@ export class AppUsageBarComponent {
   payload: IRequestPayloadBar = {
     compareWith: environment.compareWith,
     type: 'simple',
-    aggregation: 'total-by-weekday',
+    aggregation: 'average-by-weekday',
   };
  
 }
